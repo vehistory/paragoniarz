@@ -17,6 +17,7 @@ namespace Paragoniarz
         {
             InitializeComponent();
             tbPassword.UseSystemPasswordChar = true;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
        
@@ -63,6 +64,8 @@ namespace Paragoniarz
             {
                 
                 Form2 form2 = new Form2();
+                form2.StartPosition = FormStartPosition.Manual;
+                form2.Location = this.Location;
                 form2.Show();
                 this.Hide();
 
