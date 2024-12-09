@@ -93,6 +93,26 @@ namespace Paragoniarz.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Closed_Eye1 {
+            get {
+                object obj = ResourceManager.GetObject("Closed Eye1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap EmailRegister {
+            get {
+                object obj = ResourceManager.GetObject("EmailRegister", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Eye {
             get {
                 object obj = ResourceManager.GetObject("Eye", resourceCulture);
@@ -163,6 +183,16 @@ namespace Paragoniarz.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PasswordRregister {
+            get {
+                object obj = ResourceManager.GetObject("PasswordRregister", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap registerBackground {
             get {
                 object obj = ResourceManager.GetObject("registerBackground", resourceCulture);
@@ -176,6 +206,46 @@ namespace Paragoniarz.Properties {
         internal static System.Drawing.Bitmap registerBackgroundPanel {
             get {
                 object obj = ResourceManager.GetObject("registerBackgroundPanel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RegisterClosed_Eye {
+            get {
+                object obj = ResourceManager.GetObject("RegisterClosed Eye", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RegisterClosed_Eye1 {
+            get {
+                object obj = ResourceManager.GetObject("RegisterClosed Eye1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RegisterClosed_Eye2 {
+            get {
+                object obj = ResourceManager.GetObject("RegisterClosed Eye2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RegisterOpenEye {
+            get {
+                object obj = ResourceManager.GetObject("RegisterOpenEye", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -206,6 +276,16 @@ namespace Paragoniarz.Properties {
         internal static System.Drawing.Bitmap User2 {
             get {
                 object obj = ResourceManager.GetObject("User2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap UserRegister {
+            get {
+                object obj = ResourceManager.GetObject("UserRegister", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

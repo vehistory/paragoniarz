@@ -8,50 +8,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Runtime.InteropServices;
 
 namespace Paragoniarz
 {
     public partial class Form1 : Form
     {
 
-        private Dictionary<string,string> users = new Dictionary<string,string>
-        {
-            { "sudap87", "Azure1" },
-            { "admin", "admin" },
-            { "bascio", "sdfsdf" },
-            { "wersjon", "TestHaslo" }
+        //private Dictionary<string,Tuple<string,string>> users = new Dictionary<string,Tuple<string,string>>
+        //{
+        //    { "sudap87", Tuple.Create("sudap87@example.com", "Azure1") },
+        //    { "admin", Tuple.Create("admin@example.com", "admin") },
+        //    { "bascio", Tuple.Create("bascio@example.com", "sdfsdf") },
+        //    { "wersjon", Tuple.Create("wersjon@example.com", "TestHaslo") }
 
-        };
+        //};
+        //private void OpenRegisterForm()
+        //{
+        //    // Tworzymy obiekt RegisterForm i przekazujemy słownik
+        //    RegisterForm registerForm = new RegisterForm(users);
+        //    registerForm.ShowDialog();
+        //}
+
+        private FormHelper formHelper = new FormHelper();
+
         public Form1()
         {
             InitializeComponent();
             tbPassword.UseSystemPasswordChar = true;
             this.StartPosition = FormStartPosition.CenterScreen;
         }
-
-
-
-        bool isPasswordVisible = false;
-        private void pictureBox4_Click(object sender,EventArgs e)
-        {
-            if (isPasswordVisible)
-            {
-                tbPassword.UseSystemPasswordChar = true;
-
-                pictureBox4.Image = Properties.Resources.Closed_Eye;
-            }
-            else
-            {
-                tbPassword.UseSystemPasswordChar = false;
-
-                pictureBox4.Image = Properties.Resources.Eye;
-            }
-            isPasswordVisible = !isPasswordVisible;
-        }
-        private void button1_Click(object sender,EventArgs e)
-        {
-            Environment.Exit(0);
-        }
+        //funckja pozwalajaca na przesuwanie okna
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HT_CAPTION = 0x2;
         [System.Runtime.InteropServices.DllImport("user32.dll")]
@@ -67,28 +54,42 @@ namespace Paragoniarz
             }
         }
 
+       
+
+        private void pictureBox4_Click(object sender,EventArgs e)
+        {
+            formHelper.TogglePasswordVisibility(tbPassword,pictureBox4,Properties.Resources.Eye,Properties.Resources.Closed_Eye1);
+        }
+
+
+
+
+
+        private void button1_Click(object sender,EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+
         private void button2_Click(object sender,EventArgs e)
         {
             string enteredUsername = tbUserName.Text;
             string enteredPassword = tbPassword.Text;
 
-
-            if (users.ContainsKey(enteredUsername) && users[enteredUsername] == enteredPassword)
+            if (UserManager.ValidateUser(enteredUsername,enteredPassword))
             {
-
                 Form2 form2 = new Form2(enteredUsername);
                 form2.StartPosition = FormStartPosition.Manual;
                 form2.Location = this.Location;
                 form2.Show();
                 this.Hide();
-
-
             }
             else
             {
                 MessageBox.Show("Błędne dane logowania!");
             }
         }
+
 
         private void tbUserName_KeyPress(object sender,KeyPressEventArgs e)
         {
@@ -113,8 +114,10 @@ namespace Paragoniarz
             int x = this.Location.X + (this.Width - registerForm.Width) / 2;
             int y = this.Location.Y + (this.Height - registerForm.Height) / 2;
             registerForm.Location = new Point(x,y);
-            registerForm.Show();
+            registerForm.FormClosed += (s,args) => this.Show();
+            
             this.Hide();
+            registerForm.Show();
 
         }
     }

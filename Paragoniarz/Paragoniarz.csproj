@@ -58,6 +58,7 @@
     <Compile Include="Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterForm.cs">
@@ -66,6 +67,7 @@
     <Compile Include="RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserManager.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -136,6 +138,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Images\registerBackgroundPanel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\EmailRegister.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\PasswordRregister.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\RegisterClosed Eye.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\RegisterOpenEye.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
