@@ -1,0 +1,12 @@
+# Ignorowanie folderu .vs
+.vs/
+
+# Ignorowanie folderów kompilacji (bin i obj)
+bin/
+obj/
+
+# Ignorowanie plików SQLite (np. slnx.sqlite) - jeśli nie chcesz ich śledzić w repozytorium
+*.sqlite
+
+# Ignorowanie pliku stanu sesji Visual Studio
+VSWorkspaceState.json
