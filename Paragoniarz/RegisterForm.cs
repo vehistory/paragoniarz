@@ -20,7 +20,7 @@ namespace Paragoniarz
             InitializeComponent();
             passBox.UseSystemPasswordChar = true;
             rePassBox.UseSystemPasswordChar = true;
-            
+
         }
 
         //funckja pozwalajaca na przesuwanie okna
@@ -65,20 +65,14 @@ namespace Paragoniarz
             int y = this.Location.Y + (this.Height - form1.Height) / 2;
             form1.Location = new Point(x,y);
             form1.Show();
-            this.Hide();
+            this.Close();
         }
 
         //obsluga butonna "x" do zamkniecia okna
         private void exitButton_Click(object sender,EventArgs e)
         {
 
-            //Form1 form1 = new Form1();
-            //form1.StartPosition = FormStartPosition.Manual;
-            //int x = this.Location.X + (this.Width - form1.Width) / 2;
-            //int y = this.Location.Y + (this.Height - form1.Height) / 2;
-            //form1.Location = new Point(x,y);
-            //form1.Show();
-            //this.Hide();
+
             Environment.Exit(0);
 
         }
@@ -141,37 +135,17 @@ namespace Paragoniarz
             return false;
         }
 
-        private void textBox1_KeyDown(object sender,KeyEventArgs e)
-        {
-            if((e.KeyCode == Keys.Enter))
-            {
-                button3.PerformClick();
-            }
-            
-        }
 
-        private void textBox2_KeyDown(object sender,KeyEventArgs e)
+
+        private void Field_KeyDown(object sender,KeyEventArgs e)
         {
-            if ((e.KeyCode == Keys.Enter))
+            if (e.KeyCode == Keys.Enter)
             {
-                button3.PerformClick();
+                button3.PerformClick();  // Kliknięcie przycisku "Zarejestruj"
             }
         }
 
-        private void passBox_KeyDown(object sender,KeyEventArgs e)
-        {
-            if ((e.KeyCode == Keys.Enter))
-            {
-                button3.PerformClick();
-            }
-        }
 
-        private void rePassBox_KeyDown(object sender,KeyEventArgs e)
-        {
-            if ((e.KeyCode == Keys.Enter))
-            {
-                button3.PerformClick();
-            }
-        }
+       
     }
 }
