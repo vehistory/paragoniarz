@@ -24,7 +24,7 @@ namespace Paragoniarz
             int nHeightEllipse
         );
 
-        private string username;
+        
 
         public Form2(string username)
         {
@@ -34,8 +34,18 @@ namespace Paragoniarz
             pnlNav.Top = button3.Top;
             pnlNav.Left = button3.Left;
             button3.BackColor = Color.FromArgb(46,51,73);
-            this.username = username;
-            label1.Text = "Witaj " + username + " !";
+            //this.username = username;
+            //label1.Text = "Witaj " + username + " !";
+            // Sprawdź, czy nazwa użytkownika została przekazana i przypisz ją do labela
+            if (!string.IsNullOrEmpty(username))
+            {
+                label1.Text = "Witaj " + username + "!";
+            }
+            else
+            {
+                label1.Text = "Witaj nieznajomy!";
+            }
+
         }
 
         private void button1_Click(object sender,EventArgs e)
@@ -69,7 +79,7 @@ namespace Paragoniarz
 
         }
 
-       
+
 
         private void SetNavigationPanel(Control clickedButton)
         {
@@ -85,7 +95,7 @@ namespace Paragoniarz
         {
             SetNavigationPanel(button3);
         }
-        
+
 
         private void button4_Click(object sender,EventArgs e)
         {

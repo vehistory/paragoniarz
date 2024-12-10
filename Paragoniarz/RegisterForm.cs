@@ -14,7 +14,7 @@ namespace Paragoniarz
     public partial class RegisterForm : Form
     {
 
-        private Dictionary<string,Tuple<string,string>> users;
+        //private Dictionary<string,Tuple<string,string>> users;
         public RegisterForm()
         {
             InitializeComponent();
@@ -85,7 +85,10 @@ namespace Paragoniarz
             string email = textBox2.Text;
             string username = textBox1.Text;
 
-            if (UserManager.IsUsernameOrEmailTaken(username,email))
+
+            DatabaseHelper dbHelper = new DatabaseHelper();
+
+            if (dbHelper.IsUsernameOrEmailTaken(username,email))
             {
                 MessageBox.Show("Nazwa użytkownika lub e-mail są już zajęte.");
                 return;
@@ -103,7 +106,12 @@ namespace Paragoniarz
                 return;
             }
 
-            UserManager.RegisterUser(username,email,password);
+
+           
+            dbHelper.InsertUser(username,email,password);
+
+
+
             MessageBox.Show("Rejestracja zakończona sukcesem!");
             Form1 form1 = new Form1();
             form1.StartPosition = FormStartPosition.Manual;
@@ -114,26 +122,7 @@ namespace Paragoniarz
             this.Hide();
         }
 
-        public bool IsUsernameOrEmailTaken(string username,string email)
-        {
-            // Sprawdzamy, czy nazwa użytkownika już istnieje
-            if (users.ContainsKey(username))
-            {
-                return true;  // Nazwa użytkownika już istnieje
-            }
-
-            // Sprawdzamy, czy email już istnieje
-            foreach (var user in users.Values)
-            {
-                if (user.Item1 == email)
-                {
-                    return true;  // E-mail już istnieje
-                }
-            }
-
-            // Jeśli nazwa użytkownika ani e-mail nie istnieją, zwracamy false
-            return false;
-        }
+       
 
 
 

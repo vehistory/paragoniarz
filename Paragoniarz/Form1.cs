@@ -62,8 +62,9 @@ namespace Paragoniarz
                 return;
             }
 
+            DatabaseHelper dbHelper = new DatabaseHelper();
 
-            if (UserManager.ValidateUser(enteredUsername,enteredPassword))
+            if (dbHelper.ValidateUser(enteredUsername,enteredPassword))
             {
                 Form2 form2 = new Form2(enteredUsername);
                 form2.StartPosition = FormStartPosition.Manual;
@@ -76,6 +77,7 @@ namespace Paragoniarz
                 MessageBox.Show("Błędne dane logowania!");
             }
         }
+
 
 
 
