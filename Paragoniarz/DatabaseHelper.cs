@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
@@ -8,13 +9,20 @@ namespace Paragoniarz
 {
     public class DatabaseHelper
     {
-        // Connection string do SQL Server
-        string connectionString = "Server=tcp:paragoniarz.database.windows.net,1433;Initial Catalog=paragoniarz_db;Persist Security Info=False;User ID=p4ragoniarzadmin;Password=zaq1@WSX123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        public static string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["ParagoniarzConnectionString"].ConnectionString;
+            }
+        }
 
+
+        
         // Sprawdzanie, czy użytkownik lub email są już zajęte
         public bool IsUsernameOrEmailTaken(string username,string email)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -26,7 +34,7 @@ namespace Paragoniarz
                         cmd.Parameters.AddWithValue("@email",email);
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
-                        return count > 0; // Zwróci true, jeśli użytkownik lub email są już zajęte
+                        return count > 0; 
                     }
                 }
                 catch (Exception ex)
@@ -44,7 +52,7 @@ namespace Paragoniarz
 
             string query = "INSERT INTO dbo.Users (username, password, email) VALUES (@username, @password, @email)";
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -94,7 +102,7 @@ namespace Paragoniarz
 
             string query = "SELECT COUNT(*) FROM dbo.Users WHERE username = @username AND password = @password";
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 try
                 {
