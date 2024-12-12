@@ -29,7 +29,7 @@ namespace Paragoniarz
         public Form2(string username)
         {
             InitializeComponent();
-            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0,0,Width,Height,5,5));
+            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0,0,Width,Height,20,20));
             pnlNav.Height = button3.Height;
             pnlNav.Top = button3.Top;
             pnlNav.Left = button3.Left;
