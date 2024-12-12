@@ -5,24 +5,28 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 
+
+
+
+
 namespace Paragoniarz
 {
     public class DatabaseHelper
     {
-        public static string ConnectionString
-        {
-            get
-            {
-                return ConfigurationManager.ConnectionStrings["ParagoniarzConnectionString"].ConnectionString;
-            }
-        }
+        //public static string ConnectionString
+        //{
+        //    get
+        //    {
+        //        return ConfigurationManager.ConnectionStrings["ParagoniarzConnectionString"].ConnectionString;
+        //    }
+        //}
 
 
         
         // Sprawdzanie, czy użytkownik lub email są już zajęte
         public bool IsUsernameOrEmailTaken(string username,string email)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = DatabaseConnection.Instance.CreateConnection())
             {
                 try
                 {
@@ -52,7 +56,7 @@ namespace Paragoniarz
 
             string query = "INSERT INTO dbo.Users (username, password, email) VALUES (@username, @password, @email)";
 
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
                 try
                 {
@@ -102,7 +106,7 @@ namespace Paragoniarz
 
             string query = "SELECT COUNT(*) FROM dbo.Users WHERE username = @username AND password = @password";
 
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
                 try
                 {

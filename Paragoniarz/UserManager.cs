@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
-using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Configuration;
 using Paragoniarz;
@@ -11,16 +11,16 @@ public static class UserManager
 
     public static bool ValidateUser(string username,string password)
     {
-        string connectionString = DatabaseHelper.ConnectionString;
+        
 
         string query = "SELECT COUNT(*) FROM Users WHERE Username = @username AND Password = @password";
 
-        using (MySqlConnection conn = new MySqlConnection(connectionString))
+        using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
         {
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query,conn);
+                SqlCommand cmd = new SqlCommand(query,conn);
                 cmd.Parameters.AddWithValue("@username",username);
                 cmd.Parameters.AddWithValue("@password",password); 
 
@@ -37,15 +37,15 @@ public static class UserManager
 
     public static bool IsUserExists(string username,string email)
     {
-        string connectionString = DatabaseHelper.ConnectionString;
+       
         string query = "SELECT COUNT(*) FROM dbo.users WHERE username = @username OR email = @email";
 
-        using (MySqlConnection conn = new MySqlConnection(connectionString))
+        using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
         {
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query,conn);
+                SqlCommand cmd = new SqlCommand(query,conn);
                 cmd.Parameters.AddWithValue("@username",username);
                 cmd.Parameters.AddWithValue("@email",email);
 
@@ -62,15 +62,15 @@ public static class UserManager
 
     public static bool CreateUser(string username,string password,string email)
     {
-        string connectionString = DatabaseHelper.ConnectionString;
+        
         string query = "INSERT INTO dbo.users (username, password, email) VALUES (@username, @password, @email)";
 
-        using (MySqlConnection conn = new MySqlConnection(connectionString))
+        using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
         {
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query,conn);
+                SqlCommand cmd = new SqlCommand(query,conn);
                 cmd.Parameters.AddWithValue("@username",username);
                 cmd.Parameters.AddWithValue("@password",password); 
                 cmd.Parameters.AddWithValue("@email",email);

@@ -10,7 +10,7 @@ namespace Paragoniarz
     internal class FormHelper
     {
 
-        // funkcja odpowiedzialna za widocznosc hasla
+        
         private bool isPasswordVisible = false;
 
 
