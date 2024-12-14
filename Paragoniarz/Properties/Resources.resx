@@ -118,17 +118,23 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="RegisterClosed Eye" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\RegisterClosed Eye.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="UserRegister" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\UserRegister.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PasswordRregister" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\PasswordRregister.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RegisterOpenEye" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\RegisterOpenEye.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="EmailRegister" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\EmailRegister.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Password" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\Password.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Eye" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\Eye.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="paragoniarzfresh1panel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\paragoniarzfresh1panel.jpeg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,26 +145,26 @@
   <data name="paragoniarzfresh1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\paragoniarzfresh1.jpeg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="loginBackground 1280x720" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\loginBackground 1280x720.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="User" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\User.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RegisterClosed Eye1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\RegisterClosed Eye.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="registerBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\registerBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="loginBackground panel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\loginBackground panel.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Account" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\Account.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="registerBackgroundPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\registerBackgroundPanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Close" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\Close.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="registerBackgroundPanel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\registerBackgroundPanel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Eye" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\Eye.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RegisterClosed Eye2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\RegisterClosed Eye.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,19 +178,16 @@
   <data name="User2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\User.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="loginBackground 1280x720" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\loginBackground 1280x720.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PasswordRregister" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\PasswordRregister.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="RegisterClosed Eye1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\RegisterClosed Eye.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Closed Eye1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\Closed Eye.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RegisterClosed Eye" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\RegisterClosed Eye.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="loginBackground panel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\loginBackground panel.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RegisterOpenEye" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\RegisterOpenEye.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="registerBackground1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\registerBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

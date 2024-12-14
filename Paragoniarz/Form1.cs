@@ -115,14 +115,41 @@ namespace Paragoniarz
 
         }
 
-        private void tbPassword_KeyPress(object sender,KeyPressEventArgs e)
-        {
+        //private void linkLabel1_LinkClicked(object sender,LinkLabelLinkClickedEventArgs e)
+        //{
+        //    ForgottenPass forgottenPass = new ForgottenPass();
+        //    forgottenPass.StartPosition = FormStartPosition.Manual;
+        //    int x = this.Location.X + (this.Width - forgottenPass.Width) / 2;
+        //    int y = this.Location.Y + (this.Height - forgottenPass.Height) / 2;
+        //    forgottenPass.Location = new Point(x,y);
+        //    forgottenPass.FormClosed += (s,args) => this.Show();
+        //    this.Hide();
+        //    forgottenPass.Show();
+        //}
 
+        private void linkLabel1_MouseClick(object sender,MouseEventArgs e)
+        {
+            ForgottenPass forgottenPass = new ForgottenPass();
+            forgottenPass.StartPosition = FormStartPosition.Manual;
+            int x = this.Location.X + (this.Width - forgottenPass.Width) / 2;
+            int y = this.Location.Y + (this.Height - forgottenPass.Height) / 2;
+            forgottenPass.Location = new Point(x,y);
+            forgottenPass.FormClosed += (s,args) => this.Show();
+            this.Hide();
+            forgottenPass.Show();
         }
 
-        private void tbUserName_KeyPress(object sender,KeyPressEventArgs e)
+        private void linkLabel1_LinkClicked(object sender,LinkLabelLinkClickedEventArgs e)
         {
 
+            ForgottenPass forgottenPass = new ForgottenPass();
+            forgottenPass.StartPosition = FormStartPosition.Manual;
+            int x = this.Location.X + (this.Width - forgottenPass.Width) / 2;
+            int y = this.Location.Y + (this.Height - forgottenPass.Height) / 2;
+            forgottenPass.Location = new Point(x,y);
+            forgottenPass.FormClosed += (s,args) => this.Show();
+            this.Hide();
+            forgottenPass.Show();
         }
     }
 }
