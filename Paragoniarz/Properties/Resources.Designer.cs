@@ -203,6 +203,16 @@ namespace Paragoniarz.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap registerBackground1 {
+            get {
+                object obj = ResourceManager.GetObject("registerBackground1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap registerBackgroundPanel {
             get {
                 object obj = ResourceManager.GetObject("registerBackgroundPanel", resourceCulture);
