@@ -28,9 +28,9 @@ namespace Paragoniarz
         }
 
         // Metoda do obsługi przesuwania okna
-        public static void EnableWindowDragging(Form1 form)
+        public static void EnableWindowDragging(Control control, Form form)
         {
-            form.MouseDown += (sender,e) =>
+            control.MouseDown += (sender,e) =>
             {
                 if (e.Button == MouseButtons.Left)
                 {

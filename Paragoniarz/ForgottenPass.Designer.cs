@@ -78,7 +78,7 @@
             this.linkLabel2.BackColor = System.Drawing.Color.Transparent;
             this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.linkLabel2.LinkColor = System.Drawing.SystemColors.Highlight;
-            this.linkLabel2.Location = new System.Drawing.Point(191, 195);
+            this.linkLabel2.Location = new System.Drawing.Point(188, 195);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(134, 16);
             this.linkLabel2.TabIndex = 28;
@@ -149,7 +149,7 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(742, 31);
             this.panel2.TabIndex = 1;
-            this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ForgottenPass_MouseDown);
+            
             // 
             // label2
             // 

@@ -76,7 +76,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(742, 31);
             this.panel1.TabIndex = 2;
-            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RegisterForm_MouseDown);
+            
             // 
             // button2
             // 
@@ -398,7 +398,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RegisterForm";
             this.Text = "RegisterForm";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RegisterForm_MouseDown);
+           
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.pnlLogin.ResumeLayout(false);

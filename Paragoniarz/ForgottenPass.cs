@@ -27,24 +27,14 @@ namespace Paragoniarz
         public ForgottenPass()
         {
             InitializeComponent();
-            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0,0,Width,Height,20,20));
+            // Zaokrąglij rogi okna 
+            WindowHelper.SetWindowRoundCorners(this,20);
+
+            // Umożliw przesuwanie okna 
+            WindowHelper.EnableWindowDragging(panel2,this);
             this.StartPosition = FormStartPosition.CenterScreen;
         }
-        //funckja pozwalajaca na przesuwanie okna
-        private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int HT_CAPTION = 0x2;
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd,int Msg,int wParam,int lParam);
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern bool ReleaseCapture();
-        private void ForgottenPass_MouseDown(object sender,MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle,WM_NCLBUTTONDOWN,HT_CAPTION,0);
-            }
-        }
+       
 
         private void linkLabel2_LinkClicked(object sender,LinkLabelLinkClickedEventArgs e)
         {
