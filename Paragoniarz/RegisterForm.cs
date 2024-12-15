@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,14 +14,25 @@ namespace Paragoniarz
 {
     public partial class RegisterForm : Form
     {
+        [DllImport("Gdi32.dll",EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn
+       (
+           int nLeftRect,
+           int nTopRect,
+           int nRightRect,
+           int nBottomRect,
+           int nWidthEllipse,
+           int nHeightEllipse
+       );
 
-        private Dictionary<string,Tuple<string,string>> users;
+        //private Dictionary<string,Tuple<string,string>> users;
         public RegisterForm()
         {
             InitializeComponent();
+            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0,0,Width,Height,20,20));
             passBox.UseSystemPasswordChar = true;
             rePassBox.UseSystemPasswordChar = true;
-            
+
         }
 
         //funckja pozwalajaca na przesuwanie okna
@@ -56,29 +68,11 @@ namespace Paragoniarz
 
 
 
-        //obsluga linkuLabel powrot do logowania
-        private void linkLabel1_LinkClicked(object sender,LinkLabelLinkClickedEventArgs e)
-        {
-            Form1 form1 = new Form1();
-            form1.StartPosition = FormStartPosition.Manual;
-            int x = this.Location.X + (this.Width - form1.Width) / 2;
-            int y = this.Location.Y + (this.Height - form1.Height) / 2;
-            form1.Location = new Point(x,y);
-            form1.Show();
-            this.Hide();
-        }
-
         //obsluga butonna "x" do zamkniecia okna
         private void exitButton_Click(object sender,EventArgs e)
         {
 
-            //Form1 form1 = new Form1();
-            //form1.StartPosition = FormStartPosition.Manual;
-            //int x = this.Location.X + (this.Width - form1.Width) / 2;
-            //int y = this.Location.Y + (this.Height - form1.Height) / 2;
-            //form1.Location = new Point(x,y);
-            //form1.Show();
-            //this.Hide();
+
             Environment.Exit(0);
 
         }
@@ -91,7 +85,10 @@ namespace Paragoniarz
             string email = textBox2.Text;
             string username = textBox1.Text;
 
-            if (UserManager.IsUsernameOrEmailTaken(username,email))
+
+            DatabaseHelper dbHelper = new DatabaseHelper();
+
+            if (dbHelper.IsUsernameOrEmailTaken(username,email))
             {
                 MessageBox.Show("Nazwa użytkownika lub e-mail są już zajęte.");
                 return;
@@ -109,7 +106,12 @@ namespace Paragoniarz
                 return;
             }
 
-            UserManager.RegisterUser(username,email,password);
+
+           
+            dbHelper.InsertUser(username,email,password);
+
+
+
             MessageBox.Show("Rejestracja zakończona sukcesem!");
             Form1 form1 = new Form1();
             form1.StartPosition = FormStartPosition.Manual;
@@ -120,58 +122,27 @@ namespace Paragoniarz
             this.Hide();
         }
 
-        public bool IsUsernameOrEmailTaken(string username,string email)
+       
+
+
+
+        private void Field_KeyDown(object sender,KeyEventArgs e)
         {
-            // Sprawdzamy, czy nazwa użytkownika już istnieje
-            if (users.ContainsKey(username))
+            if (e.KeyCode == Keys.Enter)
             {
-                return true;  // Nazwa użytkownika już istnieje
-            }
-
-            // Sprawdzamy, czy email już istnieje
-            foreach (var user in users.Values)
-            {
-                if (user.Item1 == email)
-                {
-                    return true;  // E-mail już istnieje
-                }
-            }
-
-            // Jeśli nazwa użytkownika ani e-mail nie istnieją, zwracamy false
-            return false;
-        }
-
-        private void textBox1_KeyDown(object sender,KeyEventArgs e)
-        {
-            if((e.KeyCode == Keys.Enter))
-            {
-                button3.PerformClick();
-            }
-            
-        }
-
-        private void textBox2_KeyDown(object sender,KeyEventArgs e)
-        {
-            if ((e.KeyCode == Keys.Enter))
-            {
-                button3.PerformClick();
+                button3.PerformClick();  // Kliknięcie przycisku "Zarejestruj"
             }
         }
 
-        private void passBox_KeyDown(object sender,KeyEventArgs e)
+        private void linkLabel1_MouseClick(object sender,MouseEventArgs e)
         {
-            if ((e.KeyCode == Keys.Enter))
-            {
-                button3.PerformClick();
-            }
-        }
-
-        private void rePassBox_KeyDown(object sender,KeyEventArgs e)
-        {
-            if ((e.KeyCode == Keys.Enter))
-            {
-                button3.PerformClick();
-            }
+            Form1 form1 = new Form1();
+            form1.StartPosition = FormStartPosition.Manual;
+            int x = this.Location.X + (this.Width - form1.Width) / 2;
+            int y = this.Location.Y + (this.Height - form1.Height) / 2;
+            form1.Location = new Point(x,y);
+            form1.Show();
+            this.Hide();
         }
     }
 }

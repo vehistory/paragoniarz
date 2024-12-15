@@ -128,6 +128,7 @@
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UserManager.cs" />
+    <Compile Include="WindowHelper.cs" />
     <EmbeddedResource Include="ForgottenPass.resx">
       <DependentUpon>ForgottenPass.cs</DependentUpon>
     </EmbeddedResource>

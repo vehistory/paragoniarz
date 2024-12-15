@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Text.RegularExpressions;
@@ -12,6 +9,10 @@ namespace Paragoniarz
 {
     internal class FormHelper
     {
+
+        
+        private bool isPasswordVisible = false;
+
 
         public bool IsUsernameOrEmailTaken(string username,string email,Dictionary<string,Tuple<string,string>>users)
         {
@@ -35,8 +36,7 @@ namespace Paragoniarz
         }
 
 
-        // funkcja odpowiedzialna za widocznosc hasla
-        private bool isPasswordVisible = false;
+       
 
         public void TogglePasswordVisibility(TextBox tbPassword,PictureBox pictureBox,Image visibleImage,Image hiddenImage)
         {
@@ -55,35 +55,36 @@ namespace Paragoniarz
 
 
         // funkcja sprawdzajaca poprawnosc hasla
-        public bool ValidatePassword(string password, string confirmPassword)
+        public bool ValidatePassword(string password,string confirmPassword)
         {
             if (password != confirmPassword)
             {
+                MessageBox.Show("Hasła nie pasują do siebie.");
                 return false;
             }
             if (password.Length < 8)
             {
-                MessageBox.Show("Hasło musi mieć co najmniej 8 znaków");
+                MessageBox.Show("Hasło musi mieć co najmniej 8 znaków.");
                 return false;
             }
-            else if (!Regex.IsMatch(password,@"[a-z]"))
+            if (!Regex.IsMatch(password,@"[a-z]"))
             {
-                MessageBox.Show("Hasło musi zawierać co najmniej jedną małą literę");
+                MessageBox.Show("Hasło musi zawierać co najmniej jedną małą literę.");
                 return false;
             }
-            else if (!Regex.IsMatch(password,@"[A-Z]"))
+            if (!Regex.IsMatch(password,@"[A-Z]"))
             {
-                MessageBox.Show("Hasło musi zawierać co najmniej jedną dużą literę");
+                MessageBox.Show("Hasło musi zawierać co najmniej jedną dużą literę.");
                 return false;
             }
-            else if (!Regex.IsMatch(password,@"[0-9]"))
+            if (!Regex.IsMatch(password,@"[0-9]"))
             {
-                MessageBox.Show("Hasło musi zawierać co najmniej jedną cyfrę");
+                MessageBox.Show("Hasło musi zawierać co najmniej jedną cyfrę.");
                 return false;
             }
-            else if (!Regex.IsMatch(password,@"[!@#$%^&*()_+}{:|>?<]"))
+            if (!Regex.IsMatch(password,@"[!@#$%^&*()_+}{:|>?<]"))
             {
-                MessageBox.Show("Hasło musi zawierać co najmniej jeden znak specjalny");
+                MessageBox.Show("Hasło musi zawierać co najmniej jeden znak specjalny.");
                 return false;
             }
             return true;

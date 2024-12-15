@@ -125,7 +125,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(218, 19);
             this.textBox1.TabIndex = 3;
-            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Field_KeyDown);
             // 
             // label1
             // 
@@ -159,7 +159,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(218, 19);
             this.textBox2.TabIndex = 5;
-            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
+            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Field_KeyDown);
             // 
             // label4
             // 
@@ -182,7 +182,7 @@
             this.passBox.Name = "passBox";
             this.passBox.Size = new System.Drawing.Size(218, 19);
             this.passBox.TabIndex = 7;
-            this.passBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passBox_KeyDown);
+            this.passBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Field_KeyDown);
             // 
             // label5
             // 
@@ -205,7 +205,7 @@
             this.rePassBox.Name = "rePassBox";
             this.rePassBox.Size = new System.Drawing.Size(218, 19);
             this.rePassBox.TabIndex = 9;
-            this.rePassBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.rePassBox_KeyDown);
+            this.rePassBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Field_KeyDown);
             // 
             // label6
             // 
@@ -242,7 +242,7 @@
             this.linkLabel1.TabIndex = 14;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Mam już konto";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.linkLabel1_MouseClick);
             // 
             // pnlLogin
             // 
