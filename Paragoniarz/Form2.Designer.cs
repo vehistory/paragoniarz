@@ -239,7 +239,7 @@
             // 
             this.panel4.Location = new System.Drawing.Point(234, 96);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(801, 527);
+            this.panel4.Size = new System.Drawing.Size(804, 570);
             this.panel4.TabIndex = 4;
             // 
             // label4
