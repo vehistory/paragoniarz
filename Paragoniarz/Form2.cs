@@ -13,29 +13,21 @@ namespace Paragoniarz
 {
     public partial class Form2 : Form
     {
-        [DllImport("Gdi32.dll",EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn
-        (
-            int nLeftRect,
-            int nTopRect,
-            int nRightRect,
-            int nBottomRect,
-            int nWidthEllipse,
-            int nHeightEllipse
-        );
-
-        
-
+       
         public Form2(string username)
         {
             InitializeComponent();
-            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0,0,Width,Height,20,20));
+            // Zaokrąglij rogi okna 
+            WindowHelper.SetWindowRoundCorners(this,20);
+
+            // Umożliw przesuwanie okna 
+            WindowHelper.EnableWindowDragging(panel1,this);
+
             pnlNav.Height = button3.Height;
             pnlNav.Top = button3.Top;
             pnlNav.Left = button3.Left;
             button3.BackColor = Color.FromArgb(46,51,73);
-            //this.username = username;
-            //label1.Text = "Witaj " + username + " !";
+           
             // Sprawdź, czy nazwa użytkownika została przekazana i przypisz ją do labela
             if (!string.IsNullOrEmpty(username))
             {
@@ -52,21 +44,7 @@ namespace Paragoniarz
         {
             Environment.Exit(0);
         }
-        private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int HT_CAPTION = 0x2;
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd,int Msg,int wParam,int lParam);
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern bool ReleaseCapture();
-        private void Form2_MouseDown(object sender,MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle,WM_NCLBUTTONDOWN,HT_CAPTION,0);
-            }
-        }
-
+       
         private void button2_Click(object sender,EventArgs e)
         {
 
