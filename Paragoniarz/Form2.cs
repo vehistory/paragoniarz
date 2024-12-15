@@ -69,55 +69,62 @@ namespace Paragoniarz
 
         }
 
-        private void button3_Leave(object sender,EventArgs e)
+       
+
+        private void SetNavigationPanel(Control clickedButton)
         {
-            button3.BackColor = Color.FromArgb(24,30,54);
+            pnlNav.Height = clickedButton.Height;
+            pnlNav.Top = clickedButton.Top;
+            pnlNav.Left = clickedButton.Left;
+            clickedButton.BackColor = Color.FromArgb(46,51,73);
         }
+
+
 
         private void button3_Click(object sender,EventArgs e)
         {
-            pnlNav.Height = button3.Height;
-            pnlNav.Top = button3.Top;
-            pnlNav.Left = button3.Left;
-            button3.BackColor = Color.FromArgb(46,51,73);
+            SetNavigationPanel(button3);
         }
-        private void button4_Leave(object sender,EventArgs e)
-        {
-            button4.BackColor = Color.FromArgb(24,30,54);
-        }
+        
 
         private void button4_Click(object sender,EventArgs e)
         {
-            pnlNav.Height = button4.Height;
-            pnlNav.Top = button4.Top;
-            pnlNav.Left = button4.Left;
-            button4.BackColor = Color.FromArgb(46,51,73);
+            SetNavigationPanel(button4);
         }
 
         private void button5_Click(object sender,EventArgs e)
         {
-            pnlNav.Height = button5.Height;
-            pnlNav.Top = button5.Top;
-            pnlNav.Left = button5.Left;
-            button5.BackColor = Color.FromArgb(46,51,73);
+            SetNavigationPanel(button5);
         }
 
         private void button6_Click(object sender,EventArgs e)
         {
-            pnlNav.Height = button6.Height;
-            pnlNav.Top = button6.Top;
-            pnlNav.Left = button6.Left;
-            button6.BackColor = Color.FromArgb(46,51,73);
+            SetNavigationPanel(button6);
+        }
+
+        private void SetButtonDefaultColor(Button button)
+        {
+            button.BackColor = Color.FromArgb(24,30,54);
+        }
+        private void button3_Leave(object sender,EventArgs e)
+        {
+            SetButtonDefaultColor(button3);
+        }
+
+
+        private void button4_Leave(object sender,EventArgs e)
+        {
+            SetButtonDefaultColor(button4);
         }
 
         private void button5_Leave(object sender,EventArgs e)
         {
-            button5.BackColor = Color.FromArgb(24,30,54);
+            SetButtonDefaultColor(button5);
         }
 
         private void button6_Leave(object sender,EventArgs e)
         {
-            button6.BackColor = Color.FromArgb(24,30,54);
+            SetButtonDefaultColor(button6);
         }
 
         private void Form2_Load(object sender,EventArgs e)

@@ -7,28 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Runtime.InteropServices;
 
 namespace Paragoniarz
 {
     public partial class Form1 : Form
     {
-
-        //private Dictionary<string,Tuple<string,string>> users = new Dictionary<string,Tuple<string,string>>
-        //{
-        //    { "sudap87", Tuple.Create("sudap87@example.com", "Azure1") },
-        //    { "admin", Tuple.Create("admin@example.com", "admin") },
-        //    { "bascio", Tuple.Create("bascio@example.com", "sdfsdf") },
-        //    { "wersjon", Tuple.Create("wersjon@example.com", "TestHaslo") }
-
-        //};
-        //private void OpenRegisterForm()
-        //{
-        //    // Tworzymy obiekt RegisterForm i przekazujemy słownik
-        //    RegisterForm registerForm = new RegisterForm(users);
-        //    registerForm.ShowDialog();
-        //}
 
         private FormHelper formHelper = new FormHelper();
 
@@ -54,15 +38,11 @@ namespace Paragoniarz
             }
         }
 
-       
 
         private void pictureBox4_Click(object sender,EventArgs e)
         {
             formHelper.TogglePasswordVisibility(tbPassword,pictureBox4,Properties.Resources.Eye,Properties.Resources.Closed_Eye1);
         }
-
-
-
 
 
         private void button1_Click(object sender,EventArgs e)
@@ -75,6 +55,13 @@ namespace Paragoniarz
         {
             string enteredUsername = tbUserName.Text;
             string enteredPassword = tbPassword.Text;
+
+            if (string.IsNullOrEmpty(enteredUsername) || string.IsNullOrEmpty(enteredPassword))
+            {
+                MessageBox.Show("Wprowadź nazwę użytkownika i hasło.");
+                return;
+            }
+
 
             if (UserManager.ValidateUser(enteredUsername,enteredPassword))
             {
@@ -91,15 +78,9 @@ namespace Paragoniarz
         }
 
 
-        private void tbUserName_KeyPress(object sender,KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char) Keys.Enter)
-            {
-                button2.PerformClick();
-            }
-        }
 
-        private void tbPassword_KeyPress(object sender,KeyPressEventArgs e)
+
+        private void TextBox_KeyPress(object sender,KeyPressEventArgs e)
         {
             if (e.KeyChar == (char) Keys.Enter)
             {
@@ -118,6 +99,16 @@ namespace Paragoniarz
             
             this.Hide();
             registerForm.Show();
+
+        }
+
+        private void tbPassword_KeyPress(object sender,KeyPressEventArgs e)
+        {
+
+        }
+
+        private void tbUserName_KeyPress(object sender,KeyPressEventArgs e)
+        {
 
         }
     }
