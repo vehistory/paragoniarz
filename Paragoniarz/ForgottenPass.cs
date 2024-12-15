@@ -14,16 +14,7 @@ namespace Paragoniarz
     public partial class ForgottenPass : Form
     {
 
-        [DllImport("Gdi32.dll",EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn
-      (
-          int nLeftRect,
-          int nTopRect,
-          int nRightRect,
-          int nBottomRect,
-          int nWidthEllipse,
-          int nHeightEllipse
-      );
+       
         public ForgottenPass()
         {
             InitializeComponent();
