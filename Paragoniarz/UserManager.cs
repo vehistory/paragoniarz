@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Paragoniarz;
 using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-using System.Configuration;
-using Paragoniarz;
 
 public static class UserManager
 {
@@ -11,7 +9,7 @@ public static class UserManager
 
     public static bool ValidateUser(string username,string password)
     {
-        
+
 
         string query = "SELECT COUNT(*) FROM Users WHERE Username = @username AND Password = @password";
 
@@ -22,7 +20,7 @@ public static class UserManager
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query,conn);
                 cmd.Parameters.AddWithValue("@username",username);
-                cmd.Parameters.AddWithValue("@password",password); 
+                cmd.Parameters.AddWithValue("@password",password);
 
                 int result = Convert.ToInt32(cmd.ExecuteScalar());
                 return result > 0;
@@ -37,7 +35,7 @@ public static class UserManager
 
     public static bool IsUserExists(string username,string email)
     {
-       
+
         string query = "SELECT COUNT(*) FROM dbo.users WHERE username = @username OR email = @email";
 
         using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
@@ -50,7 +48,7 @@ public static class UserManager
                 cmd.Parameters.AddWithValue("@email",email);
 
                 int count = Convert.ToInt32(cmd.ExecuteScalar());
-                return count > 0;  
+                return count > 0;
             }
             catch (Exception ex)
             {
@@ -62,7 +60,7 @@ public static class UserManager
 
     public static bool CreateUser(string username,string password,string email)
     {
-        
+
         string query = "INSERT INTO dbo.users (username, password, email) VALUES (@username, @password, @email)";
 
         using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
@@ -72,11 +70,11 @@ public static class UserManager
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query,conn);
                 cmd.Parameters.AddWithValue("@username",username);
-                cmd.Parameters.AddWithValue("@password",password); 
+                cmd.Parameters.AddWithValue("@password",password);
                 cmd.Parameters.AddWithValue("@email",email);
 
                 int result = cmd.ExecuteNonQuery();
-                return result > 0;  
+                return result > 0;
             }
             catch (Exception ex)
             {

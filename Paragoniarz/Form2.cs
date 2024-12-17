@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.IO;
 
 namespace Paragoniarz
 {
@@ -19,15 +11,14 @@ namespace Paragoniarz
         private UploadFileControl uploadFileControl;
         private YourFilesControl yourFilesControl;
         private FindFileControl findFileControl;
-        
+
 
 
 
         public Form2(string username)
         {
             InitializeComponent();
-
-            
+           
             uploadFileControl = new UploadFileControl();
             yourFilesControl = new YourFilesControl();
             findFileControl = new FindFileControl();
@@ -74,7 +65,7 @@ namespace Paragoniarz
         {
             Environment.Exit(0);
         }
-       
+
         private void SetNavigationPanel(Control clickedButton)
         {
             pnlNav.Height = clickedButton.Height;
@@ -152,10 +143,10 @@ namespace Paragoniarz
             SetButtonDefaultColor(button6);
         }
 
-        
 
-       
 
-       
+
+
+
     }
 }

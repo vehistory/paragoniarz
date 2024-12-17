@@ -12,7 +12,7 @@ namespace Paragoniarz
 {
     public class DatabaseHelper
     {
-        
+
         // Sprawdzanie, czy użytkownik lub email są już zajęte
         public bool IsUsernameOrEmailTaken(string username,string email)
         {
@@ -28,7 +28,7 @@ namespace Paragoniarz
                         cmd.Parameters.AddWithValue("@email",email);
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
-                        return count > 0; 
+                        return count > 0;
                     }
                 }
                 catch (Exception ex)

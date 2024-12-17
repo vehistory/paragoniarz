@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 
 public class ImageMetadata
@@ -11,7 +10,7 @@ public class ImageMetadata
     public long FileSize
     {
         get; private set;
-    } 
+    }
     public DateTime CreationDate
     {
         get; private set;
