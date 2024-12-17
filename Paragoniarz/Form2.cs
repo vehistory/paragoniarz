@@ -33,11 +33,6 @@ namespace Paragoniarz
             findFileControl = new FindFileControl();
             ShowControl(uploadFileControl);
 
-
-
-
-
-
             // Zaokrąglij rogi okna 
             WindowHelper.SetWindowRoundCorners(this,20);
 
@@ -48,7 +43,7 @@ namespace Paragoniarz
             pnlNav.Top = sendFile.Top;
             pnlNav.Left = sendFile.Left;
             sendFile.BackColor = Color.FromArgb(46,51,73);
-           
+
             // Sprawdź, czy nazwa użytkownika została przekazana i przypisz ją do labela
             if (!string.IsNullOrEmpty(username))
             {
@@ -105,6 +100,8 @@ namespace Paragoniarz
             SetNavigationPanel(yoursFile);
             ShowControl(findFileControl);
             label3.Text = "Twoje pliki";
+            sendFile.BackColor = Color.FromArgb(24,30,54);
+
 
 
         }
@@ -114,6 +111,7 @@ namespace Paragoniarz
             SetNavigationPanel(findFile);
             ShowControl(yourFilesControl);
             label3.Text = "Znajdź plik";
+            sendFile.BackColor = Color.FromArgb(24,30,54);
 
 
 
@@ -154,10 +152,7 @@ namespace Paragoniarz
             SetButtonDefaultColor(button6);
         }
 
-        private void Form2_Load(object sender,EventArgs e)
-        {
-
-        }
+        
 
        
 

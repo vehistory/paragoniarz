@@ -44,6 +44,7 @@
             // UDlabel
             // 
             this.UDlabel.AutoSize = true;
+            this.UDlabel.ForeColor = System.Drawing.SystemColors.Highlight;
             this.UDlabel.Location = new System.Drawing.Point(383, 227);
             this.UDlabel.Name = "UDlabel";
             this.UDlabel.Size = new System.Drawing.Size(76, 13);
@@ -53,6 +54,7 @@
             // CDlabel
             // 
             this.CDlabel.AutoSize = true;
+            this.CDlabel.ForeColor = System.Drawing.SystemColors.Highlight;
             this.CDlabel.Location = new System.Drawing.Point(383, 168);
             this.CDlabel.Name = "CDlabel";
             this.CDlabel.Size = new System.Drawing.Size(90, 13);
@@ -64,6 +66,7 @@
             this.button7.BackColor = System.Drawing.Color.Transparent;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button7.ForeColor = System.Drawing.SystemColors.Highlight;
             this.button7.Location = new System.Drawing.Point(220, 289);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(119, 35);
@@ -74,6 +77,7 @@
             // FSlabel
             // 
             this.FSlabel.AutoSize = true;
+            this.FSlabel.ForeColor = System.Drawing.SystemColors.Highlight;
             this.FSlabel.Location = new System.Drawing.Point(383, 108);
             this.FSlabel.Name = "FSlabel";
             this.FSlabel.Size = new System.Drawing.Size(51, 13);
@@ -85,6 +89,7 @@
             this.button2.BackColor = System.Drawing.Color.Transparent;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button2.ForeColor = System.Drawing.SystemColors.Highlight;
             this.button2.Location = new System.Drawing.Point(51, 289);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(119, 35);
@@ -96,6 +101,7 @@
             // FNlabel
             // 
             this.FNlabel.AutoSize = true;
+            this.FNlabel.ForeColor = System.Drawing.SystemColors.Highlight;
             this.FNlabel.Location = new System.Drawing.Point(383, 38);
             this.FNlabel.Name = "FNlabel";
             this.FNlabel.Size = new System.Drawing.Size(71, 13);
@@ -123,11 +129,13 @@
             this.pictureBox2.TabStop = false;
             this.pictureBox2.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBox2_DragDrop);
             this.pictureBox2.DragEnter += new System.Windows.Forms.DragEventHandler(this.pictureBox2_DragEnter);
+            this.pictureBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox2_Paint_1);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label1.Location = new System.Drawing.Point(266, 404);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(560, 86);
@@ -139,8 +147,7 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(1000, 600);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
             this.Controls.Add(this.label1);
             this.Controls.Add(this.UDlabel);
             this.Controls.Add(this.CDlabel);
@@ -149,9 +156,8 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.FNlabel);
             this.Controls.Add(this.panel5);
-            
             this.Name = "UploadFileControl";
-            this.Text = "UploadFileControl";
+            this.Size = new System.Drawing.Size(1000, 600);
             this.panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);

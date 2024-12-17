@@ -208,15 +208,15 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label3.ForeColor = System.Drawing.Color.Cyan;
-            this.label3.Location = new System.Drawing.Point(229, 47);
+            this.label3.Location = new System.Drawing.Point(1122, 47);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(251, 30);
+            this.label3.Size = new System.Drawing.Size(115, 30);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Paragoniarz - Wyslij plik";
+            this.label3.Text = "Wyslij plik";
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
             this.panel4.Location = new System.Drawing.Point(237, 96);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1000, 600);
