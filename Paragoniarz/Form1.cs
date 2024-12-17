@@ -65,6 +65,7 @@ namespace Paragoniarz
                 form2.Location = this.Location;
                 form2.Show();
                 this.Hide();
+                
             }
             else
             {

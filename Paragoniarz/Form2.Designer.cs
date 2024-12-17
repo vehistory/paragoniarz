@@ -42,21 +42,10 @@
             this.sendFile = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.UDlabel = new System.Windows.Forms.Label();
-            this.CDlabel = new System.Windows.Forms.Label();
-            this.button7 = new System.Windows.Forms.Button();
-            this.FSlabel = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.FNlabel = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -154,11 +143,11 @@
             this.button6.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.button6.FlatAppearance.BorderSize = 0;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button6.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.button6.Location = new System.Drawing.Point(0, 659);
+            this.button6.Location = new System.Drawing.Point(0, 649);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(200, 30);
+            this.button6.Size = new System.Drawing.Size(200, 40);
             this.button6.TabIndex = 4;
             this.button6.Text = "Wyloguj";
             this.button6.UseVisualStyleBackColor = true;
@@ -170,11 +159,11 @@
             this.findFile.Dock = System.Windows.Forms.DockStyle.Top;
             this.findFile.FlatAppearance.BorderSize = 0;
             this.findFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.findFile.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.findFile.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.findFile.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.findFile.Location = new System.Drawing.Point(0, 210);
+            this.findFile.Location = new System.Drawing.Point(0, 250);
             this.findFile.Name = "findFile";
-            this.findFile.Size = new System.Drawing.Size(200, 30);
+            this.findFile.Size = new System.Drawing.Size(200, 50);
             this.findFile.TabIndex = 3;
             this.findFile.Text = "Znajdz plik";
             this.findFile.UseVisualStyleBackColor = true;
@@ -186,11 +175,11 @@
             this.yoursFile.Dock = System.Windows.Forms.DockStyle.Top;
             this.yoursFile.FlatAppearance.BorderSize = 0;
             this.yoursFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.yoursFile.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.yoursFile.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.yoursFile.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.yoursFile.Location = new System.Drawing.Point(0, 180);
+            this.yoursFile.Location = new System.Drawing.Point(0, 200);
             this.yoursFile.Name = "yoursFile";
-            this.yoursFile.Size = new System.Drawing.Size(200, 30);
+            this.yoursFile.Size = new System.Drawing.Size(200, 50);
             this.yoursFile.TabIndex = 2;
             this.yoursFile.Text = "Twoje pliki";
             this.yoursFile.UseVisualStyleBackColor = true;
@@ -202,11 +191,11 @@
             this.sendFile.Dock = System.Windows.Forms.DockStyle.Top;
             this.sendFile.FlatAppearance.BorderSize = 0;
             this.sendFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.sendFile.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.sendFile.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.sendFile.ForeColor = System.Drawing.SystemColors.Highlight;
             this.sendFile.Location = new System.Drawing.Point(0, 150);
             this.sendFile.Name = "sendFile";
-            this.sendFile.Size = new System.Drawing.Size(200, 30);
+            this.sendFile.Size = new System.Drawing.Size(200, 50);
             this.sendFile.TabIndex = 1;
             this.sendFile.Text = "Wyślij plik";
             this.sendFile.UseVisualStyleBackColor = true;
@@ -228,99 +217,10 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.panel4.Controls.Add(this.UDlabel);
-            this.panel4.Controls.Add(this.CDlabel);
-            this.panel4.Controls.Add(this.button7);
-            this.panel4.Controls.Add(this.FSlabel);
-            this.panel4.Controls.Add(this.button2);
-            this.panel4.Controls.Add(this.FNlabel);
-            this.panel4.Controls.Add(this.panel5);
             this.panel4.Location = new System.Drawing.Point(237, 96);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1000, 600);
             this.panel4.TabIndex = 4;
-            // 
-            // UDlabel
-            // 
-            this.UDlabel.AutoSize = true;
-            this.UDlabel.Location = new System.Drawing.Point(372, 219);
-            this.UDlabel.Name = "UDlabel";
-            this.UDlabel.Size = new System.Drawing.Size(82, 15);
-            this.UDlabel.TabIndex = 7;
-            this.UDlabel.Text = "Data wgrania: ";
-            // 
-            // CDlabel
-            // 
-            this.CDlabel.AutoSize = true;
-            this.CDlabel.Location = new System.Drawing.Point(372, 160);
-            this.CDlabel.Name = "CDlabel";
-            this.CDlabel.Size = new System.Drawing.Size(98, 15);
-            this.CDlabel.TabIndex = 6;
-            this.CDlabel.Text = "Data utworzenia: ";
-            // 
-            // button7
-            // 
-            this.button7.BackColor = System.Drawing.Color.Transparent;
-            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Location = new System.Drawing.Point(209, 281);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(119, 35);
-            this.button7.TabIndex = 3;
-            this.button7.Text = "Wyslij";
-            this.button7.UseVisualStyleBackColor = false;
-            // 
-            // FSlabel
-            // 
-            this.FSlabel.AutoSize = true;
-            this.FSlabel.Location = new System.Drawing.Point(372, 100);
-            this.FSlabel.Name = "FSlabel";
-            this.FSlabel.Size = new System.Drawing.Size(56, 15);
-            this.FSlabel.TabIndex = 5;
-            this.FSlabel.Text = "Rozmiar: ";
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.Transparent;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(40, 281);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(119, 35);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Usun";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
-            // 
-            // FNlabel
-            // 
-            this.FNlabel.AutoSize = true;
-            this.FNlabel.Location = new System.Drawing.Point(372, 30);
-            this.FNlabel.Name = "FNlabel";
-            this.FNlabel.Size = new System.Drawing.Size(77, 15);
-            this.FNlabel.TabIndex = 4;
-            this.FNlabel.Text = "Nazwa pliku: ";
-            // 
-            // panel5
-            // 
-            this.panel5.AllowDrop = true;
-            this.panel5.Controls.Add(this.pictureBox2);
-            this.panel5.Location = new System.Drawing.Point(27, 24);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(324, 234);
-            this.panel5.TabIndex = 1;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(324, 234);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBox2_DragDrop);
-            this.pictureBox2.DragEnter += new System.Windows.Forms.DragEventHandler(this.pictureBox2_DragEnter);
-            this.pictureBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox2_Paint);
             // 
             // Form2
             // 
@@ -345,10 +245,6 @@
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel3.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
-            this.panel5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -370,13 +266,5 @@
         private System.Windows.Forms.Panel pnlNav;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label UDlabel;
-        private System.Windows.Forms.Label CDlabel;
-        private System.Windows.Forms.Label FSlabel;
-        private System.Windows.Forms.Label FNlabel;
     }
 }
