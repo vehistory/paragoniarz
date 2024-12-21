@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,15 +12,6 @@ namespace Paragoniarz
 {
     public class DatabaseHelper
     {
-        //public static string ConnectionString
-        //{
-        //    get
-        //    {
-        //        return ConfigurationManager.ConnectionStrings["ParagoniarzConnectionString"].ConnectionString;
-        //    }
-        //}
-
-
         
         // Sprawdzanie, czy użytkownik lub email są już zajęte
         public bool IsUsernameOrEmailTaken(string username,string email)

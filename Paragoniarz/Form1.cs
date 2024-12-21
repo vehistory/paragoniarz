@@ -13,42 +13,25 @@ namespace Paragoniarz
 {
     public partial class Form1 : Form
     {
-        [DllImport("Gdi32.dll",EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn
-       (
-           int nLeftRect,
-           int nTopRect,
-           int nRightRect,
-           int nBottomRect,
-           int nWidthEllipse,
-           int nHeightEllipse
-       );
+       
 
         private FormHelper formHelper = new FormHelper();
 
         public Form1()
         {
             InitializeComponent();
-            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0,0,Width,Height,20,20));
-            tbPassword.UseSystemPasswordChar = true;
-            this.StartPosition = FormStartPosition.CenterScreen;
-        }
-        //funckja pozwalajaca na przesuwanie okna
-        private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int HT_CAPTION = 0x2;
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd,int Msg,int wParam,int lParam);
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern bool ReleaseCapture();
-        private void Form1_MouseDown(object sender,MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle,WM_NCLBUTTONDOWN,HT_CAPTION,0);
-            }
-        }
 
+            tbPassword.UseSystemPasswordChar = true;
+           
+            // Zaokrąglij rogi okna 
+            WindowHelper.SetWindowRoundCorners(this,20);
+
+            // Umożliw przesuwanie okna 
+             WindowHelper.EnableWindowDragging(panel1, this);
+
+        }
+        
+       
 
         private void pictureBox4_Click(object sender,EventArgs e)
         {
@@ -115,14 +98,20 @@ namespace Paragoniarz
 
         }
 
-        private void tbPassword_KeyPress(object sender,KeyPressEventArgs e)
-        {
+      
 
+        private void linkLabel1_MouseClick(object sender,MouseEventArgs e)
+        {
+            ForgottenPass forgottenPass = new ForgottenPass();
+            forgottenPass.StartPosition = FormStartPosition.Manual;
+            int x = this.Location.X + (this.Width - forgottenPass.Width) / 2;
+            int y = this.Location.Y + (this.Height - forgottenPass.Height) / 2;
+            forgottenPass.Location = new Point(x,y);
+            forgottenPass.FormClosed += (s,args) => this.Show();
+            this.Hide();
+            forgottenPass.Show();
         }
 
-        private void tbUserName_KeyPress(object sender,KeyPressEventArgs e)
-        {
-
-        }
+       
     }
 }

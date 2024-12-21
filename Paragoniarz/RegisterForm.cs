@@ -14,42 +14,21 @@ namespace Paragoniarz
 {
     public partial class RegisterForm : Form
     {
-        [DllImport("Gdi32.dll",EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn
-       (
-           int nLeftRect,
-           int nTopRect,
-           int nRightRect,
-           int nBottomRect,
-           int nWidthEllipse,
-           int nHeightEllipse
-       );
-
-        //private Dictionary<string,Tuple<string,string>> users;
+       
+        
         public RegisterForm()
         {
             InitializeComponent();
-            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0,0,Width,Height,20,20));
+            // Zaokrąglij rogi okna 
+            WindowHelper.SetWindowRoundCorners(this,20);
+            // Umożliw przesuwanie okna 
+            WindowHelper.EnableWindowDragging(panel1,this);
             passBox.UseSystemPasswordChar = true;
             rePassBox.UseSystemPasswordChar = true;
 
         }
 
-        //funckja pozwalajaca na przesuwanie okna
-        private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int HT_CAPTION = 0x2;
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd,int Msg,int wParam,int lParam);
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        private static extern bool ReleaseCapture();
-        private void RegisterForm_MouseDown(object sender,MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle,WM_NCLBUTTONDOWN,HT_CAPTION,0);
-            }
-        }
+       
 
 
         private FormHelper formHelper = new FormHelper();
@@ -67,18 +46,6 @@ namespace Paragoniarz
         }
 
 
-
-        //obsluga linkuLabel powrot do logowania
-        private void linkLabel1_LinkClicked(object sender,LinkLabelLinkClickedEventArgs e)
-        {
-            Form1 form1 = new Form1();
-            form1.StartPosition = FormStartPosition.Manual;
-            int x = this.Location.X + (this.Width - form1.Width) / 2;
-            int y = this.Location.Y + (this.Height - form1.Height) / 2;
-            form1.Location = new Point(x,y);
-            form1.Show();
-            this.Close();
-        }
 
         //obsluga butonna "x" do zamkniecia okna
         private void exitButton_Click(object sender,EventArgs e)
@@ -135,9 +102,6 @@ namespace Paragoniarz
         }
 
        
-
-
-
         private void Field_KeyDown(object sender,KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -146,7 +110,15 @@ namespace Paragoniarz
             }
         }
 
-
-       
+        private void linkLabel1_MouseClick(object sender,MouseEventArgs e)
+        {
+            Form1 form1 = new Form1();
+            form1.StartPosition = FormStartPosition.Manual;
+            int x = this.Location.X + (this.Width - form1.Width) / 2;
+            int y = this.Location.Y + (this.Height - form1.Height) / 2;
+            form1.Location = new Point(x,y);
+            form1.Show();
+            this.Hide();
+        }
     }
 }
