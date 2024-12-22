@@ -116,20 +116,19 @@ namespace Paragoniarz
                     labelNazwa.ForeColor = Color.White;
 
 
-                    // Kolumna 1: Opis (jeśli nie masz danych, ustaw pustą wartość)
-                    Label labelOpis = new Label();
-                    labelOpis.Text = ""; // Zakładamy, że brak opisu w bazie
-                    labelOpis.TextAlign = ContentAlignment.MiddleCenter;
-                    tableLayoutPanel1.Controls.Add(labelOpis,1,tableLayoutPanel1.RowCount - 1);
-                    labelOpis.ForeColor = Color.White;
-                   
-
-                    // Kolumna 2: Data dodania (timestamp)
+                    // Kolumna 1: Data dodania (timestamp)
                     Label labelData = new Label();
                     labelData.Text = row["timestamp"].ToString(); // Możesz dodać formatowanie daty, jeśli potrzeba
                     labelData.TextAlign = ContentAlignment.MiddleCenter;
-                    tableLayoutPanel1.Controls.Add(labelData,2,tableLayoutPanel1.RowCount - 1);
+                    tableLayoutPanel1.Controls.Add(labelData,1,tableLayoutPanel1.RowCount - 1);
                     labelData.ForeColor = Color.White;
+
+                    // Kolumna 2: Opis (jeśli nie masz danych, ustaw pustą wartość)
+                    Label labelOpis = new Label();
+                    labelOpis.Text = ""; // Zakładamy, że brak opisu w bazie
+                    labelOpis.TextAlign = ContentAlignment.MiddleCenter;
+                    tableLayoutPanel1.Controls.Add(labelOpis,2,tableLayoutPanel1.RowCount - 1);
+                    labelOpis.ForeColor = Color.White;
 
 
                     // Kolumna 3: Załączony plik (URL)
@@ -168,11 +167,7 @@ namespace Paragoniarz
             {
                 MessageBox.Show("Brak wyników dla podanych kryteriów.");
             }
-            //label2.ForeColor = Color.White;
-            //label3.ForeColor = Color.White;
-            //label4.ForeColor = Color.White;
-            //label4.ForeColor = Color.White;
-            //label15.ForeColor = Color.White;
+           
 
         }
 

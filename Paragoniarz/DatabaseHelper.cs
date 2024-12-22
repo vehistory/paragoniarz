@@ -6,16 +6,13 @@ using System.Text;
 using System.Windows.Forms;
 
 
-
-
-
 namespace Paragoniarz
 {
     public class DatabaseHelper
     {
 
         // Sprawdzanie, czy użytkownik lub email są już zajęte
-        public bool IsUsernameOrEmailTaken(string username,string email)
+        public bool IsUsernameOrEmailTaken(string username,string email)  
         {
             using (var connection = DatabaseConnection.Instance.CreateConnection())
             {
@@ -90,8 +87,6 @@ namespace Paragoniarz
             }
         }
 
-        // Walidacja użytkownika
-        // Walidacja użytkownika i pobieranie idUser
         // Metoda ValidateUser zwraca teraz krotkę (idUser, username)
         public int? ValidateUser(string username,string password)
         {
@@ -130,30 +125,6 @@ namespace Paragoniarz
             }
         }
 
-
-
-
-
-
-        //// Metoda do pobierania danych z bazy danych
-        //public DataTable FetchData(string nazwa,string opis,string osoba,DateTime dataOd,DateTime dataDo)
-        //{
-        //    string query = "SELECT * FROM YourTable WHERE nazwa = @nazwa AND opis = @opis AND osoba = @osoba AND data_od >= @data_od AND data_do <= @data_do";
-
-        //    using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
-        //    {
-        //        SqlDataAdapter dataAdapter = new SqlDataAdapter(query,conn);
-        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@nazwa",nazwa);
-        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@opis",opis);
-        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@osoba",osoba);
-        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@data_od",dataOd);
-        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@data_do",dataDo);
-
-        //        DataTable dataTable = new DataTable();
-        //        dataAdapter.Fill(dataTable);
-        //        return dataTable;
-        //    }
-        //}
 
         // Metoda do pobierania danych z bazy danych
         public DataTable GetDataFromQuery(string query)
