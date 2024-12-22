@@ -3,13 +3,18 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Paragoniarz 
+namespace Paragoniarz
 {
     public static class WindowHelper //NIEDZIALA
     {
         // Import funkcji do zaokrąglania rogów okna
         [DllImport("Gdi32.dll",EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(int nLeftRect,int nTopRect,int nRightRect,int nBottomRect,int nWidthEllipse,int nHeightEllipse);
+        public static void SetWindowRoundCorners(Control control,int cornerRadius)
+        {
+            control.Region = Region.FromHrgn(CreateRoundRectRgn(0,0,control.Width,control.Height,cornerRadius,cornerRadius));
+          
+        }
 
         // Import funkcji do przesuwania okna
         private const int WM_NCLBUTTONDOWN = 0xA1;
@@ -28,7 +33,7 @@ namespace Paragoniarz
         }
 
         // Metoda do obsługi przesuwania okna
-        public static void EnableWindowDragging(Control control, Form form)
+        public static void EnableWindowDragging(Control control,Form form)
         {
             control.MouseDown += (sender,e) =>
             {

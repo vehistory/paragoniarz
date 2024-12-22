@@ -1,37 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
 namespace Paragoniarz
 {
     public partial class Form1 : Form
     {
-       
+
 
         private FormHelper formHelper = new FormHelper();
 
         public Form1()
         {
             InitializeComponent();
-
+            this.StartPosition = FormStartPosition.CenterScreen;
             tbPassword.UseSystemPasswordChar = true;
-           
+
             // Zaokrąglij rogi okna 
             WindowHelper.SetWindowRoundCorners(this,20);
 
             // Umożliw przesuwanie okna 
-             WindowHelper.EnableWindowDragging(panel1, this);
+            WindowHelper.EnableWindowDragging(panel1,this);
 
         }
-        
-       
+
+
 
         private void pictureBox4_Click(object sender,EventArgs e)
         {
@@ -65,6 +58,7 @@ namespace Paragoniarz
                 form2.Location = this.Location;
                 form2.Show();
                 this.Hide();
+
             }
             else
             {
@@ -92,13 +86,13 @@ namespace Paragoniarz
             int y = this.Location.Y + (this.Height - registerForm.Height) / 2;
             registerForm.Location = new Point(x,y);
             registerForm.FormClosed += (s,args) => this.Show();
-            
+
             this.Hide();
             registerForm.Show();
 
         }
 
-      
+
 
         private void linkLabel1_MouseClick(object sender,MouseEventArgs e)
         {
@@ -112,6 +106,6 @@ namespace Paragoniarz
             forgottenPass.Show();
         }
 
-       
+
     }
 }

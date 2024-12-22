@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -14,8 +7,8 @@ namespace Paragoniarz
 {
     public partial class RegisterForm : Form
     {
-       
-        
+
+
         public RegisterForm()
         {
             InitializeComponent();
@@ -28,7 +21,7 @@ namespace Paragoniarz
 
         }
 
-       
+
 
 
         private FormHelper formHelper = new FormHelper();
@@ -86,7 +79,7 @@ namespace Paragoniarz
             }
 
 
-           
+
             dbHelper.InsertUser(username,email,password);
 
 
@@ -101,7 +94,7 @@ namespace Paragoniarz
             this.Hide();
         }
 
-       
+
         private void Field_KeyDown(object sender,KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

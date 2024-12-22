@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 
 namespace Paragoniarz
@@ -10,11 +10,11 @@ namespace Paragoniarz
     internal class FormHelper
     {
 
-        
+
         private bool isPasswordVisible = false;
 
 
-        public bool IsUsernameOrEmailTaken(string username,string email,Dictionary<string,Tuple<string,string>>users)
+        public bool IsUsernameOrEmailTaken(string username,string email,Dictionary<string,Tuple<string,string>> users)
         {
             // Sprawdzamy, czy nazwa użytkownika już istnieje
             if (users.ContainsKey(username))
@@ -36,7 +36,7 @@ namespace Paragoniarz
         }
 
 
-       
+
 
         public void TogglePasswordVisibility(TextBox tbPassword,PictureBox pictureBox,Image visibleImage,Image hiddenImage)
         {

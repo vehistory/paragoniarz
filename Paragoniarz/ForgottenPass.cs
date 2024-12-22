@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Paragoniarz
@@ -14,7 +7,7 @@ namespace Paragoniarz
     public partial class ForgottenPass : Form
     {
 
-       
+
         public ForgottenPass()
         {
             InitializeComponent();
@@ -25,7 +18,7 @@ namespace Paragoniarz
             WindowHelper.EnableWindowDragging(panel2,this);
             this.StartPosition = FormStartPosition.CenterScreen;
         }
-       
+
 
         private void linkLabel2_LinkClicked(object sender,LinkLabelLinkClickedEventArgs e)
         {
