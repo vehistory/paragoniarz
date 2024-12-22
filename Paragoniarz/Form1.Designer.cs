@@ -63,7 +63,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1280, 31);
             this.panel1.TabIndex = 0;
-            
             // 
             // label2
             // 
@@ -153,7 +152,7 @@
             this.linkLabel2.Location = new System.Drawing.Point(216, 370);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(108, 15);
-            this.linkLabel2.TabIndex = 8;
+            this.linkLabel2.TabIndex = 5;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Stworz nowe konto";
             this.linkLabel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.linkLabel2_MouseClick);
@@ -166,7 +165,7 @@
             this.linkLabel1.Location = new System.Drawing.Point(216, 290);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(113, 15);
-            this.linkLabel1.TabIndex = 7;
+            this.linkLabel1.TabIndex = 3;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Zapomnialem Hasla";
             this.linkLabel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.linkLabel1_MouseClick);
@@ -188,7 +187,7 @@
             this.button2.Location = new System.Drawing.Point(210, 321);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(119, 35);
-            this.button2.TabIndex = 1;
+            this.button2.TabIndex = 4;
             this.button2.Text = "Zaloguj";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -198,7 +197,7 @@
             this.tbPassword.Location = new System.Drawing.Point(169, 253);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(212, 23);
-            this.tbPassword.TabIndex = 5;
+            this.tbPassword.TabIndex = 2;
             this.tbPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress);
             // 
             // label3
@@ -227,7 +226,7 @@
             this.tbUserName.Location = new System.Drawing.Point(169, 192);
             this.tbUserName.Name = "tbUserName";
             this.tbUserName.Size = new System.Drawing.Size(212, 23);
-            this.tbUserName.TabIndex = 2;
+            this.tbUserName.TabIndex = 1;
             this.tbUserName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress);
             // 
             // pictureBox3

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Azure.Storage.Blobs;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -126,6 +128,51 @@ namespace Paragoniarz
         }
 
 
+        // Metoda do wykonywania zapytań SQL
+        public void ExecuteQuery(string query)
+        {
+            // Pobieranie instancji połączenia z bazy danych
+            using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
+            {
+                try
+                {
+                    // Otwarcie połączenia
+                    conn.Open();
+
+                    // Tworzenie obiektu SqlCommand do wykonania zapytania
+                    SqlCommand cmd = new SqlCommand(query,conn);
+
+                    // Wykonanie zapytania i zwrócenie liczby zmodyfikowanych wierszy
+                    int result = cmd.ExecuteNonQuery();
+
+                    // Sprawdzenie rezultatu zapytania
+                    if (result > 0)
+                    {
+                        MessageBox.Show("Operacja zakończona pomyślnie.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Operacja zakończona niepowodzeniem.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Obsługa błędu
+                    MessageBox.Show($"Błąd podczas wykonywania zapytania: {ex.Message}");
+                }
+                finally
+                {
+                    // Zamykanie połączenia (jest to obsługiwane automatycznie przez using)
+                    if (conn.State == ConnectionState.Open)
+                    {
+                        conn.Close();
+                    }
+                }
+            }
+        }
+
+
+
         // Metoda do pobierania danych z bazy danych
         public DataTable GetDataFromQuery(string query)
         {
@@ -143,5 +190,69 @@ namespace Paragoniarz
                 }
             }
         }
+
+
+        public string GetFileNameFromDatabase(int userId)
+        {
+            string query = "SELECT fileName FROM dbo.Files WHERE userId = @userId"; // Załóżmy, że masz tabelę 'Files'
+
+            using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand(query,conn);
+                    cmd.Parameters.AddWithValue("@userId",userId);
+
+                    object result = cmd.ExecuteScalar(); // Zwraca tylko jedną wartość (nazwa pliku)
+
+                    if (result != null)
+                    {
+                        return result.ToString(); // Zwraca nazwę pliku
+                    }
+                    else
+                    {
+                        return null; // Zwraca null, jeśli nie znaleziono pliku
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Błąd podczas pobierania nazwy pliku: {ex.Message}");
+                    return null;
+                }
+            }
+        }
+
+
+
+        public async Task DeleteFileFromBlobStorage(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                MessageBox.Show("Nie podano nazwy pliku do usunięcia.");
+                return;
+            }
+
+            // Wyszukiwanie i usuwanie pliku z Azure Blob Storage
+            string connectionString = DatabaseConnection.Instance.CreateBlobStorageConnection().ToString();
+            string containerName = "documents";
+
+            BlobContainerClient containerClient = new BlobContainerClient(connectionString,containerName);
+            BlobClient blobClient = containerClient.GetBlobClient(fileName);
+
+            try
+            {
+                // Usuwanie pliku z Blob Storage
+                await blobClient.DeleteIfExistsAsync();
+                MessageBox.Show($"Plik {fileName} został pomyślnie usunięty.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Błąd podczas usuwania pliku z Azure: {ex.Message}");
+            }
+        }
+
+
+
     }
 }

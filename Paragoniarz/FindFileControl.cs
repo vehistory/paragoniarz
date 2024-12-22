@@ -1,9 +1,11 @@
 ﻿using System.Drawing.Drawing2D;
 using System.Drawing;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Data;
 using System;
+using Azure.Storage.Blobs;  
+using System.Threading.Tasks;
+
 
 namespace Paragoniarz
 {
@@ -16,8 +18,6 @@ namespace Paragoniarz
             InitializeComponent();
             _userId = userId;
             tableLayoutPanel1.Controls.Clear();
-          
-
             WindowHelper.SetWindowRoundCorners(panel6,10);
 
         }
@@ -59,8 +59,6 @@ namespace Paragoniarz
         
         private void button3_Click(object sender,EventArgs e)
         {
-
-            
             // Pobierz dane z TextBoxów
             string nazwa = textBox8.Text;
             string opis = textBox7.Text; // Możesz użyć tego później, jeśli chcesz dodać opcję opisu
@@ -89,24 +87,15 @@ namespace Paragoniarz
 
             if (result.Rows.Count > 0)
             {
-               
-
-
-                // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
+               // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
                 tableLayoutPanel1.Controls.Clear();
                 tableLayoutPanel1.RowCount = 1;  // Resetowanie liczby wierszy do 1
-
-
-                 // Wyłączamy układanie, aby przyspieszyć dodawanie kontrolek
                 tableLayoutPanel1.SuspendLayout();
-
-               
 
                 // Iterujemy przez wszystkie wiersze wyników
                 foreach (DataRow row in result.Rows)
                 {
-                    // Dodajemy nowy wiersz
-                    //tableLayoutPanel1.RowCount++;
+                    
 
                     // Kolumna 0: Nazwa pliku
                     Label labelNazwa = new Label();
@@ -125,7 +114,7 @@ namespace Paragoniarz
 
                     // Kolumna 2: Opis (jeśli nie masz danych, ustaw pustą wartość)
                     Label labelOpis = new Label();
-                    labelOpis.Text = ""; // Zakładamy, że brak opisu w bazie
+                    labelOpis.Text = "3 kolumna"; // Zakładamy, że brak opisu w bazie
                     labelOpis.TextAlign = ContentAlignment.MiddleCenter;
                     tableLayoutPanel1.Controls.Add(labelOpis,2,tableLayoutPanel1.RowCount - 1);
                     labelOpis.ForeColor = Color.White;
@@ -141,17 +130,24 @@ namespace Paragoniarz
 
                     // Kolumna 4: Rozmiar (zakładamy, że nie masz danych o rozmiarze w bazie)
                     Label labelRozmiar = new Label();
-                    labelRozmiar.Text = ""; // Możesz uzupełnić to danymi o rozmiarze, jeśli masz je w bazie
+                    labelRozmiar.Text = "5 kolumna"; // Możesz uzupełnić to danymi o rozmiarze, jeśli masz je w bazie
                     labelRozmiar.TextAlign = ContentAlignment.MiddleCenter;
                     tableLayoutPanel1.Controls.Add(labelRozmiar,4,tableLayoutPanel1.RowCount - 1);
                     labelRozmiar.ForeColor = Color.White;
 
 
-                    // Kolumna 5: Pusta kolumna (na razie)
-                    Label labelPusta = new Label();
-                    labelPusta.Text = ""; // Pusty label, może być na przykład do edycji w przyszłości
-                    tableLayoutPanel1.Controls.Add(labelPusta,5,tableLayoutPanel1.RowCount - 1);
-                    labelPusta.ForeColor = Color.White;
+
+                    Button deleteButton = new Button();
+                    deleteButton.BackgroundImage = Properties.Resources.icons8_trash_26; // Ustawienie obrazka
+                    deleteButton.BackgroundImageLayout = ImageLayout.Center; // Rozciągnięcie obrazka
+                    deleteButton.FlatStyle = FlatStyle.Flat; // Usunięcie ramki
+                    deleteButton.Size = new Size(31,33); // Dopasuj rozmiar przycisku
+                    deleteButton.Cursor = Cursors.Hand;  // Zmieniamy kursor na rękę
+                    deleteButton.Tag = row["original_name"]; // Przypisanie Tag z nazwą pliku (będzie użyteczne przy usuwaniu)
+                    deleteButton.Click += button2_Click; // Podpięcie zdarzenia kliknięcia
+                    tableLayoutPanel1.Controls.Add(deleteButton,5,tableLayoutPanel1.RowCount - 1);
+
+                  
 
 
                     // Dodajemy kolejny wiersz
@@ -171,16 +167,90 @@ namespace Paragoniarz
 
         }
 
-        private void label4_ForeColorChanged(object sender,EventArgs e)
-        {
-            label4.ForeColor = Color.White;
-        }
+        
 
         private void button1_Click(object sender,EventArgs e)
         {
             // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.RowCount = 1;  // Resetowanie liczby wierszy do 1
+        }
+
+
+
+        public async Task DeleteFileFromBlobStorage(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                MessageBox.Show("Nie znaleziono pliku do usunięcia.");
+                return;
+            }
+
+            // Tworzymy obiekt BlobContainerClient
+            BlobContainerClient containerClient = DatabaseConnection.Instance.CreateBlobStorageConnection();
+
+            try
+            {
+                // Uzyskujemy obiekt BlobClient dla pliku, który chcemy usunąć
+                BlobClient blobClient = containerClient.GetBlobClient(fileName);
+
+                // Usuwamy plik
+                await blobClient.DeleteIfExistsAsync();
+
+                // Powiadamiamy użytkownika o sukcesie
+                MessageBox.Show($"Plik {fileName} został pomyślnie usunięty.");
+            }
+            catch (Exception ex)
+            {
+                // Obsługuje wyjątek w przypadku błędu
+                MessageBox.Show($"Błąd podczas usuwania pliku z Azure: {ex.Message}");
+            }
+        }
+
+        //public async Task DeleteFileFromBlobStorage(string fileName)
+        //{
+        //    if (string.IsNullOrEmpty(fileName))
+        //    {
+        //        MessageBox.Show("Nie znaleziono pliku do usunięcia.");
+        //        return;
+        //    }
+
+        //    var connectionString = DatabaseConnection.Instance.CreateBlobStorageConnection();
+        //    Console.WriteLine(connectionString);
+        //    string containerName = "documents";
+
+
+
+        //    try
+        //    {
+        //        BlobContainerClient containerClient = new BlobContainerClient(connectionString,containerName);
+        //        BlobClient blobClient = containerClient.GetBlobClient(fileName);
+        //        await blobClient.DeleteIfExistsAsync();
+        //        MessageBox.Show($"Plik {fileName} został pomyślnie usunięty.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Błąd podczas usuwania pliku z Azure: {ex.Message}");
+        //    }
+        //}
+
+
+
+
+
+
+        private async void button2_Click(object sender,EventArgs e)
+        {
+            // Sprawdzamy, czy sender to przycisk
+            Button deleteButton = sender as Button;
+
+            if (deleteButton != null)
+            {
+                string fileName = deleteButton.Tag.ToString();  // Pobieramy nazwę pliku z Tag
+
+                // Wywołanie funkcji usuwania pliku
+                await DeleteFileFromBlobStorage(fileName);
+            }
         }
     }
 }

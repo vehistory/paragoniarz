@@ -20,17 +20,21 @@ namespace Paragoniarz
 
        
 
-        private void AddLabelToTable(int columnIndex,string text)
-        {
-            Label label = new Label();
-            label.Text = string.IsNullOrEmpty(text) ? "Brak danych" : text;  // Ustawiamy tekst, jeśli brak danych, wyświetlamy "Brak danych"
-            label.ForeColor = Color.White;  // Ustawiamy kolor tekstu (możesz dostosować)
-            label.TextAlign = ContentAlignment.MiddleCenter;  // Wyrównanie tekstu
-            label.BackColor = Color.Transparent;  // Tło białe
+       
 
-            // Dodajemy etykietę do odpowiedniej kolumny
-            _tableLayoutPanel.Controls.Add(label,columnIndex,_tableLayoutPanel.RowCount - 1);
+
+        public void RefreshTable()
+        {
+            //TODO: Wpisac zapytanie poprawne
+            // Pobierz dane z bazy (wstaw swoje zapytanie)
+            string query = "SELECT * FROM YourTable";  // Przykładowe zapytanie SQL
+            DatabaseHelper dbConnection = new DatabaseHelper();
+            DataTable result = dbConnection.GetDataFromQuery(query);
+
+            // Ponownie budujemy tabelę z nowymi danymi
+            PopulateTableWithData(result);
         }
+
 
         public void PopulateTableWithData(DataTable result)
         {
@@ -47,16 +51,15 @@ namespace Paragoniarz
                     string zalaczonyPlik = row["file_url"].ToString();
                     string rozmiar = row["file_size"].ToString(); // Załóżmy, że masz kolumnę "file_size" w bazie
 
-                    // Dodajemy dane do odpowiednich komórek w tabeli
-                    AddLabelToTable(0,nazwa);           // Kolumna 0: Nazwa
-                    AddLabelToTable(1,data);            // Kolumna 1: Data
-                    AddLabelToTable(2,"xcvbxcvb");              // Kolumna 2: Opis (na razie pusta)
-                    AddLabelToTable(3,zalaczonyPlik);   // Kolumna 3: Załączony plik (URL)
-                    AddLabelToTable(4,rozmiar);         // Kolumna 4: Rozmiar
-                    AddLabelToTable(5,"xcvb");              // Kolumna 5: Pusta kolumna
+
+
+
+
                 }
             }
         }
+
+       
 
     }
 }
