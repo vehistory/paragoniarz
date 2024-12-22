@@ -91,11 +91,16 @@ namespace Paragoniarz
         }
 
         // Walidacja użytkownika
-        public bool ValidateUser(string username,string password)
+        // Walidacja użytkownika i pobieranie idUser
+        // Metoda ValidateUser zwraca teraz krotkę (idUser, username)
+        public int? ValidateUser(string username,string password)
         {
             string hashedPassword = HashPassword(password);
 
-            string query = "SELECT COUNT(*) FROM dbo.Users WHERE username = @username AND password = @password";
+            // Zapytanie SQL teraz zwraca idUser
+            string query = "SELECT id FROM dbo.Users WHERE username = @username AND password = @password";
+            
+
 
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
@@ -106,16 +111,27 @@ namespace Paragoniarz
                     cmd.Parameters.AddWithValue("@username",username);
                     cmd.Parameters.AddWithValue("@password",hashedPassword);
 
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    return count > 0;
+                    object result = cmd.ExecuteScalar(); // Zwraca pojedynczy wynik, idUser
+
+                    if (result != null)
+                    {
+                        return Convert.ToInt32(result); // Zwraca idUser, jeśli użytkownik istnieje
+                    }
+                    else
+                    {
+                        return null; // Zwraca null, jeśli nie znaleziono użytkownika
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Błąd podczas logowania: {ex.Message}");
-                    return false;
+                    return null;
                 }
             }
         }
+
+
+
 
 
 

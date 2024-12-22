@@ -50,21 +50,23 @@ namespace Paragoniarz
             }
 
             DatabaseHelper dbHelper = new DatabaseHelper();
+            int? userId = dbHelper.ValidateUser(enteredUsername,enteredPassword);
 
-            if (dbHelper.ValidateUser(enteredUsername,enteredPassword))
+            if (userId.HasValue)
             {
-                Form2 form2 = new Form2(enteredUsername);
+                // Przekazujemy userId do Form2
+                Form2 form2 = new Form2(userId.Value,enteredUsername); // Przekazujemy userId zamiast username
                 form2.StartPosition = FormStartPosition.Manual;
                 form2.Location = this.Location;
                 form2.Show();
                 this.Hide();
-
             }
             else
             {
                 MessageBox.Show("Błędne dane logowania!");
             }
         }
+
 
 
 

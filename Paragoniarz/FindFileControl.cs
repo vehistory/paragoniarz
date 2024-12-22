@@ -9,16 +9,18 @@ namespace Paragoniarz
 {
     public partial class FindFileControl : UserControl
     {
-        public FindFileControl()
+
+        private int _userId;
+        public FindFileControl(int userId)
         {
             InitializeComponent();
+            _userId = userId;
 
-            
             WindowHelper.SetWindowRoundCorners(panel6,10);
 
         }
 
-
+        // rysowanie gradientu na panelu
         private void gradientPanel(object sender,PaintEventArgs e, Panel panel)
         {
             // Definicja kolorów dla gradientu
@@ -47,8 +49,8 @@ namespace Paragoniarz
         {
             
                 tablePanel.AutoScroll = true;
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-           tablePanel.Controls.Add(tableLayoutPanel1);
+                tableLayoutPanel1.Dock = DockStyle.Fill;
+                tablePanel.Controls.Add(tableLayoutPanel1);
 
         }
 
@@ -74,7 +76,7 @@ namespace Paragoniarz
 
             // Tworzymy instancję klasy odpowiedzialnej za zapytanie
             FinderManager finderManager = new FinderManager();
-            string query = finderManager.CreateSearchQuery(nazwa,opis,osoba,dataOd,dataDo);
+            string query = finderManager.CreateSearchQuery(_userId,nazwa,dataOd,dataDo);
 
             // Wysyłamy zapytanie do bazy danych
             DatabaseHelper dbConnection = new DatabaseHelper();

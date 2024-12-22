@@ -8,40 +8,34 @@ namespace Paragoniarz
 {
     internal class FinderManager
     {
-        //Metoda do tworzenia zapytania SQL na podstawie podanych parametrów
-        public string CreateSearchQuery(string nazwa,string opis,string osoba,DateTime? dataOd,DateTime? dataDo)
+        // Metoda do tworzenia zapytania SQL na podstawie podanych parametrów i idUser
+        public string CreateSearchQuery(int userId,string nazwa,DateTime? dataOd,DateTime? dataDo)
         {
-            // Budujemy podstawowe zapytanie SQL
-            string query = "SELECT * FROM YourTable WHERE 1=1";
+            // Budujemy podstawowe zapytanie SQL - szukamy plików powiązanych z danym userId
+            string query = $"SELECT file_url, original_name, timestamp FROM dbo.files WHERE user_id = {userId}";
 
-            // Sprawdzamy, czy pola nie są puste i dodajemy warunki do zapytania
+            // Dodajemy filtrację po nazwie pliku (original_name)
             if (!string.IsNullOrEmpty(nazwa))
             {
-                query += $" AND Nazwa LIKE '%{nazwa}%'";
+                query += $" AND original_name LIKE '%{nazwa}%'";
             }
 
-            if (!string.IsNullOrEmpty(opis))
-            {
-                query += $" AND Opis LIKE '%{opis}%'";
-            }
-
-            if (!string.IsNullOrEmpty(osoba))
-            {
-                query += $" AND Osoba LIKE '%{osoba}%'";
-            }
-
+            // Dodajemy warunki dla daty
             if (dataOd.HasValue)
             {
-                query += $" AND Data >= '{dataOd.Value.ToString("yyyy-MM-dd")}'";
+                query += $" AND timestamp >= '{dataOd.Value.ToString("yyyy-MM-dd")}'";
             }
 
             if (dataDo.HasValue)
             {
-                query += $" AND Data <= '{dataDo.Value.ToString("yyyy-MM-dd")}'";
+                query += $" AND timestamp <= '{dataDo.Value.ToString("yyyy-MM-dd")}'";
             }
 
             return query;
         }
+
+
+
 
 
 
