@@ -27,8 +27,9 @@ namespace Paragoniarz
             UDlabel.Text = "Data wgrania: ";
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
 
-        }        private void pictureBox2_DragDrop(object sender,DragEventArgs e)
+        private void pictureBox2_DragDrop(object sender,DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -36,7 +37,10 @@ namespace Paragoniarz
 
                 if (files.Length > 0)
                 {
-                    string filePath = files[0]; // Pierwszy plik                    FileInfo fileInfo = new FileInfo(filePath);
+                    string filePath = files[0]; // Pierwszy plik
+
+
+                    FileInfo fileInfo = new FileInfo(filePath);
 
                     long maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
                     if (fileInfo.Length > maxSizeInBytes)
@@ -45,7 +49,9 @@ namespace Paragoniarz
                         return;
                     }
 
-                    string extension = Path.GetExtension(filePath).ToLower();                    // Sprawdzamy, czy jest to plik graficzny
+                    string extension = Path.GetExtension(filePath).ToLower();
+
+                    // Sprawdzamy, czy jest to plik graficzny
                     if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" ||
                         extension == ".gif" || extension == ".bmp" || extension == ".tiff")
                     {
@@ -67,7 +73,9 @@ namespace Paragoniarz
                             FNlabel.Text = "Nazwa pliku: " + metadata.FileName;
                             FSlabel.Text = "Rozmiar pliku: " + (metadata.FileSize / 1024) + " KB"; // Konwersja na KB
                             CDlabel.Text = "Data utworzenia: " + metadata.CreationDate.ToString();
-                            UDlabel.Text = "Data wgrania: " + metadata.UploadDate.ToString();                        }
+                            UDlabel.Text = "Data wgrania: " + metadata.UploadDate.ToString();
+
+                        }
                         catch (Exception ex)
                         {
                             MessageBox.Show("Nie udało się załadować obrazu: " + ex.Message);

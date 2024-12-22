@@ -43,5 +43,8 @@ namespace Paragoniarz
                     SendMessage(form.Handle,WM_NCLBUTTONDOWN,HT_CAPTION,0);
                 }
             };
-        }    }
+        }
+
+
+    }
 }

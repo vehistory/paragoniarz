@@ -4,8 +4,13 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 
 public static class UserManager
-{    public static bool ValidateUser(string username,string password)
-    {        string query = "SELECT COUNT(*) FROM Users WHERE Username = @username AND Password = @password";
+{
+
+
+    public static bool ValidateUser(string username,string password)
+    {
+
+        string query = "SELECT COUNT(*) FROM Users WHERE Username = @username AND Password = @password";
 
         using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
         {
@@ -76,4 +81,6 @@ public static class UserManager
                 return false;
             }
         }
-    }}
+    }
+
+}

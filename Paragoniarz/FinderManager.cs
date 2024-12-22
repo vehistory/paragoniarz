@@ -32,5 +32,7 @@ namespace Paragoniarz
             }
 
             return query;
-        }    }
+        }
+
+    }
 }

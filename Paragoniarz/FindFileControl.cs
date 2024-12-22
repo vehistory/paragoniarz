@@ -4,11 +4,13 @@ using System.Windows.Forms;
 using System.Data;
 using System;
 using Azure.Storage.Blobs;  
-using System.Threading.Tasks;namespace Paragoniarz
+using System.Threading.Tasks;
+
+
+namespace Paragoniarz
 {
     public partial class FindFileControl : UserControl
     {
-
         private int _userId;
         public FindFileControl(int userId)
         {
@@ -18,7 +20,6 @@ using System.Threading.Tasks;namespace Paragoniarz
             WindowHelper.SetWindowRoundCorners(panel6,10);
 
         }
-
         // rysowanie gradientu na panelu
         private void gradientPanel(object sender,PaintEventArgs e, Panel panel)
         {
@@ -36,7 +37,6 @@ using System.Threading.Tasks;namespace Paragoniarz
                 e.Graphics.FillRectangle(brush,panel.ClientRectangle);
             }
         }
-
         private void panel6_Paint(object sender,PaintEventArgs e)
         {
             gradientPanel(sender,e,panel6);
@@ -50,8 +50,6 @@ using System.Threading.Tasks;namespace Paragoniarz
                 tablePanel.Controls.Add(tableLayoutPanel1);
 
         }
-
-        
         private void button3_Click(object sender,EventArgs e)
         {
             // Pobierz dane z TextBoxów
@@ -140,19 +138,14 @@ using System.Threading.Tasks;namespace Paragoniarz
                     tableLayoutPanel1.RowCount++;
 
                 }
-
                 // Po zakończeniu dodawania wszystkich kontrolek wznawiamy układ
                 tableLayoutPanel1.ResumeLayout();
-
             }
             else
             {
                 MessageBox.Show("Brak wyników dla podanych kryteriów.");
             }
-           
-
         }
-
         private void button1_Click(object sender,EventArgs e)
         {
             // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
@@ -187,7 +180,8 @@ using System.Threading.Tasks;namespace Paragoniarz
                 // Obsługuje wyjątek w przypadku błędu
                           MessageBox.Show($"Błąd podczas usuwania pliku z Azure: {ex.Message}");
             }          
-        }         private async void button2_Click(object sender,EventArgs e)
+        } 
+        private async void button2_Click(object sender,EventArgs e)
         {
             // Sprawdzamy, czy sender to przycisk
             Button deleteButton = sender as Button;

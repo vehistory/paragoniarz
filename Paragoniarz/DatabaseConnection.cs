@@ -16,7 +16,6 @@ public sealed class DatabaseConnection
             return _instance;
         }
     }
-
     // Metoda do utworzenia połączenia z bazą danych
     public SqlConnection CreateConnection()
     {
@@ -37,16 +36,17 @@ public sealed class DatabaseConnection
             // Obsługuje wyjątek i może rzucić go dalej lub logować
             throw new ApplicationException("Failed to create database connection.",ex);
         }
-    }    public string GetBlobStorageConnectionString()
+    }
+    public string GetBlobStorageConnectionString()
     {
         string blobStorageConnectionString = ConfigurationManager.ConnectionStrings["BlobStorageConnectionString"]?.ConnectionString;
         if (string.IsNullOrEmpty(blobStorageConnectionString))
         {
             throw new InvalidOperationException("Connection string for Blob Storage is not found.");
         }
-
         return blobStorageConnectionString;
-    }    public BlobContainerClient CreateBlobStorageConnection()
+    }
+    public BlobContainerClient CreateBlobStorageConnection()
     {
         // Pobieramy connection string z pliku konfiguracyjnego (app.config)
         string blobStorageConnectionString = ConfigurationManager.ConnectionStrings["BlobStorageConnectionString"].ConnectionString;
@@ -58,4 +58,5 @@ public sealed class DatabaseConnection
         BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("documents");
 
         return containerClient;
-    }}
+    }
+}

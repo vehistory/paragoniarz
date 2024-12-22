@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;namespace Paragoniarz
+using System.Windows.Forms;
+
+
+namespace Paragoniarz
 {
     internal class FormHelper
-    {        private bool isPasswordVisible = false;        public bool IsUsernameOrEmailTaken(string username,string email,Dictionary<string,Tuple<string,string>> users)
+    {
+        private bool isPasswordVisible = false;
+
+        public bool IsUsernameOrEmailTaken(string username,string email,Dictionary<string,Tuple<string,string>> users)
         {
             // Sprawdzamy, czy nazwa użytkownika już istnieje
             if (users.ContainsKey(username))
             {
                 return true;  // Nazwa użytkownika już istnieje
             }
-
             // Sprawdzamy, czy email już istnieje
             foreach (var user in users.Values)
             {
@@ -21,10 +26,11 @@ using System.Windows.Forms;namespace Paragoniarz
                     return true;  // E-mail już istnieje
                 }
             }
-
             // Jeśli nazwa użytkownika ani e-mail nie istnieją, zwracamy false
             return false;
-        }        public void TogglePasswordVisibility(TextBox tbPassword,PictureBox pictureBox,Image visibleImage,Image hiddenImage)
+        }
+
+        public void TogglePasswordVisibility(TextBox tbPassword,PictureBox pictureBox,Image visibleImage,Image hiddenImage)
         {
             if (isPasswordVisible)
             {
@@ -37,7 +43,8 @@ using System.Windows.Forms;namespace Paragoniarz
                 pictureBox.Image = visibleImage;  // Ustawienie obrazu dla widocznego hasła
             }
             isPasswordVisible = !isPasswordVisible;
-        }        // funkcja sprawdzajaca poprawnosc hasla
+        }
+        // funkcja sprawdzajaca poprawnosc hasla
         public bool ValidatePassword(string password,string confirmPassword)
         {
             if (password != confirmPassword)

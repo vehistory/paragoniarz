@@ -12,12 +12,10 @@ namespace Paragoniarz
     internal class BuildingTable
     {
         private TableLayoutPanel _tableLayoutPanel;
-
         public BuildingTable(TableLayoutPanel tableLayoutPanel)
         {
             _tableLayoutPanel = tableLayoutPanel;
         }
-
         public void RefreshTable()
         {
             //TODO: Wpisac zapytanie poprawne

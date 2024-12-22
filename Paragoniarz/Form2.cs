@@ -13,7 +13,9 @@ namespace Paragoniarz
         private YourFilesControl yourFilesControl;
         private FindFileControl findFileControl;
         private int _userId;
-        private string _username;        public Form2(int userId, string userName)
+        private string _username;
+
+        public Form2(int userId, string userName)
         {
             InitializeComponent();
            
@@ -58,7 +60,8 @@ namespace Paragoniarz
             panel4.Controls.Add(control);
             control.Dock = DockStyle.Fill;
             currentControl = control;
-        }        private void button1_Click(object sender,EventArgs e)
+        }
+        private void button1_Click(object sender,EventArgs e)
         {
             Environment.Exit(0);
         }
@@ -68,24 +71,29 @@ namespace Paragoniarz
             pnlNav.Height = clickedButton.Height;
             pnlNav.Top = clickedButton.Top;
             pnlNav.Left = clickedButton.Left;
-            clickedButton.BackColor = Color.FromArgb(46,51,73);        }        private void button3_Click(object sender,EventArgs e)
+            clickedButton.BackColor = Color.FromArgb(46,51,73);
+        }
+        private void button3_Click(object sender,EventArgs e)
         {
             SetNavigationPanel(sendFile);
             ShowControl(uploadFileControl);
             label3.Text = "Wyślij plik";
-        }        private void button4_Click(object sender,EventArgs e)
+        }
+        private void button4_Click(object sender,EventArgs e)
         {
             SetNavigationPanel(yoursFile);
             ShowControl(findFileControl);
             label3.Text = "Twoje pliki";
-            sendFile.BackColor = Color.FromArgb(24,30,54);        }
+            sendFile.BackColor = Color.FromArgb(24,30,54);
+        }
 
         private void button5_Click(object sender,EventArgs e)
         {
             SetNavigationPanel(findFile);
             ShowControl(yourFilesControl);
             label3.Text = "Znajdź plik";
-            sendFile.BackColor = Color.FromArgb(24,30,54);        }
+            sendFile.BackColor = Color.FromArgb(24,30,54);
+        }
 
         private void button6_Click(object sender,EventArgs e)
         {
@@ -104,18 +112,18 @@ namespace Paragoniarz
         private void button3_Leave(object sender,EventArgs e)
         {
             SetButtonDefaultColor(sendFile);
-        }        private void button4_Leave(object sender,EventArgs e)
+        }
+        private void button4_Leave(object sender,EventArgs e)
         {
             SetButtonDefaultColor(yoursFile);
         }
-
         private void button5_Leave(object sender,EventArgs e)
         {
             SetButtonDefaultColor(findFile);
         }
-
         private void button6_Leave(object sender,EventArgs e)
         {
             SetButtonDefaultColor(button6);
-        }    }
+        }
+    }
 }

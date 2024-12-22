@@ -5,7 +5,9 @@ using System.Windows.Forms;
 namespace Paragoniarz
 {
     public partial class ForgottenPass : Form
-    {        public ForgottenPass()
+    {
+
+        public ForgottenPass()
         {
             InitializeComponent();
             // Zaokrąglij rogi okna 
@@ -14,7 +16,8 @@ namespace Paragoniarz
             // Umożliw przesuwanie okna 
             WindowHelper.EnableWindowDragging(panel2,this);
             this.StartPosition = FormStartPosition.CenterScreen;
-        }        private void linkLabel2_LinkClicked(object sender,LinkLabelLinkClickedEventArgs e)
+        }
+        private void linkLabel2_LinkClicked(object sender,LinkLabelLinkClickedEventArgs e)
         {
             RegisterForm registerForm = new RegisterForm();
             registerForm.StartPosition = FormStartPosition.Manual;
