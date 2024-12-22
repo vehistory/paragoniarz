@@ -5,10 +5,7 @@ using System.Windows.Forms;
 namespace Paragoniarz
 {
     public partial class Form1 : Form
-    {
-
-
-        private FormHelper formHelper = new FormHelper();
+    {        private FormHelper formHelper = new FormHelper();
 
         public Form1()
         {
@@ -22,23 +19,13 @@ namespace Paragoniarz
             // Umożliw przesuwanie okna 
             WindowHelper.EnableWindowDragging(panel1,this);
 
-        }
-
-
-
-        private void pictureBox4_Click(object sender,EventArgs e)
+        }        private void pictureBox4_Click(object sender,EventArgs e)
         {
             formHelper.TogglePasswordVisibility(tbPassword,pictureBox4,Properties.Resources.Eye,Properties.Resources.Closed_Eye1);
-        }
-
-
-        private void button1_Click(object sender,EventArgs e)
+        }        private void button1_Click(object sender,EventArgs e)
         {
             Environment.Exit(0);
-        }
-
-
-        private void button2_Click(object sender,EventArgs e)
+        }        private void button2_Click(object sender,EventArgs e)
         {
             string enteredUsername = tbUserName.Text;
             string enteredPassword = tbPassword.Text;
@@ -65,14 +52,7 @@ namespace Paragoniarz
             {
                 MessageBox.Show("Błędne dane logowania!");
             }
-        }
-
-
-
-
-
-
-        private void TextBox_KeyPress(object sender,KeyPressEventArgs e)
+        }        private void TextBox_KeyPress(object sender,KeyPressEventArgs e)
         {
             if (e.KeyChar == (char) Keys.Enter)
             {
@@ -92,11 +72,7 @@ namespace Paragoniarz
             this.Hide();
             registerForm.Show();
 
-        }
-
-
-
-        private void linkLabel1_MouseClick(object sender,MouseEventArgs e)
+        }        private void linkLabel1_MouseClick(object sender,MouseEventArgs e)
         {
             ForgottenPass forgottenPass = new ForgottenPass();
             forgottenPass.StartPosition = FormStartPosition.Manual;
@@ -106,8 +82,5 @@ namespace Paragoniarz
             forgottenPass.FormClosed += (s,args) => this.Show();
             this.Hide();
             forgottenPass.Show();
-        }
-
-
-    }
+        }    }
 }

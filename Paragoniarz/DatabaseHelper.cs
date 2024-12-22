@@ -5,10 +5,7 @@ using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-
-
-namespace Paragoniarz
+using System.Windows.Forms;namespace Paragoniarz
 {
     public class DatabaseHelper
     {
@@ -96,10 +93,7 @@ namespace Paragoniarz
 
             // Zapytanie SQL teraz zwraca idUser
             string query = "SELECT id FROM dbo.Users WHERE username = @username AND password = @password";
-            
-
-
-            using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
+                        using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
                 try
                 {
@@ -125,10 +119,7 @@ namespace Paragoniarz
                     return null;
                 }
             }
-        }
-
-
-        // Metoda do wykonywania zapytań SQL
+        }        // Metoda do wykonywania zapytań SQL
         public void ExecuteQuery(string query)
         {
             // Pobieranie instancji połączenia z bazy danych
@@ -169,11 +160,7 @@ namespace Paragoniarz
                     }
                 }
             }
-        }
-
-
-
-        // Metoda do pobierania danych z bazy danych
+        }        // Metoda do pobierania danych z bazy danych
         public DataTable GetDataFromQuery(string query)
         {
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
@@ -189,10 +176,7 @@ namespace Paragoniarz
                     }
                 }
             }
-        }
-
-
-        public string GetFileNameFromDatabase(int userId)
+        }        public string GetFileNameFromDatabase(int userId)
         {
             string query = "SELECT fileName FROM dbo.Files WHERE userId = @userId"; // Załóżmy, że masz tabelę 'Files'
 
@@ -221,11 +205,7 @@ namespace Paragoniarz
                     return null;
                 }
             }
-        }
-
-
-
-        public async Task DeleteFileFromBlobStorage(string fileName)
+        }        public async Task DeleteFileFromBlobStorage(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
             {
@@ -250,9 +230,5 @@ namespace Paragoniarz
             {
                 MessageBox.Show($"Błąd podczas usuwania pliku z Azure: {ex.Message}");
             }
-        }
-
-
-
-    }
+        }    }
 }

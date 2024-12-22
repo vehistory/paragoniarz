@@ -32,13 +32,5 @@ namespace Paragoniarz
             }
 
             return query;
-        }
-
-
-
-
-
-
-
-    }
+        }    }
 }

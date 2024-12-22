@@ -4,10 +4,7 @@ using System.Windows.Forms;
 using System.Data;
 using System;
 using Azure.Storage.Blobs;  
-using System.Threading.Tasks;
-
-
-namespace Paragoniarz
+using System.Threading.Tasks;namespace Paragoniarz
 {
     public partial class FindFileControl : UserControl
     {
@@ -39,8 +36,6 @@ namespace Paragoniarz
                 e.Graphics.FillRectangle(brush,panel.ClientRectangle);
             }
         }
-
-       
 
         private void panel6_Paint(object sender,PaintEventArgs e)
         {
@@ -96,14 +91,12 @@ namespace Paragoniarz
                 foreach (DataRow row in result.Rows)
                 {
                     
-
                     // Kolumna 0: Nazwa pliku
                     Label labelNazwa = new Label();
                     labelNazwa.Text = row["original_name"].ToString();
                     labelNazwa.TextAlign = ContentAlignment.MiddleCenter;
                     tableLayoutPanel1.Controls.Add(labelNazwa,0,tableLayoutPanel1.RowCount - 1);
                     labelNazwa.ForeColor = Color.White;
-
 
                     // Kolumna 1: Data dodania (timestamp)
                     Label labelData = new Label();
@@ -119,7 +112,6 @@ namespace Paragoniarz
                     tableLayoutPanel1.Controls.Add(labelOpis,2,tableLayoutPanel1.RowCount - 1);
                     labelOpis.ForeColor = Color.White;
 
-
                     // Kolumna 3: Załączony plik (URL)
                     Label labelUrl = new Label();
                     labelUrl.Text = row["file_url"].ToString();
@@ -127,15 +119,12 @@ namespace Paragoniarz
                     tableLayoutPanel1.Controls.Add(labelUrl,3,tableLayoutPanel1.RowCount - 1);
                     labelUrl.ForeColor = Color.White;
 
-
                     // Kolumna 4: Rozmiar (zakładamy, że nie masz danych o rozmiarze w bazie)
                     Label labelRozmiar = new Label();
                     labelRozmiar.Text = "5 kolumna"; // Możesz uzupełnić to danymi o rozmiarze, jeśli masz je w bazie
                     labelRozmiar.TextAlign = ContentAlignment.MiddleCenter;
                     tableLayoutPanel1.Controls.Add(labelRozmiar,4,tableLayoutPanel1.RowCount - 1);
                     labelRozmiar.ForeColor = Color.White;
-
-
 
                     Button deleteButton = new Button();
                     deleteButton.BackgroundImage = Properties.Resources.icons8_trash_26; // Ustawienie obrazka
@@ -146,9 +135,6 @@ namespace Paragoniarz
                     deleteButton.Tag = row["original_name"]; // Przypisanie Tag z nazwą pliku (będzie użyteczne przy usuwaniu)
                     deleteButton.Click += button2_Click; // Podpięcie zdarzenia kliknięcia
                     tableLayoutPanel1.Controls.Add(deleteButton,5,tableLayoutPanel1.RowCount - 1);
-
-                  
-
 
                     // Dodajemy kolejny wiersz
                     tableLayoutPanel1.RowCount++;
@@ -167,16 +153,12 @@ namespace Paragoniarz
 
         }
 
-        
-
         private void button1_Click(object sender,EventArgs e)
         {
             // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.RowCount = 1;  // Resetowanie liczby wierszy do 1
         }
-
-
 
         public async Task DeleteFileFromBlobStorage(string fileName)
         {
@@ -203,43 +185,9 @@ namespace Paragoniarz
             catch (Exception ex)
             {
                 // Obsługuje wyjątek w przypadku błędu
-                MessageBox.Show($"Błąd podczas usuwania pliku z Azure: {ex.Message}");
-            }
-        }
-
-        //public async Task DeleteFileFromBlobStorage(string fileName)
-        //{
-        //    if (string.IsNullOrEmpty(fileName))
-        //    {
-        //        MessageBox.Show("Nie znaleziono pliku do usunięcia.");
-        //        return;
-        //    }
-
-        //    var connectionString = DatabaseConnection.Instance.CreateBlobStorageConnection();
-        //    Console.WriteLine(connectionString);
-        //    string containerName = "documents";
-
-
-
-        //    try
-        //    {
-        //        BlobContainerClient containerClient = new BlobContainerClient(connectionString,containerName);
-        //        BlobClient blobClient = containerClient.GetBlobClient(fileName);
-        //        await blobClient.DeleteIfExistsAsync();
-        //        MessageBox.Show($"Plik {fileName} został pomyślnie usunięty.");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"Błąd podczas usuwania pliku z Azure: {ex.Message}");
-        //    }
-        //}
-
-
-
-
-
-
-        private async void button2_Click(object sender,EventArgs e)
+                          MessageBox.Show($"Błąd podczas usuwania pliku z Azure: {ex.Message}");
+            }          
+        }         private async void button2_Click(object sender,EventArgs e)
         {
             // Sprawdzamy, czy sender to przycisk
             Button deleteButton = sender as Button;

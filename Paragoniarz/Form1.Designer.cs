@@ -5,10 +5,7 @@
         /// <summary>
         /// Wymagana zmienna projektanta.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
-
-
-        /// <summary>
+        private System.ComponentModel.IContainer components = null;        /// <summary>
         /// Wyczyść wszystkie używane zasoby.
         /// </summary>
         /// <param name="disposing">prawda, jeżeli zarządzane zasoby powinny zostać zlikwidowane; Fałsz w przeciwnym wypadku.</param>

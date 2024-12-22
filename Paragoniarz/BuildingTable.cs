@@ -18,11 +18,6 @@ namespace Paragoniarz
             _tableLayoutPanel = tableLayoutPanel;
         }
 
-       
-
-       
-
-
         public void RefreshTable()
         {
             //TODO: Wpisac zapytanie poprawne
@@ -34,7 +29,6 @@ namespace Paragoniarz
             // Ponownie budujemy tabelę z nowymi danymi
             PopulateTableWithData(result);
         }
-
 
         public void PopulateTableWithData(DataTable result)
         {
@@ -51,15 +45,9 @@ namespace Paragoniarz
                     string zalaczonyPlik = row["file_url"].ToString();
                     string rozmiar = row["file_size"].ToString(); // Załóżmy, że masz kolumnę "file_size" w bazie
 
-
-
-
-
                 }
             }
         }
-
-       
 
     }
 }
