@@ -15,6 +15,8 @@ namespace Paragoniarz
         {
             InitializeComponent();
             _userId = userId;
+            tableLayoutPanel1.Controls.Clear();
+          
 
             WindowHelper.SetWindowRoundCorners(panel6,10);
 
@@ -54,39 +56,11 @@ namespace Paragoniarz
 
         }
 
-        //private void button3_Click(object sender,System.EventArgs e)
-        //{
-        //    // Pobierz dane z TextBoxów
-        //    string nazwa = textBox8.Text;
-        //    string opis = textBox7.Text;
-        //    string osoba = textBox1.Text;
-        //    DateTime? dataOd = null;
-        //    DateTime? dataDo = null;
-
-        //    // Sprawdzamy, czy daty są wpisane (można użyć DateTimePickerów zamiast TextBoxów)
-        //    if (DateTime.TryParse(dateTimePicker1.Text,out DateTime parsedDataOd))
-        //    {
-        //        dataOd = parsedDataOd;
-        //    }
-
-        //    if (DateTime.TryParse(dateTimePicker2.Text,out DateTime parsedDataDo))
-        //    {
-        //        dataDo = parsedDataDo;
-        //    }
-
-        //    // Tworzymy instancję klasy odpowiedzialnej za zapytanie
-        //    FinderManager finderManager = new FinderManager();
-        //    string query = finderManager.CreateSearchQuery(_userId,nazwa,dataOd,dataDo);
-
-        //    // Wysyłamy zapytanie do bazy danych
-        //    DatabaseHelper dbConnection = new DatabaseHelper();
-        //    DataTable result = dbConnection.GetDataFromQuery(query);
-
-        //    // Tutaj możesz wyświetlić dane (np. w tabeli, na liście, itp.)
-        //    // np. _tableManager.PopulateTableWithData(result); jeśli używasz TableManagera
-        //}
+        
         private void button3_Click(object sender,EventArgs e)
         {
+
+            
             // Pobierz dane z TextBoxów
             string nazwa = textBox8.Text;
             string opis = textBox7.Text; // Możesz użyć tego później, jeśli chcesz dodać opcję opisu
@@ -113,38 +87,105 @@ namespace Paragoniarz
             DatabaseHelper dbConnection = new DatabaseHelper();
             DataTable result = dbConnection.GetDataFromQuery(query);
 
-            // Sprawdzamy, czy wynik zawiera dane
             if (result.Rows.Count > 0)
             {
+               
+
+
                 // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
                 tableLayoutPanel1.Controls.Clear();
                 tableLayoutPanel1.RowCount = 1;  // Resetowanie liczby wierszy do 1
 
+
+                 // Wyłączamy układanie, aby przyspieszyć dodawanie kontrolek
+                tableLayoutPanel1.SuspendLayout();
+
+               
+
                 // Iterujemy przez wszystkie wiersze wyników
                 foreach (DataRow row in result.Rows)
                 {
-                    // Tworzymy etykiety i przypisujemy dane
+                    // Dodajemy nowy wiersz
+                    //tableLayoutPanel1.RowCount++;
+
+                    // Kolumna 0: Nazwa pliku
                     Label labelNazwa = new Label();
                     labelNazwa.Text = row["original_name"].ToString();
-                    tableLayoutPanel1.Controls.Add(labelNazwa,0,tableLayoutPanel1.RowCount);
+                    labelNazwa.TextAlign = ContentAlignment.MiddleCenter;
+                    tableLayoutPanel1.Controls.Add(labelNazwa,0,tableLayoutPanel1.RowCount - 1);
+                    labelNazwa.ForeColor = Color.White;
 
+
+                    // Kolumna 1: Opis (jeśli nie masz danych, ustaw pustą wartość)
+                    Label labelOpis = new Label();
+                    labelOpis.Text = ""; // Zakładamy, że brak opisu w bazie
+                    labelOpis.TextAlign = ContentAlignment.MiddleCenter;
+                    tableLayoutPanel1.Controls.Add(labelOpis,1,tableLayoutPanel1.RowCount - 1);
+                    labelOpis.ForeColor = Color.White;
+                   
+
+                    // Kolumna 2: Data dodania (timestamp)
+                    Label labelData = new Label();
+                    labelData.Text = row["timestamp"].ToString(); // Możesz dodać formatowanie daty, jeśli potrzeba
+                    labelData.TextAlign = ContentAlignment.MiddleCenter;
+                    tableLayoutPanel1.Controls.Add(labelData,2,tableLayoutPanel1.RowCount - 1);
+                    labelData.ForeColor = Color.White;
+
+
+                    // Kolumna 3: Załączony plik (URL)
                     Label labelUrl = new Label();
                     labelUrl.Text = row["file_url"].ToString();
-                    tableLayoutPanel1.Controls.Add(labelUrl,1,tableLayoutPanel1.RowCount);
+                    labelUrl.TextAlign = ContentAlignment.MiddleCenter;
+                    tableLayoutPanel1.Controls.Add(labelUrl,3,tableLayoutPanel1.RowCount - 1);
+                    labelUrl.ForeColor = Color.White;
 
-                    Label labelData = new Label();
-                    labelData.Text = row["timestamp"].ToString();
-                    tableLayoutPanel1.Controls.Add(labelData,2,tableLayoutPanel1.RowCount);
+
+                    // Kolumna 4: Rozmiar (zakładamy, że nie masz danych o rozmiarze w bazie)
+                    Label labelRozmiar = new Label();
+                    labelRozmiar.Text = ""; // Możesz uzupełnić to danymi o rozmiarze, jeśli masz je w bazie
+                    labelRozmiar.TextAlign = ContentAlignment.MiddleCenter;
+                    tableLayoutPanel1.Controls.Add(labelRozmiar,4,tableLayoutPanel1.RowCount - 1);
+                    labelRozmiar.ForeColor = Color.White;
+
+
+                    // Kolumna 5: Pusta kolumna (na razie)
+                    Label labelPusta = new Label();
+                    labelPusta.Text = ""; // Pusty label, może być na przykład do edycji w przyszłości
+                    tableLayoutPanel1.Controls.Add(labelPusta,5,tableLayoutPanel1.RowCount - 1);
+                    labelPusta.ForeColor = Color.White;
+
 
                     // Dodajemy kolejny wiersz
                     tableLayoutPanel1.RowCount++;
+
                 }
+
+                // Po zakończeniu dodawania wszystkich kontrolek wznawiamy układ
+                tableLayoutPanel1.ResumeLayout();
+
             }
             else
             {
                 MessageBox.Show("Brak wyników dla podanych kryteriów.");
             }
+            //label2.ForeColor = Color.White;
+            //label3.ForeColor = Color.White;
+            //label4.ForeColor = Color.White;
+            //label4.ForeColor = Color.White;
+            //label15.ForeColor = Color.White;
+
         }
 
+        private void label4_ForeColorChanged(object sender,EventArgs e)
+        {
+            label4.ForeColor = Color.White;
+        }
+
+        private void button1_Click(object sender,EventArgs e)
+        {
+            // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
+            tableLayoutPanel1.Controls.Clear();
+            tableLayoutPanel1.RowCount = 1;  // Resetowanie liczby wierszy do 1
+        }
     }
 }
