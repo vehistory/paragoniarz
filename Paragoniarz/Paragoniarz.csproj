@@ -125,6 +125,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildingTable.cs" />
     <Compile Include="DatabaseConnection.cs" />
     <Compile Include="DatabaseHelper.cs" />
     <Compile Include="FinderManager.cs" />
