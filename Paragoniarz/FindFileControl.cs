@@ -20,19 +20,7 @@ namespace Paragoniarz
 
         private void gradientPanel(object sender,PaintEventArgs e)
         {
-            // Definicja kolorów dla gradientu
-            Color startColor = Color.FromArgb(75,0,130); // Kolor początkowy (np. czerwony)
-            Color endColor = Color.FromArgb(0,128,128); // Kolor końcowy (np. niebieski)
-            // Tworzymy pędzel z gradientem
-            using (LinearGradientBrush brush = new LinearGradientBrush(
-                panel1.ClientRectangle,  // Określamy obszar panelu
-                startColor,              // Kolor początkowy
-                endColor,                // Kolor końcowy
-                45F))                    // Kąt gradientu (w tym przypadku 45 stopni)
-            {
-                // Rysujemy tło panelu z użyciem gradientu
-                e.Graphics.FillRectangle(brush,panel1.ClientRectangle);
-            }
+
         }
 
         private void panel1_Paint(object sender,PaintEventArgs e)

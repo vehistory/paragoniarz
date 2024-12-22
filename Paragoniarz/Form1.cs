@@ -106,6 +106,8 @@ namespace Paragoniarz
             forgottenPass.Show();
         }
 
-
+        private void label5_Paint(object sender, PaintEventArgs e)
+        {
+        }
     }
 }
