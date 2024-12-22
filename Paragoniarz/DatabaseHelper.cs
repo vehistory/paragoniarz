@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,6 +13,12 @@ namespace Paragoniarz
 {
     public class DatabaseHelper
     {
+        public static class SessionData
+        {
+            public static int UserId { get; set; }
+            public static string UserName { get; set; }
+        }
+
 
         // Sprawdzanie, czy użytkownik lub email są już zajęte
         public bool IsUsernameOrEmailTaken(string username,string email)
@@ -94,7 +101,7 @@ namespace Paragoniarz
         {
             string hashedPassword = HashPassword(password);
 
-            string query = "SELECT COUNT(*) FROM dbo.Users WHERE username = @username AND password = @password";
+            string query = "SELECT id FROM dbo.Users WHERE username = @username AND password = @password";
 
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
@@ -105,13 +112,34 @@ namespace Paragoniarz
                     cmd.Parameters.AddWithValue("@username",username);
                     cmd.Parameters.AddWithValue("@password",hashedPassword);
 
-                    int count = Convert.ToInt32(cmd.ExecuteScalar());
-                    return count > 0;
+                    int user_id = Convert.ToInt32(cmd.ExecuteScalar());
+                    SessionData.UserId = user_id;
+                    return user_id > 0;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Błąd podczas logowania: {ex.Message}");
                     return false;
+                }
+            }
+        }
+
+        public bool UpdateFileRecord(string fileID, string fileUriBase64)
+        {
+            using (var sqlConnection = DatabaseConnection.Instance.CreateConnection())
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("dbo.UpdateFileUri", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    // Dodanie parametrów
+                    sqlCommand.Parameters.AddWithValue("@FileID", fileID);
+                    sqlCommand.Parameters.AddWithValue("@FileUriBase64", fileUriBase64);
+
+                    int rowsAffected = sqlCommand.ExecuteNonQuery();
+                    return rowsAffected > 0; // Zwraca true, jeśli rekord został zaktualizowany
                 }
             }
         }

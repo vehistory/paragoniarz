@@ -61,7 +61,7 @@
             this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label1.Location = new System.Drawing.Point(302, 491);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(474, 86);
+            this.label1.Size = new System.Drawing.Size(588, 106);
             this.label1.TabIndex = 1;
             this.label1.Text = "FindFileCOntrol";
             // 
@@ -73,7 +73,7 @@
             this.label3.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label3.Location = new System.Drawing.Point(14, 13);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(90, 32);
+            this.label3.Size = new System.Drawing.Size(112, 41);
             this.label3.TabIndex = 3;
             this.label3.Text = "Nazwa";
             // 
@@ -85,7 +85,7 @@
             this.label2.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label2.Location = new System.Drawing.Point(3, 13);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 32);
+            this.label2.Size = new System.Drawing.Size(82, 41);
             this.label2.TabIndex = 4;
             this.label2.Text = "Opis";
             // 
@@ -97,7 +97,7 @@
             this.label4.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label4.Location = new System.Drawing.Point(18, 13);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(104, 32);
+            this.label4.Size = new System.Drawing.Size(129, 41);
             this.label4.TabIndex = 5;
             this.label4.Text = "Data od";
             // 
@@ -109,7 +109,7 @@
             this.label5.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label5.Location = new System.Drawing.Point(14, 13);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(104, 32);
+            this.label5.Size = new System.Drawing.Size(129, 41);
             this.label5.TabIndex = 6;
             this.label5.Text = "Data do";
             // 
@@ -120,7 +120,7 @@
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.textBox1.Location = new System.Drawing.Point(20, 58);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(145, 19);
+            this.textBox1.Size = new System.Drawing.Size(145, 23);
             this.textBox1.TabIndex = 7;
             this.textBox1.Tag = "";
             // 
@@ -131,7 +131,7 @@
             this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.textBox2.Location = new System.Drawing.Point(9, 58);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(145, 19);
+            this.textBox2.Size = new System.Drawing.Size(145, 23);
             this.textBox2.TabIndex = 8;
             // 
             // textBox3
@@ -141,7 +141,7 @@
             this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.textBox3.Location = new System.Drawing.Point(24, 58);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(145, 19);
+            this.textBox3.Size = new System.Drawing.Size(145, 23);
             this.textBox3.TabIndex = 9;
             // 
             // textBox4
@@ -151,7 +151,7 @@
             this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.textBox4.Location = new System.Drawing.Point(20, 58);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(145, 19);
+            this.textBox4.Size = new System.Drawing.Size(145, 23);
             this.textBox4.TabIndex = 10;
             // 
             // label6
@@ -161,7 +161,7 @@
             this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label6.Location = new System.Drawing.Point(51, 276);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(90, 32);
+            this.label6.Size = new System.Drawing.Size(112, 41);
             this.label6.TabIndex = 11;
             this.label6.Text = "Nazwa";
             // 
@@ -172,7 +172,7 @@
             this.label7.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label7.Location = new System.Drawing.Point(188, 276);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(67, 32);
+            this.label7.Size = new System.Drawing.Size(84, 41);
             this.label7.TabIndex = 12;
             this.label7.Text = "Data";
             // 
@@ -183,7 +183,7 @@
             this.label8.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label8.Location = new System.Drawing.Point(288, 276);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(247, 32);
+            this.label8.Size = new System.Drawing.Size(304, 41);
             this.label8.TabIndex = 13;
             this.label8.Text = "Wygenerowany opis";
             // 
@@ -194,7 +194,7 @@
             this.label9.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label9.Location = new System.Drawing.Point(808, 276);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(108, 32);
+            this.label9.Size = new System.Drawing.Size(133, 41);
             this.label9.TabIndex = 15;
             this.label9.Text = "Rozmiar";
             // 
@@ -205,7 +205,7 @@
             this.label10.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label10.Location = new System.Drawing.Point(579, 276);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(179, 32);
+            this.label10.Size = new System.Drawing.Size(219, 41);
             this.label10.TabIndex = 14;
             this.label10.Text = "Załączony plik";
             // 
