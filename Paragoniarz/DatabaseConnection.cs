@@ -1,6 +1,8 @@
-﻿using System.Configuration;
-
+﻿using System;
+using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace Paragoniarz
 {
@@ -26,5 +28,9 @@ namespace Paragoniarz
             string connectionString = ConfigurationManager.ConnectionStrings["ParagoniarzConnectionString"].ConnectionString;
             return new SqlConnection(connectionString);
         }
+
+
+
     }
+
 }

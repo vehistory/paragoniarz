@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
@@ -112,6 +113,46 @@ namespace Paragoniarz
                 {
                     MessageBox.Show($"Błąd podczas logowania: {ex.Message}");
                     return false;
+                }
+            }
+        }
+
+
+
+        //// Metoda do pobierania danych z bazy danych
+        //public DataTable FetchData(string nazwa,string opis,string osoba,DateTime dataOd,DateTime dataDo)
+        //{
+        //    string query = "SELECT * FROM YourTable WHERE nazwa = @nazwa AND opis = @opis AND osoba = @osoba AND data_od >= @data_od AND data_do <= @data_do";
+
+        //    using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
+        //    {
+        //        SqlDataAdapter dataAdapter = new SqlDataAdapter(query,conn);
+        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@nazwa",nazwa);
+        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@opis",opis);
+        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@osoba",osoba);
+        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@data_od",dataOd);
+        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@data_do",dataDo);
+
+        //        DataTable dataTable = new DataTable();
+        //        dataAdapter.Fill(dataTable);
+        //        return dataTable;
+        //    }
+        //}
+
+        // Metoda do pobierania danych z bazy danych
+        public DataTable GetDataFromQuery(string query)
+        {
+            using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand(query,conn))
+                {
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+                        return dataTable;  // Zwraca wynik jako DataTable
+                    }
                 }
             }
         }
