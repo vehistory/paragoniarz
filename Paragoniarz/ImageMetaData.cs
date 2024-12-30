@@ -3,22 +3,10 @@ using System.IO;
 
 public class ImageMetadata
 {
-    public string FileName
-    {
-        get; private set;
-    }
-    public long FileSize
-    {
-        get; private set;
-    }
-    public DateTime CreationDate
-    {
-        get; private set;
-    }
-    public DateTime UploadDate
-    {
-        get; private set;
-    }
+    public string FileName { get; private set; }
+    public long FileSize { get; private set; }
+    public DateTime CreationDate { get; private set; }
+    public DateTime UploadDate { get; private set; }
 
     public ImageMetadata(string filePath)
     {
@@ -41,9 +29,9 @@ public class ImageMetadata
             throw new FileNotFoundException("Plik nie istnieje.");
         }
     }
+
     public static ImageMetadata LoadFromFile(string filePath)
     {
         return new ImageMetadata(filePath);
     }
-
 }

@@ -1,30 +1,84 @@
-﻿using System.Configuration;
-
+﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace Paragoniarz
 {
     public sealed class DatabaseConnection
     {
-        // Statyczna zmienna przechowująca jedyną instancję klasy
-        private static readonly DatabaseConnection _instance = new DatabaseConnection();
+        private static readonly Lazy<DatabaseConnection> _lazyInstance =
+            new Lazy<DatabaseConnection>(() => new DatabaseConnection());
 
+        private readonly string _connectionString;
 
-        // Publiczna statyczna właściwość umożliwiająca dostęp do instancji
-        public static DatabaseConnection Instance
+        private DatabaseConnection()
         {
-            get
+            try
             {
-                return _instance;
+                _connectionString = ConfigurationManager.ConnectionStrings["ParagoniarzConnectionString"].ConnectionString;
+                if (string.IsNullOrEmpty(_connectionString))
+                {
+                    throw new ConfigurationErrorsException(
+                        "Connection string 'ParagoniarzConnectionString' is missing or empty in the configuration file."
+                    );
+                }
+            }
+            catch (ConfigurationErrorsException ex)
+            {
+                Console.WriteLine($"Configuration error: {ex.Message}");
+                throw;
             }
         }
 
-        // Metoda do utworzenia połączenia z bazą danych
+        public static DatabaseConnection Instance => _lazyInstance.Value;
+
         public SqlConnection CreateConnection()
         {
-            // Pobieramy connection string z pliku konfiguracyjnego (app.config)
-            string connectionString = ConfigurationManager.ConnectionStrings["ParagoniarzConnectionString"].ConnectionString;
-            return new SqlConnection(connectionString);
+            return new SqlConnection(_connectionString);
+        }
+
+        public void ExecuteQuery(Action<SqlConnection> action)
+        {
+            using (SqlConnection connection = CreateConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    action(connection);
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine($"SQL error when executing query: {ex.Message}");
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Unexpected error when executing query: {ex.Message}");
+                    throw;
+                }
+            }
+        }
+
+        public T ExecuteQuery<T>(Func<SqlConnection, T> func)
+        {
+            using (SqlConnection connection = CreateConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    return func(connection);
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine($"SQL error when executing query: {ex.Message}");
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Unexpected error when executing query: {ex.Message}");
+                    throw;
+                }
+            }
         }
     }
 }

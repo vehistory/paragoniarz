@@ -1,6 +1,4 @@
-﻿using System.Drawing.Drawing2D;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Paragoniarz
 {
@@ -10,40 +8,40 @@ namespace Paragoniarz
         {
             InitializeComponent();
 
-            WindowHelper.SetWindowRoundCorners(panel1,10);
-            WindowHelper.SetWindowRoundCorners(panel2,10);
-            WindowHelper.SetWindowRoundCorners(panel3,10);
-            WindowHelper.SetWindowRoundCorners(panel4,10);
+            WindowHelper.SetWindowRoundCorners(panel1, 10);
+            WindowHelper.SetWindowRoundCorners(panel2, 10);
+            WindowHelper.SetWindowRoundCorners(panel3, 10);
+            WindowHelper.SetWindowRoundCorners(panel4, 10);
 
         }
 
 
-        private void gradientPanel(object sender,PaintEventArgs e)
+        private void gradientPanel(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void panel1_Paint(object sender,PaintEventArgs e)
+        private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            gradientPanel(sender,e);
+            gradientPanel(sender, e);
         }
 
-        private void panel2_Paint(object sender,PaintEventArgs e)
+        private void panel2_Paint(object sender, PaintEventArgs e)
         {
-            gradientPanel(sender,e);
+            gradientPanel(sender, e);
 
         }
 
-        private void panel3_Paint(object sender,PaintEventArgs e)
+        private void panel3_Paint(object sender, PaintEventArgs e)
         {
-            gradientPanel(sender,e);
-            
+            gradientPanel(sender, e);
+
         }
 
-        private void panel4_Paint(object sender,PaintEventArgs e)
+        private void panel4_Paint(object sender, PaintEventArgs e)
         {
-            gradientPanel(sender,e);
-            
+            gradientPanel(sender, e);
+
         }
     }
 }

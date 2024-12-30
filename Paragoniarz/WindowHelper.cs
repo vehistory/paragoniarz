@@ -8,12 +8,21 @@ namespace Paragoniarz
     public static class WindowHelper //NIEDZIALA
     {
         // Import funkcji do zaokrąglania rogów okna
-        [DllImport("Gdi32.dll",EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn(int nLeftRect,int nTopRect,int nRightRect,int nBottomRect,int nWidthEllipse,int nHeightEllipse);
-        public static void SetWindowRoundCorners(Control control,int cornerRadius)
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn(
+            int nLeftRect,
+            int nTopRect,
+            int nRightRect,
+            int nBottomRect,
+            int nWidthEllipse,
+            int nHeightEllipse
+        );
+
+        public static void SetWindowRoundCorners(Control control, int cornerRadius)
         {
-            control.Region = Region.FromHrgn(CreateRoundRectRgn(0,0,control.Width,control.Height,cornerRadius,cornerRadius));
-          
+            control.Region = Region.FromHrgn(
+                CreateRoundRectRgn(0, 0, control.Width, control.Height, cornerRadius, cornerRadius)
+            );
         }
 
         // Import funkcji do przesuwania okna
@@ -21,30 +30,30 @@ namespace Paragoniarz
         private const int HT_CAPTION = 0x2;
 
         [DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd,int Msg,int wParam,int lParam);
+        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         [DllImport("user32.dll")]
         private static extern bool ReleaseCapture();
 
         // Metoda do zaokrąglania rogów
-        public static void SetWindowRoundCorners(Form form,int radius)
+        public static void SetWindowRoundCorners(Form form, int radius)
         {
-            form.Region = Region.FromHrgn(CreateRoundRectRgn(0,0,form.Width,form.Height,radius,radius));
+            form.Region = Region.FromHrgn(
+                CreateRoundRectRgn(0, 0, form.Width, form.Height, radius, radius)
+            );
         }
 
         // Metoda do obsługi przesuwania okna
-        public static void EnableWindowDragging(Control control,Form form)
+        public static void EnableWindowDragging(Control control, Form form)
         {
-            control.MouseDown += (sender,e) =>
+            control.MouseDown += (sender, e) =>
             {
                 if (e.Button == MouseButtons.Left)
                 {
                     ReleaseCapture();
-                    SendMessage(form.Handle,WM_NCLBUTTONDOWN,HT_CAPTION,0);
+                    SendMessage(form.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
                 }
             };
         }
-
-
     }
 }

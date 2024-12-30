@@ -1,14 +1,14 @@
-﻿using Azure.Storage.Blobs;
-using System;
-using System.Data.SqlClient;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Collections.Generic;
+using Azure.Storage.Blobs;
 using static Paragoniarz.DatabaseHelper;
-using System.Configuration;
 
 namespace Paragoniarz
 {
@@ -24,20 +24,29 @@ namespace Paragoniarz
 
         private void button2_Click(object sender, EventArgs e)
         {
+            ClearImageAndResetLabels();
+        }
+
+        private void ClearImageAndResetLabels()
+        {
             if (pictureBox2.Image != null)
             {
-                pictureBox2.Image.Dispose();
-                pictureBox2.Image = null;
+                using (var image = pictureBox2.Image)
+                {
+                    pictureBox2.Image = null;
+                }
             }
+
+            ResetLabels();
+        }
+
+        private void ResetLabels()
+        {
             FNlabel.Text = "Nazwa pliku: ";
             FSlabel.Text = "Rozmiar pliku: ";
             CDlabel.Text = "Data utworzenia: ";
             UDlabel.Text = "Data wgrania: ";
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
         }
-
 
         private void pictureBox2_DragDrop(object sender, DragEventArgs e)
         {
@@ -61,12 +70,24 @@ namespace Paragoniarz
                     string extension = Path.GetExtension(droppedFilePath).ToLower();
 
                     // Sprawdź rozszerzenie pliku
-                    if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" ||
-                        extension == ".gif" || extension == ".bmp" || extension == ".tiff")
+                    if (
+                        extension == ".jpg"
+                        || extension == ".jpeg"
+                        || extension == ".png"
+                        || extension == ".gif"
+                        || extension == ".bmp"
+                        || extension == ".tiff"
+                    )
                     {
                         try
                         {
-                            using (var stream = new FileStream(droppedFilePath, FileMode.Open, FileAccess.Read))
+                            using (
+                                var stream = new FileStream(
+                                    droppedFilePath,
+                                    FileMode.Open,
+                                    FileAccess.Read
+                                )
+                            )
                             {
                                 Image originalImage = Image.FromStream(stream);
                                 Image resizedImage = new Bitmap(originalImage, new Size(1024, 768));
@@ -102,10 +123,14 @@ namespace Paragoniarz
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
                 // Sprawdzenie, czy przynajmniej jeden z plików ma rozszerzenie jpg, jpeg lub inne obsługiwane
-                if (files.Any(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
-                                      file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
-                                      file.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
-                                      file.EndsWith(".gif", StringComparison.OrdinalIgnoreCase)))
+                if (
+                    files.Any(file =>
+                        file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
+                        || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
+                        || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+                        || file.EndsWith(".gif", StringComparison.OrdinalIgnoreCase)
+                    )
+                )
                 {
                     e.Effect = DragDropEffects.Copy; // Dozwolone kopiowanie
                 }
@@ -154,8 +179,12 @@ namespace Paragoniarz
                 MessageBox.Show("Nie załadowano żadnego pliku do przesłania.");
                 return;
             }
-            string blobConnectionString = ConfigurationManager.ConnectionStrings["BlobConnectionString"].ConnectionString;
-            string sqlConnectionString = ConfigurationManager.ConnectionStrings["SqlConnectionString"].ConnectionString;
+            string blobConnectionString = ConfigurationManager
+                .ConnectionStrings["BlobConnectionString"]
+                .ConnectionString;
+            string sqlConnectionString = ConfigurationManager
+                .ConnectionStrings["SqlConnectionString"]
+                .ConnectionString;
             string containerName = "documents";
 
             FileStream fileStream = null;
@@ -170,14 +199,19 @@ namespace Paragoniarz
 
                     // Przykładowa procedura składowana: dbo.InsertFileAndReturnID
                     // Procedura wstawia encję i zwraca fileID
-                    using (var sqlCommand = new SqlCommand("dbo.InsertFileAndReturnID", sqlConnection))
+                    using (
+                        var sqlCommand = new SqlCommand("dbo.InsertFileAndReturnID", sqlConnection)
+                    )
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
 
                         // Dodaj parametry procedury
-                        sqlCommand.Parameters.AddWithValue("@FileName", Path.GetFileName(droppedFilePath));
+                        sqlCommand.Parameters.AddWithValue(
+                            "@FileName",
+                            Path.GetFileName(droppedFilePath)
+                        );
                         sqlCommand.Parameters.AddWithValue("@UploadDate", DateTime.UtcNow);
-                        sqlCommand.Parameters.AddWithValue("@UserId", SessionData.UserId); // Przekaż wartość user_id
+                        sqlCommand.Parameters.AddWithValue("@UserId", UserSession.UserId);
 
                         // Odczytaj wynik procedury
                         object result = sqlCommand.ExecuteScalar();
@@ -194,7 +228,9 @@ namespace Paragoniarz
 
                 // Krok 2: Przesłanie pliku do Azure Blob Storage z metadanymi
                 BlobServiceClient blobServiceClient = new BlobServiceClient(blobConnectionString);
-                BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+                BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(
+                    containerName
+                );
 
                 // Utworzenie kontenera, jeśli jeszcze nie istnieje
                 containerClient.CreateIfNotExists();
@@ -202,7 +238,9 @@ namespace Paragoniarz
                 // Tworzenie klienta Blob dla przesyłanego pliku
                 string blobName = Path.GetFileName(droppedFilePath);
                 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-                MessageBox.Show($"Plik {blobName} został pomyślnie przesłany do Azure Blob Storage z fileID: {fileID}");
+                MessageBox.Show(
+                    $"Plik {blobName} został pomyślnie przesłany do Azure Blob Storage z fileID: {fileID}"
+                );
 
                 // Otwórz plik do odczytu
                 fileStream = File.OpenRead(droppedFilePath);
@@ -211,13 +249,17 @@ namespace Paragoniarz
                 blobClient.Upload(fileStream, true);
 
                 // Dodanie metadanych do pliku (np. fileID)
-                var metadata = new Dictionary<string, string>{
-                    { "file_id", fileID }, { "user_id", SessionData.UserId.ToString() } // Zapisanie fileID jako metadanych
+                var metadata = new Dictionary<string, string>
+                {
+                    { "file_id", fileID },
+                    { "user_id", UserSession.UserId.ToString() }, // Zapisanie fileID jako metadanych
                 };
                 blobClient.SetMetadata(metadata);
 
                 string fileUri = blobClient.Uri.ToString();
-                string uriBase64 = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(fileUri));
+                string uriBase64 = Convert.ToBase64String(
+                    System.Text.Encoding.UTF8.GetBytes(fileUri)
+                );
 
                 // 3. Aktualizacja rekordu w SQL
                 DatabaseHelper dbHelper = new DatabaseHelper();
@@ -225,7 +267,9 @@ namespace Paragoniarz
 
                 if (isUpdated)
                 {
-                    MessageBox.Show("Plik został pomyślnie przesłany i zaktualizowany w bazie danych.");
+                    MessageBox.Show(
+                        "Plik został pomyślnie przesłany i zaktualizowany w bazie danych."
+                    );
                 }
                 else
                 {

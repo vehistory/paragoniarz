@@ -5,63 +5,59 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 
-
-
-
-
 namespace Paragoniarz
 {
     public class DatabaseHelper
     {
-        public static class SessionData
+        public class User
         {
-            public static int UserId { get; set; }
-            public static string UserName { get; set; }
+            public int Id { get; set; }
+            public string Username { get; set; }
+            public string Email { get; set; }
         }
 
-
         // Sprawdzanie, czy użytkownik lub email są już zajęte
-        public bool IsUsernameOrEmailTaken(string username,string email)
+        public bool IsUsernameOrEmailTaken(string username, string email)
         {
-            using (var connection = DatabaseConnection.Instance.CreateConnection())
+            try
             {
-                try
+                return DatabaseConnection.Instance.ExecuteQuery(connection =>
                 {
-                    connection.Open();
-                    string query = "SELECT COUNT(*) FROM dbo.Users WHERE username = @username OR email = @email";
-                    using (var cmd = new SqlCommand(query,connection))
+                    string query =
+                        "SELECT COUNT(*) FROM dbo.Users WHERE username = @username OR email = @email";
+                    using (var cmd = new SqlCommand(query, connection))
                     {
-                        cmd.Parameters.AddWithValue("@username",username);
-                        cmd.Parameters.AddWithValue("@email",email);
-
+                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@email", email);
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         return count > 0;
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Błąd: " + ex.Message);
-                    return false;
-                }
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Błąd podczas sprawdzania użytkownika/email: {ex.Message}");
+                return false;
             }
         }
 
         // Metoda do dodawania użytkownika z hasłem w formie haszowanej
-        public void InsertUser(string username,string email,string password)
+        public void InsertUser(string username, string email, string password)
         {
             string hashedPassword = HashPassword(password); // Haszowanie hasła
 
-            string query = "INSERT INTO dbo.Users (username, password, email) VALUES (@username, @password, @email)";
+            string query =
+                "INSERT INTO dbo.Users (username, password, email) VALUES (@username, @password, @email)";
 
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(query,conn);
-                    cmd.Parameters.AddWithValue("@username",username);
-                    cmd.Parameters.AddWithValue("@password",hashedPassword);
-                    cmd.Parameters.AddWithValue("@email",email);
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@password", hashedPassword);
+                    cmd.Parameters.AddWithValue("@email", email);
 
                     int result = cmd.ExecuteNonQuery();
                     if (result > 0)
@@ -80,47 +76,41 @@ namespace Paragoniarz
             }
         }
 
-        // Metoda haszująca hasło
-        private string HashPassword(string rawData)
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
-
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
-
         // Walidacja użytkownika
-        public bool ValidateUser(string username,string password)
+        public User ValidateUser(string username, string password)
         {
             string hashedPassword = HashPassword(password);
 
-            string query = "SELECT id FROM dbo.Users WHERE username = @username AND password = @password";
-
-            using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
+            try
             {
-                try
+                return DatabaseConnection.Instance.ExecuteQuery(connection =>
                 {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand(query,conn);
-                    cmd.Parameters.AddWithValue("@username",username);
-                    cmd.Parameters.AddWithValue("@password",hashedPassword);
+                    string query = "SELECT id, username, email FROM dbo.Users WHERE username = @username AND password = @password";
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@password", hashedPassword);
 
-                    int user_id = Convert.ToInt32(cmd.ExecuteScalar());
-                    SessionData.UserId = user_id;
-                    return user_id > 0;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Błąd podczas logowania: {ex.Message}");
-                    return false;
-                }
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                return new User
+                                {
+                                    Id = reader.GetInt32(0),
+                                    Username = reader.GetString(1),
+                                    Email = reader.GetString(2)
+                                };
+                            }
+                        }
+                    }
+                    return null;
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Błąd podczas logowania: {ex.Message}");
+                return null;
             }
         }
 
@@ -141,6 +131,22 @@ namespace Paragoniarz
                     int rowsAffected = sqlCommand.ExecuteNonQuery();
                     return rowsAffected > 0; // Zwraca true, jeśli rekord został zaktualizowany
                 }
+            }
+        }
+
+        // Metoda haszująca hasło
+        private string HashPassword(string rawData)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
             }
         }
     }
