@@ -7,7 +7,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Azure;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using static Paragoniarz.DatabaseHelper;
 
 namespace Paragoniarz
@@ -77,29 +79,36 @@ namespace Paragoniarz
                         || extension == ".gif"
                         || extension == ".bmp"
                         || extension == ".tiff"
+                        || extension == ".pdf"
                     )
                     {
                         try
                         {
-                            using (
-                                var stream = new FileStream(
-                                    droppedFilePath,
-                                    FileMode.Open,
-                                    FileAccess.Read
-                                )
-                            )
+                            if (extension == ".pdf")
                             {
-                                Image originalImage = Image.FromStream(stream);
-                                Image resizedImage = new Bitmap(originalImage, new Size(1024, 768));
-                                pictureBox2.Image = resizedImage;
+                                pictureBox2.Image = Properties.Resources.pdf_icon;
+                            }
+                            else
+                            {
+                                using (
+                                    var stream = new FileStream(
+                                        droppedFilePath,
+                                        FileMode.Open,
+                                        FileAccess.Read
+                                    )
+                                )
+                                {
+                                    Image originalImage = Image.FromStream(stream);
+                                    Image resizedImage = new Bitmap(
+                                        originalImage,
+                                        new Size(1024, 768)
+                                    );
+                                    pictureBox2.Image = resizedImage;
+                                }
                             }
 
-                            // Pobranie metadanych
                             ImageMetadata metadata = ImageMetadata.LoadFromFile(droppedFilePath);
-                            FNlabel.Text = "Nazwa pliku: " + metadata.FileName;
-                            FSlabel.Text = "Rozmiar pliku: " + (metadata.FileSize / 1024) + " KB";
-                            CDlabel.Text = "Data utworzenia: " + metadata.CreationDate.ToString();
-                            UDlabel.Text = "Data wgrania: " + metadata.UploadDate.ToString();
+                            UpdateLabels(metadata);
                         }
                         catch (Exception ex)
                         {
@@ -129,6 +138,7 @@ namespace Paragoniarz
                         || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
                         || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
                         || file.EndsWith(".gif", StringComparison.OrdinalIgnoreCase)
+                        || file.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase)
                     )
                 )
                 {
@@ -158,7 +168,8 @@ namespace Paragoniarz
                 // Rysowanie ikony (zakładam, że masz ikonę w zasobach)
                 Image uploadIcon = Properties.Resources.Upload_to_Cloud; // Ikona z zasobów
                 int iconX = (pictureBox2.Width - uploadIcon.Width) / 2; // Wyśrodkowanie ikony
-                int iconY = (pictureBox2.Height - uploadIcon.Height - (int)textSize.Height - 10) / 2; // Wyśrodkowanie ikony z uwzględnieniem miejsca na tekst poniżej ikony
+                int iconY =
+                    (pictureBox2.Height - uploadIcon.Height - (int)textSize.Height - 10) / 2; // Wyśrodkowanie ikony z uwzględnieniem miejsca na tekst poniżej ikony
 
                 // Rysowanie ikony
                 e.Graphics.DrawImage(uploadIcon, iconX, iconY);
@@ -179,12 +190,31 @@ namespace Paragoniarz
                 MessageBox.Show("Nie załadowano żadnego pliku do przesłania.");
                 return;
             }
-            string blobConnectionString = ConfigurationManager
-                .ConnectionStrings["BlobConnectionString"]
-                .ConnectionString;
-            string sqlConnectionString = ConfigurationManager
-                .ConnectionStrings["SqlConnectionString"]
-                .ConnectionString;
+
+            string blobConnectionString;
+            string sqlConnectionString;
+
+            try
+            {
+                blobConnectionString = ConfigurationManager
+                    .ConnectionStrings["BlobConnectionString"]
+                    .ConnectionString;
+                sqlConnectionString = ConfigurationManager
+                    .ConnectionStrings["SqlConnectionString"]
+                    .ConnectionString;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Błąd odczytu ciągu połączenia: {ex.Message}; Upewnij się, że dobrze masz skonfigurowane connectionStrings w App.config");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(blobConnectionString) || string.IsNullOrEmpty(sqlConnectionString))
+            {
+                MessageBox.Show("Ciąg połączenia do Blob Storage jest pusty lub nieprawidłowy. Upewnij się, że dobrze masz skonfigurowane connectionStrings w App.config");
+                return;
+            }
+
             string containerName = "documents";
 
             FileStream fileStream = null;
@@ -238,23 +268,43 @@ namespace Paragoniarz
                 // Tworzenie klienta Blob dla przesyłanego pliku
                 string blobName = Path.GetFileName(droppedFilePath);
                 BlobClient blobClient = containerClient.GetBlobClient(blobName);
+
+                fileStream = File.OpenRead(droppedFilePath);
+
+                string contentType = "application/octet-stream";
+                if (Path.GetExtension(droppedFilePath).ToLower() == ".pdf")
+                {
+                    contentType = "application/pdf";
+                }
+                else if (
+                    Path.GetExtension(droppedFilePath).ToLower() == ".jpg"
+                    || Path.GetExtension(droppedFilePath).ToLower() == ".jpeg"
+                )
+                {
+                    contentType = "image/jpeg";
+                }
+                else if (Path.GetExtension(droppedFilePath).ToLower() == ".png")
+                {
+                    contentType = "image/png";
+                }
+
+                BlobUploadOptions options = new BlobUploadOptions
+                {
+                    HttpHeaders = new BlobHttpHeaders { ContentType = contentType },
+                    Conditions = new BlobRequestConditions { IfNoneMatch = ETag.All }, // Pozwala na nadpisywanie
+                    Metadata = new Dictionary<string, string>
+                    {
+                        { "file_id", fileID },
+                        { "user_id", UserSession.UserId.ToString() },
+                    },
+                };
+
+                fileStream = File.OpenRead(droppedFilePath);
+                blobClient.Upload(fileStream, options);
+
                 MessageBox.Show(
                     $"Plik {blobName} został pomyślnie przesłany do Azure Blob Storage z fileID: {fileID}"
                 );
-
-                // Otwórz plik do odczytu
-                fileStream = File.OpenRead(droppedFilePath);
-
-                // Prześlij plik
-                blobClient.Upload(fileStream, true);
-
-                // Dodanie metadanych do pliku (np. fileID)
-                var metadata = new Dictionary<string, string>
-                {
-                    { "file_id", fileID },
-                    { "user_id", UserSession.UserId.ToString() }, // Zapisanie fileID jako metadanych
-                };
-                blobClient.SetMetadata(metadata);
 
                 string fileUri = blobClient.Uri.ToString();
                 string uriBase64 = Convert.ToBase64String(
@@ -268,7 +318,7 @@ namespace Paragoniarz
                 if (isUpdated)
                 {
                     MessageBox.Show(
-                        "Plik został pomyślnie przesłany i zaktualizowany w bazie danych."
+                        "Rekord został pomyślnie zaktualizowany w bazie danych."
                     );
                 }
                 else
@@ -288,6 +338,14 @@ namespace Paragoniarz
                     fileStream.Dispose();
                 }
             }
+        }
+
+        private void UpdateLabels(ImageMetadata metadata)
+        {
+            FNlabel.Text = "Nazwa pliku: " + metadata.FileName;
+            FSlabel.Text = "Rozmiar pliku: " + (metadata.FileSize / 1024) + " KB";
+            CDlabel.Text = "Data utworzenia: " + metadata.CreationDate.ToString();
+            UDlabel.Text = "Data wgrania: " + metadata.UploadDate.ToString();
         }
     }
 }
