@@ -10,17 +10,35 @@ using System.Windows.Forms;
 using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using static Paragoniarz.DatabaseHelper;
 
 namespace Paragoniarz
 {
     public partial class UploadFileControl : UserControl
     {
-        private string droppedFilePath; // Pole do przechowywania ścieżki pliku
+        private const long MaxFileSizeBytes = 2 * 1024 * 1024; // 2 MB
+        private const string ContainerName = "documents";
+        private const string DefaultDropText = "Tu wrzuć plik";
+        private readonly string[] AllowedExtensions =
+        {
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".gif",
+            ".bmp",
+            ".tiff",
+            ".pdf",
+        };
+
+        private string _droppedFilePath;
 
         public UploadFileControl()
         {
             InitializeComponent();
+            SetupPictureBox();
+        }
+
+        private void SetupPictureBox()
+        {
             pictureBox2.AllowDrop = true;
         }
 
@@ -33,10 +51,8 @@ namespace Paragoniarz
         {
             if (pictureBox2.Image != null)
             {
-                using (var image = pictureBox2.Image)
-                {
-                    pictureBox2.Image = null;
-                }
+                pictureBox2.Image.Dispose();
+                pictureBox2.Image = null;
             }
 
             ResetLabels();
@@ -50,293 +66,247 @@ namespace Paragoniarz
             UDlabel.Text = "Data wgrania: ";
         }
 
-        private void pictureBox2_DragDrop(object sender, DragEventArgs e)
+        private void PictureBox2_DragDrop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                return;
+            }
 
-                if (files.Length > 0)
-                {
-                    droppedFilePath = files[0]; // Zapisz ścieżkę pliku
-                    FileInfo fileInfo = new FileInfo(droppedFilePath);
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                    long maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
-                    if (fileInfo.Length > maxSizeInBytes)
-                    {
-                        MessageBox.Show("Plik jest zbyt duży. Maksymalny rozmiar to 2 MB.");
-                        droppedFilePath = null; // Wyzeruj ścieżkę, jeśli plik jest zbyt duży
-                        return;
-                    }
+            if (files.Length == 0)
+            {
+                return;
+            }
 
-                    string extension = Path.GetExtension(droppedFilePath).ToLower();
+            _droppedFilePath = files[0];
 
-                    // Sprawdź rozszerzenie pliku
-                    if (
-                        extension == ".jpg"
-                        || extension == ".jpeg"
-                        || extension == ".png"
-                        || extension == ".gif"
-                        || extension == ".bmp"
-                        || extension == ".tiff"
-                        || extension == ".pdf"
-                    )
-                    {
-                        try
-                        {
-                            if (extension == ".pdf")
-                            {
-                                pictureBox2.Image = Properties.Resources.pdf_icon;
-                            }
-                            else
-                            {
-                                using (
-                                    var stream = new FileStream(
-                                        droppedFilePath,
-                                        FileMode.Open,
-                                        FileAccess.Read
-                                    )
-                                )
-                                {
-                                    Image originalImage = Image.FromStream(stream);
-                                    Image resizedImage = new Bitmap(
-                                        originalImage,
-                                        new Size(1024, 768)
-                                    );
-                                    pictureBox2.Image = resizedImage;
-                                }
-                            }
+            ProcessDroppedFile();
+        }
 
-                            ImageMetadata metadata = ImageMetadata.LoadFromFile(droppedFilePath);
-                            UpdateLabels(metadata);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Nie udało się załadować obrazu: " + ex.Message);
-                            droppedFilePath = null; // Wyzeruj ścieżkę w przypadku błędu
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Plik nie jest obsługiwanym obrazem.");
-                        droppedFilePath = null; // Wyzeruj ścieżkę dla nieobsługiwanego formatu
-                    }
-                }
+        private void ProcessDroppedFile()
+        {
+            if (!ValidateFile())
+                return;
+
+            try
+            {
+                LoadFilePreview();
+                UpdateFileMetadata();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Nie udało się załadować pliku: {ex.Message}");
+                _droppedFilePath = null;
             }
         }
 
-        private void pictureBox2_DragEnter(object sender, DragEventArgs e)
+        private bool ValidateFile()
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            var fileInfo = new FileInfo(_droppedFilePath);
+            if (fileInfo.Length > MaxFileSizeBytes)
             {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                MessageBox.Show("Plik jest zbyt duży. Maksymalny rozmiar to 2 MB.");
+                _droppedFilePath = null;
+                return false;
+            }
 
-                // Sprawdzenie, czy przynajmniej jeden z plików ma rozszerzenie jpg, jpeg lub inne obsługiwane
-                if (
-                    files.Any(file =>
-                        file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
-                        || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
-                        || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
-                        || file.EndsWith(".gif", StringComparison.OrdinalIgnoreCase)
-                        || file.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase)
-                    )
-                )
-                {
-                    e.Effect = DragDropEffects.Copy; // Dozwolone kopiowanie
-                }
-                else
-                {
-                    e.Effect = DragDropEffects.None; // Niedozwolony typ danych
-                }
+            string extension = Path.GetExtension(_droppedFilePath).ToLower();
+            if (!AllowedExtensions.Contains(extension))
+            {
+                MessageBox.Show("Plik nie jest obsługiwanym formatem.");
+                _droppedFilePath = null;
+                return false;
+            }
+
+            return true;
+        }
+
+        private void LoadFilePreview()
+        {
+            string extension = Path.GetExtension(_droppedFilePath).ToLower();
+            if (extension == ".pdf")
+            {
+                pictureBox2.Image = Properties.Resources.pdf_icon;
             }
             else
             {
-                e.Effect = DragDropEffects.None; // Jeśli dane nie są plikami, zablokuj upuszczanie
+                using (
+                    var stream = new FileStream(_droppedFilePath, FileMode.Open, FileAccess.Read)
+                )
+                {
+                    Image originalImage = Image.FromStream(stream);
+                    Image resizedImage = new Bitmap(originalImage, new Size(1024, 768));
+                    pictureBox2.Image = resizedImage;
+                }
             }
         }
 
-        private void pictureBox2_Paint_1(object sender, PaintEventArgs e)
+        private void UpdateFileMetadata()
         {
-            if (pictureBox2.Image == null) // Jeśli obrazek jest pusty
+            var metadata = ImageMetadata.LoadFromFile(_droppedFilePath);
+            UpdateLabels(metadata);
+        }
+
+        private void PictureBox2_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect =
+                e.Data.GetDataPresent(DataFormats.FileDrop)
+                && ((string[])e.Data.GetData(DataFormats.FileDrop)).Any(file =>
+                    AllowedExtensions.Contains(Path.GetExtension(file).ToLower())
+                )
+                    ? DragDropEffects.Copy
+                    : DragDropEffects.None;
+        }
+
+        private void PictureBox2_Paint(object sender, PaintEventArgs e)
+        {
+            if (pictureBox2.Image != null)
             {
-                // Rysowanie tekstu
-                string text = "Tu wrzuć plik";
-                Font font = new Font("Arial", 14, FontStyle.Bold);
-                Brush brush = Brushes.Gray;
-                SizeF textSize = e.Graphics.MeasureString(text, font);
-
-                // Rysowanie ikony (zakładam, że masz ikonę w zasobach)
-                Image uploadIcon = Properties.Resources.Upload_to_Cloud; // Ikona z zasobów
-                int iconX = (pictureBox2.Width - uploadIcon.Width) / 2; // Wyśrodkowanie ikony
-                int iconY =
-                    (pictureBox2.Height - uploadIcon.Height - (int)textSize.Height - 10) / 2; // Wyśrodkowanie ikony z uwzględnieniem miejsca na tekst poniżej ikony
-
-                // Rysowanie ikony
-                e.Graphics.DrawImage(uploadIcon, iconX, iconY);
-
-                // Ustawienie tekstu pod ikoną
-                float textX = (pictureBox2.Width - textSize.Width) / 2; // Wyśrodkowanie tekstu
-                float textY = iconY + uploadIcon.Height + 10; // Tekst pod ikoną, z odstępem 10 pikseli
-
-                // Rysowanie tekstu
-                e.Graphics.DrawString(text, font, brush, textX, textY);
+                return;
             }
+
+            DrawPlaceholderContent(e.Graphics);
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void DrawPlaceholderContent(Graphics graphics)
         {
-            if (string.IsNullOrEmpty(droppedFilePath))
+            var text = DefaultDropText;
+            Font font = new Font("Arial", 14, FontStyle.Bold);
+            Brush brush = Brushes.Gray;
+            SizeF textSize = graphics.MeasureString(text, font);
+
+            var uploadIcon = Properties.Resources.Upload_to_Cloud;
+            var iconX = (pictureBox2.Width - uploadIcon.Width) / 2;
+            var iconY = (pictureBox2.Height - uploadIcon.Height - (int)textSize.Height - 10) / 2;
+
+            graphics.DrawImage(uploadIcon, iconX, iconY);
+
+            var textX = (pictureBox2.Width - textSize.Width) / 2;
+            var textY = iconY + uploadIcon.Height + 10;
+
+            graphics.DrawString(text, font, brush, textX, textY);
+        }
+
+        private void Button7_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(_droppedFilePath))
             {
                 MessageBox.Show("Nie załadowano żadnego pliku do przesłania.");
                 return;
             }
 
-            string blobConnectionString;
-            string sqlConnectionString;
-
             try
             {
-                blobConnectionString = ConfigurationManager
-                    .ConnectionStrings["BlobConnectionString"]
-                    .ConnectionString;
-                sqlConnectionString = ConfigurationManager
-                    .ConnectionStrings["SqlConnectionString"]
-                    .ConnectionString;
+                var blobConnectionString = GetConnectionString("BlobConnectionString");
+
+                var fileId = InsertFileRecordAndGetId();
+                var blobUri = UploadFileToBlobStorage(blobConnectionString, fileId);
+                UpdateFileRecord(fileId, blobUri);
+
+                MessageBox.Show("Plik został pomyślnie przesłany i zaktualizowany w bazie danych.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Błąd odczytu ciągu połączenia: {ex.Message}; Upewnij się, że dobrze masz skonfigurowane connectionStrings w App.config");
-                return;
+                MessageBox.Show($"Błąd podczas przesyłania pliku: {ex.Message}");
             }
+        }
 
-            if (string.IsNullOrEmpty(blobConnectionString) || string.IsNullOrEmpty(sqlConnectionString))
+        private string GetConnectionString(string name)
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings[name]?.ConnectionString;
+            if (string.IsNullOrEmpty(connectionString))
             {
-                MessageBox.Show("Ciąg połączenia do Blob Storage jest pusty lub nieprawidłowy. Upewnij się, że dobrze masz skonfigurowane connectionStrings w App.config");
-                return;
-            }
-
-            string containerName = "documents";
-
-            FileStream fileStream = null;
-            string fileID = null;
-
-            try
-            {
-                // Krok 1: Dodanie encji do SQL Server i uzyskanie fileID
-                using (var sqlConnection = new SqlConnection(sqlConnectionString))
-                {
-                    sqlConnection.Open();
-
-                    // Przykładowa procedura składowana: dbo.InsertFileAndReturnID
-                    // Procedura wstawia encję i zwraca fileID
-                    using (
-                        var sqlCommand = new SqlCommand("dbo.InsertFileAndReturnID", sqlConnection)
-                    )
-                    {
-                        sqlCommand.CommandType = CommandType.StoredProcedure;
-
-                        // Dodaj parametry procedury
-                        sqlCommand.Parameters.AddWithValue(
-                            "@FileName",
-                            Path.GetFileName(droppedFilePath)
-                        );
-                        sqlCommand.Parameters.AddWithValue("@UploadDate", DateTime.UtcNow);
-                        sqlCommand.Parameters.AddWithValue("@UserId", UserSession.UserId);
-
-                        // Odczytaj wynik procedury
-                        object result = sqlCommand.ExecuteScalar();
-                        if (result != null)
-                        {
-                            fileID = result.ToString();
-                        }
-                        else
-                        {
-                            throw new Exception("Nie udało się uzyskać fileID z bazy danych.");
-                        }
-                    }
-                }
-
-                // Krok 2: Przesłanie pliku do Azure Blob Storage z metadanymi
-                BlobServiceClient blobServiceClient = new BlobServiceClient(blobConnectionString);
-                BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(
-                    containerName
+                throw new ConfigurationErrorsException(
+                    $"Brak lub nieprawidłowy ciąg połączenia: {name}; Sprawdź App.config"
                 );
+            }
+            return connectionString;
+        }
 
-                // Utworzenie kontenera, jeśli jeszcze nie istnieje
-                containerClient.CreateIfNotExists();
-
-                // Tworzenie klienta Blob dla przesyłanego pliku
-                string blobName = Path.GetFileName(droppedFilePath);
-                BlobClient blobClient = containerClient.GetBlobClient(blobName);
-
-                fileStream = File.OpenRead(droppedFilePath);
-
-                string contentType = "application/octet-stream";
-                if (Path.GetExtension(droppedFilePath).ToLower() == ".pdf")
+        private string InsertFileRecordAndGetId()
+        {
+            return DatabaseConnection.Instance.ExecuteQuery(connection =>
+            {
+                using (var sqlCommand = new SqlCommand("dbo.InsertFileAndReturnID", connection))
                 {
-                    contentType = "application/pdf";
-                }
-                else if (
-                    Path.GetExtension(droppedFilePath).ToLower() == ".jpg"
-                    || Path.GetExtension(droppedFilePath).ToLower() == ".jpeg"
-                )
-                {
-                    contentType = "image/jpeg";
-                }
-                else if (Path.GetExtension(droppedFilePath).ToLower() == ".png")
-                {
-                    contentType = "image/png";
-                }
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue(
+                        "@FileName",
+                        Path.GetFileName(_droppedFilePath)
+                    );
+                    sqlCommand.Parameters.AddWithValue("@UploadDate", DateTime.UtcNow);
+                    sqlCommand.Parameters.AddWithValue("@UserId", UserSession.UserId);
 
-                BlobUploadOptions options = new BlobUploadOptions
+                    var result = sqlCommand.ExecuteScalar();
+                    if (result == null)
+                    {
+                        throw new Exception("Nie udało się uzyskać fileID z bazy danych.");
+                    }
+                    return result.ToString();
+                }
+            });
+        }
+
+        private string UploadFileToBlobStorage(string blobConnectionString, string fileId)
+        {
+            var blobServiceClient = new BlobServiceClient(blobConnectionString);
+            var containerClient = blobServiceClient.GetBlobContainerClient(ContainerName);
+            containerClient.CreateIfNotExists();
+
+            var blobName = Path.GetFileName(_droppedFilePath);
+            var blobClient = containerClient.GetBlobClient(blobName);
+
+            using (var fileStream = File.OpenRead(_droppedFilePath))
+            {
+                var contentType = GetContentType(_droppedFilePath);
+                var options = new BlobUploadOptions
                 {
                     HttpHeaders = new BlobHttpHeaders { ContentType = contentType },
-                    Conditions = new BlobRequestConditions { IfNoneMatch = ETag.All }, // Pozwala na nadpisywanie
+                    Conditions = new BlobRequestConditions { IfNoneMatch = ETag.All },
                     Metadata = new Dictionary<string, string>
                     {
-                        { "file_id", fileID },
+                        { "file_id", fileId },
                         { "user_id", UserSession.UserId.ToString() },
                     },
                 };
 
-                fileStream = File.OpenRead(droppedFilePath);
                 blobClient.Upload(fileStream, options);
-
-                MessageBox.Show(
-                    $"Plik {blobName} został pomyślnie przesłany do Azure Blob Storage z fileID: {fileID}"
-                );
-
-                string fileUri = blobClient.Uri.ToString();
-                string uriBase64 = Convert.ToBase64String(
-                    System.Text.Encoding.UTF8.GetBytes(fileUri)
-                );
-
-                // 3. Aktualizacja rekordu w SQL
-                DatabaseHelper dbHelper = new DatabaseHelper();
-                bool isUpdated = dbHelper.UpdateFileRecord(fileID, uriBase64);
-
-                if (isUpdated)
-                {
-                    MessageBox.Show(
-                        "Rekord został pomyślnie zaktualizowany w bazie danych."
-                    );
-                }
-                else
-                {
-                    MessageBox.Show("Aktualizacja bazy danych nie powiodła się.");
-                }
             }
-            catch (Exception ex)
+
+            return blobClient.Uri.ToString();
+        }
+
+        private void UpdateFileRecord(string fileId, string blobUri)
+        {
+            var uriBase64 = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(blobUri));
+            var dbHelper = new DatabaseHelper();
+            if (!dbHelper.UpdateFileRecord(fileId, uriBase64))
             {
-                MessageBox.Show("Błąd podczas przesyłania pliku: " + ex.Message);
+                throw new Exception("Aktualizacja bazy danych nie powiodła się.");
             }
-            finally
+        }
+
+        private string GetContentType(string filePath)
+        {
+            var extension = Path.GetExtension(filePath).ToLower();
+
+            if (extension == ".pdf")
             {
-                // Zamknięcie strumienia pliku
-                if (fileStream != null)
-                {
-                    fileStream.Dispose();
-                }
+                return "application/pdf";
+            }
+            else if (extension == ".jpg" || extension == ".jpeg")
+            {
+                return "image/jpeg";
+            }
+            else if (extension == ".png")
+            {
+                return "image/png";
+            }
+            else
+            {
+                return "application/octet-stream";
             }
         }
 

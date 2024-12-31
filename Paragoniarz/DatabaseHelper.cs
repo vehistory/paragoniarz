@@ -119,7 +119,6 @@ namespace Paragoniarz
             using (var sqlConnection = DatabaseConnection.Instance.CreateConnection())
             {
                 sqlConnection.Open();
-
                 using (var sqlCommand = new SqlCommand("dbo.UpdateFileUri", sqlConnection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
