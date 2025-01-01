@@ -12,7 +12,12 @@ app.eventGrid('paragoniarzEventGridTrigger', {
         context.log('Event grid function processed event:', event);
 
         if (!searchEndpoint || !searchApiKey || !indexerName) {
-            context.log("Make sure to set valid values for searchEndpoint and searchApiKey with proper authorization.");
+            context.log.error("Make sure to set valid values for searchEndpoint and searchApiKey with proper authorization.");
+            return;
+        }
+
+        if (!event.data) {
+            context.log.error('Event data is missing, skipping processing.');
             return;
         }
 
