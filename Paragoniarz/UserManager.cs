@@ -7,8 +7,8 @@ public static class UserManager
 {
     public static bool ValidateUser(string username, string password)
     {
-        string query =
-            "SELECT COUNT(*) FROM Users WHERE Username = @username AND Password = @password";
+
+        string query = "SELECT COUNT(*) FROM Users WHERE Username = @username AND Password = @password";
 
         using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
         {

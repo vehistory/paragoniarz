@@ -21,7 +21,6 @@ namespace Paragoniarz
             {
                 return true; // Nazwa użytkownika już istnieje
             }
-
             // Sprawdzamy, czy email już istnieje
             foreach (var user in users.Values)
             {
@@ -30,7 +29,6 @@ namespace Paragoniarz
                     return true; // E-mail już istnieje
                 }
             }
-
             // Jeśli nazwa użytkownika ani e-mail nie istnieją, zwracamy false
             return false;
         }

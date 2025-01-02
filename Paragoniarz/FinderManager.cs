@@ -9,16 +9,10 @@ namespace Paragoniarz
     internal class FinderManager
     {
         // Metoda do tworzenia zapytania SQL na podstawie podanych parametrów i idUser
-        public string CreateSearchQuery(
-            int userId,
-            string nazwa,
-            DateTime? dataOd,
-            DateTime? dataDo
-        )
+        public string CreateSearchQuery(int userId,string nazwa,DateTime? dataOd,DateTime? dataDo)
         {
             // Budujemy podstawowe zapytanie SQL - szukamy plików powiązanych z danym userId
-            string query =
-                $"SELECT file_url, original_name, timestamp FROM dbo.files WHERE user_id = {userId}";
+            string query = $"SELECT file_url, original_name, timestamp FROM dbo.files WHERE user_id = {userId}";
 
             // Dodajemy filtrację po nazwie pliku (original_name)
             if (!string.IsNullOrEmpty(nazwa))
@@ -39,5 +33,6 @@ namespace Paragoniarz
 
             return query;
         }
+
     }
 }
