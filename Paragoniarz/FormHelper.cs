@@ -10,7 +10,11 @@ namespace Paragoniarz
     {
         private bool isPasswordVisible = false;
 
-        public bool IsUsernameOrEmailTaken(string username, string email, Dictionary<string, Tuple<string, string>> users)
+        public bool IsUsernameOrEmailTaken(
+            string username,
+            string email,
+            Dictionary<string, Tuple<string, string>> users
+        )
         {
             // Sprawdzamy, czy nazwa użytkownika już istnieje
             if (users.ContainsKey(username))
@@ -31,7 +35,12 @@ namespace Paragoniarz
             return false;
         }
 
-        public void TogglePasswordVisibility(TextBox tbPassword, PictureBox pictureBox, Image visibleImage, Image hiddenImage)
+        public void TogglePasswordVisibility(
+            TextBox tbPassword,
+            PictureBox pictureBox,
+            Image visibleImage,
+            Image hiddenImage
+        )
         {
             if (isPasswordVisible)
             {

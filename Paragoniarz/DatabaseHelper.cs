@@ -85,7 +85,8 @@ namespace Paragoniarz
             {
                 return DatabaseConnection.Instance.ExecuteQuery(connection =>
                 {
-                    string query = "SELECT id, username, email FROM dbo.Users WHERE username = @username AND password = @password";
+                    string query =
+                        "SELECT id, username, email FROM dbo.Users WHERE username = @username AND password = @password";
                     using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
                         cmd.Parameters.AddWithValue("@username", username);
@@ -99,7 +100,7 @@ namespace Paragoniarz
                                 {
                                     Id = reader.GetInt32(0),
                                     Username = reader.GetString(1),
-                                    Email = reader.GetString(2)
+                                    Email = reader.GetString(2),
                                 };
                             }
                         }

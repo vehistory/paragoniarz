@@ -2,51 +2,49 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-
 namespace Paragoniarz
 {
     public partial class RegisterForm : Form
     {
-
-
         public RegisterForm()
         {
             InitializeComponent();
-            // Zaokrąglij rogi okna 
+            // Zaokrąglij rogi okna
             WindowHelper.SetWindowRoundCorners(this, 20);
-            // Umożliw przesuwanie okna 
+            // Umożliw przesuwanie okna
             WindowHelper.EnableWindowDragging(panel1, this);
             passBox.UseSystemPasswordChar = true;
             rePassBox.UseSystemPasswordChar = true;
-
         }
 
-
-
-
         private FormHelper formHelper = new FormHelper();
-
 
         //obsluga widocznosci hasla dla pola haslo
         private void pictureBox5_Click(object sender, EventArgs e)
         {
-            formHelper.TogglePasswordVisibility(passBox, pictureBox5, Properties.Resources.RegisterOpenEye, Properties.Resources.RegisterClosed_Eye2);
+            formHelper.TogglePasswordVisibility(
+                passBox,
+                pictureBox5,
+                Properties.Resources.RegisterOpenEye,
+                Properties.Resources.RegisterClosed_Eye2
+            );
         }
+
         //obsluga widocznosci hasla dla pola powtorz haslo
         private void pictureBox6_Click(object sender, EventArgs e)
         {
-            formHelper.TogglePasswordVisibility(rePassBox, pictureBox6, Properties.Resources.RegisterOpenEye, Properties.Resources.RegisterClosed_Eye2);
+            formHelper.TogglePasswordVisibility(
+                rePassBox,
+                pictureBox6,
+                Properties.Resources.RegisterOpenEye,
+                Properties.Resources.RegisterClosed_Eye2
+            );
         }
-
-
 
         //obsluga butonna "x" do zamkniecia okna
         private void exitButton_Click(object sender, EventArgs e)
         {
-
-
             Environment.Exit(0);
-
         }
 
         //oblsuga przycisku zarejestruj
@@ -56,7 +54,6 @@ namespace Paragoniarz
             string confirmPassword = rePassBox.Text;
             string email = textBox2.Text;
             string username = textBox1.Text;
-
 
             DatabaseHelper dbHelper = new DatabaseHelper();
 
@@ -74,15 +71,13 @@ namespace Paragoniarz
 
             if (!formHelper.ValidatePassword(password, confirmPassword))
             {
-                MessageBox.Show("Hasło musi mieć co najmniej 8 znaków, zawierać jedną cyfrę, jedną wielką literę i jeden znak specjalny.");
+                MessageBox.Show(
+                    "Hasło musi mieć co najmniej 8 znaków, zawierać jedną cyfrę, jedną wielką literę i jeden znak specjalny."
+                );
                 return;
             }
 
-
-
             dbHelper.InsertUser(username, email, password);
-
-
 
             MessageBox.Show("Rejestracja zakończona sukcesem!");
             Form1 form1 = new Form1();
@@ -94,12 +89,11 @@ namespace Paragoniarz
             this.Hide();
         }
 
-
         private void Field_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                button3.PerformClick();  // Kliknięcie przycisku "Zarejestruj"
+                button3.PerformClick(); // Kliknięcie przycisku "Zarejestruj"
             }
         }
 

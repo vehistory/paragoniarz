@@ -6,19 +6,16 @@ namespace Paragoniarz
 {
     public partial class ForgottenPass : Form
     {
-
-
         public ForgottenPass()
         {
             InitializeComponent();
-            // Zaokrąglij rogi okna 
+            // Zaokrąglij rogi okna
             WindowHelper.SetWindowRoundCorners(this, 20);
 
-            // Umożliw przesuwanie okna 
+            // Umożliw przesuwanie okna
             WindowHelper.EnableWindowDragging(panel2, this);
             this.StartPosition = FormStartPosition.CenterScreen;
         }
-
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

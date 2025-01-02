@@ -33,7 +33,8 @@ namespace Paragoniarz
 
         public static bool IsUserExists(string username, string email)
         {
-            string query = "SELECT COUNT(*) FROM dbo.users WHERE username = @username OR email = @email";
+            string query =
+                "SELECT COUNT(*) FROM dbo.users WHERE username = @username OR email = @email";
 
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
@@ -57,7 +58,8 @@ namespace Paragoniarz
 
         public static bool CreateUser(string username, string password, string email)
         {
-            string query = "INSERT INTO dbo.users (username, password, email) VALUES (@username, @password, @email)";
+            string query =
+                "INSERT INTO dbo.users (username, password, email) VALUES (@username, @password, @email)";
 
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {

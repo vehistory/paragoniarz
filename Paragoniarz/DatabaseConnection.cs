@@ -15,7 +15,9 @@ namespace Paragoniarz
         {
             try
             {
-                _connectionString = ConfigurationManager.ConnectionStrings["ParagoniarzConnectionString"].ConnectionString;
+                _connectionString = ConfigurationManager
+                    .ConnectionStrings["ParagoniarzConnectionString"]
+                    .ConnectionString;
                 if (string.IsNullOrEmpty(_connectionString))
                 {
                     throw new ConfigurationErrorsException(

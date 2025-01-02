@@ -24,7 +24,12 @@ namespace Paragoniarz
 
         private void pictureBox4_Click(object sender, EventArgs e)
         {
-            formHelper.TogglePasswordVisibility(tbPassword, pictureBox4, Properties.Resources.Eye, Properties.Resources.Closed_Eye1);
+            formHelper.TogglePasswordVisibility(
+                tbPassword,
+                pictureBox4,
+                Properties.Resources.Eye,
+                Properties.Resources.Closed_Eye1
+            );
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -91,7 +96,7 @@ namespace Paragoniarz
         {
             ForgottenPass forgottenPass = new ForgottenPass
             {
-                StartPosition = FormStartPosition.Manual
+                StartPosition = FormStartPosition.Manual,
             };
             int x = this.Location.X + (this.Width - forgottenPass.Width) / 2;
             int y = this.Location.Y + (this.Height - forgottenPass.Height) / 2;
@@ -101,11 +106,13 @@ namespace Paragoniarz
             forgottenPass.Show();
         }
 
-        private void label5_Paint(object sender, PaintEventArgs e) {
+        private void label5_Paint(object sender, PaintEventArgs e)
+        {
             // pass
         }
 
-        private void button3_Click(object sender, EventArgs e) {
+        private void button3_Click(object sender, EventArgs e)
+        {
             UserSession.Login(1, "admin", "admin@example.com");
 
             Form2 form2 = new Form2
