@@ -106,14 +106,9 @@ namespace Paragoniarz
             forgottenPass.Show();
         }
 
-        private void label5_Paint(object sender, PaintEventArgs e)
-        {
-            // pass
-        }
-
         private void button3_Click(object sender, EventArgs e)
         {
-            UserSession.Login(1, "SebastianSajda ssaddsadasa ssaasddasdads", "admin@example.com");
+            UserSession.Login(1, "admin", "admin@example.com");
 
             Form2 form2 = new Form2
             {

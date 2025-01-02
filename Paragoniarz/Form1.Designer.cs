@@ -124,7 +124,6 @@
             this.label5.Size = new System.Drawing.Size(114, 28);
             this.label5.TabIndex = 12;
             this.label5.Text = "Logowanie";
-            this.label5.Paint += new System.Windows.Forms.PaintEventHandler(this.label5_Paint);
             //
             // pictureBox4
             //
