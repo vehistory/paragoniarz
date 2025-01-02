@@ -125,8 +125,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildingTable.cs" />
     <Compile Include="DatabaseConnection.cs" />
     <Compile Include="DatabaseHelper.cs" />
+    <Compile Include="FinderManager.cs" />
     <Compile Include="FindFileControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -178,15 +180,19 @@
     </Compile>
     <EmbeddedResource Include="FindFileControl.resx">
       <DependentUpon>FindFileControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ForgottenPass.resx">
       <DependentUpon>ForgottenPass.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -200,9 +206,11 @@
     </Compile>
     <EmbeddedResource Include="RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UploadFileControl.resx">
       <DependentUpon>UploadFileControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="YourFilesControl.resx">
       <DependentUpon>YourFilesControl.cs</DependentUpon>
@@ -276,6 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ILLink\ILLink.Descriptors.LibraryBuild.xml" />
+    <None Include="Resources\Images\icons8-trash-26.png" />
     <None Include="Resources\pdf_icon.bmp" />
     <None Include="Resources\Upload to Cloud.png" />
   </ItemGroup>
