@@ -3,6 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Policy;
@@ -25,6 +26,10 @@ namespace Paragoniarz
             _userId = userId;
             tableLayoutPanel1.Controls.Clear();
             WindowHelper.SetWindowRoundCorners(panel6, 10);
+
+            tableLayoutPanel1.AutoSize = true;
+            tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel1.Dock = DockStyle.Top;
         }
 
         // rysowanie gradientu na panelu
@@ -91,9 +96,9 @@ namespace Paragoniarz
             if (result.Rows.Count > 0)
             {
                 // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
-                tableLayoutPanel1.Controls.Clear();
-                tableLayoutPanel1.RowCount = 0; // Resetowanie liczby wierszy do 0
                 tableLayoutPanel1.SuspendLayout();
+                tableLayoutPanel1.Controls.Clear();
+                tableLayoutPanel1.RowCount = 0;
 
                 // Iterujemy przez wszystkie wiersze wyników
                 foreach (DataRow row in result.Rows)
@@ -136,7 +141,7 @@ namespace Paragoniarz
                     // Kolumna 3: Załączony plik (URL)
                     LinkLabel labelUrl = new LinkLabel();
                     labelUrl.AccessibleName = url;
-                    labelUrl.Text = "Wyświetl";
+                    labelUrl.Text = "Podgląd";
                     labelUrl.LinkClicked += new LinkLabelLinkClickedEventHandler(linkLabel1_LinkClicked);
                     labelUrl.TextAlign = ContentAlignment.MiddleCenter;
                     labelUrl.LinkColor = Color.FromArgb(0, 192, 192);
@@ -181,7 +186,7 @@ namespace Paragoniarz
         {
             // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
             tableLayoutPanel1.Controls.Clear();
-            tableLayoutPanel1.RowCount = 1; // Resetowanie liczby wierszy do 1
+            tableLayoutPanel1.RowCount = 0; // Resetowanie liczby wierszy do 0
         }
 
         public async Task DeleteFileFromBlobStorage(string fileName)

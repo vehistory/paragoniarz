@@ -1,4 +1,6 @@
-﻿namespace Paragoniarz
+﻿using System.Windows.Forms;
+
+namespace Paragoniarz
 {
     partial class FindFileControl
     {
@@ -236,26 +238,28 @@
             // 
             this.tablePanel.Controls.Add(this.panel2);
             this.tablePanel.Controls.Add(this.panel1);
-            this.tablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tablePanel.AutoScroll = true;
+            this.tablePanel.Dock = DockStyle.Fill;
             this.tablePanel.Location = new System.Drawing.Point(0, 118);
             this.tablePanel.Name = "tablePanel";
             this.tablePanel.Size = new System.Drawing.Size(1003, 482);
             this.tablePanel.TabIndex = 19;
             this.tablePanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tablePanel_Scroll);
+
             // 
             // panel2
             // 
+            this.panel2.AutoScroll = true;
             this.panel2.Controls.Add(this.tableLayoutPanel1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 39);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1003, 443);
+            this.panel2.Size = new System.Drawing.Size(1003, 482);
             this.panel2.TabIndex = 27;
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.AutoScroll = true;
-            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 6;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 253F));
@@ -264,12 +268,12 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 195F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1003, 2);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1003, 482);
             this.tableLayoutPanel1.TabIndex = 26;
             // 
             // panel1
@@ -354,7 +358,6 @@
             this.panel6.PerformLayout();
             this.tablePanel.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
