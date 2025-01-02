@@ -127,6 +127,7 @@
   <ItemGroup>
     <Compile Include="DatabaseConnection.cs" />
     <Compile Include="DatabaseHelper.cs" />
+    <Compile Include="FinderManager.cs" />
     <Compile Include="FindFileControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

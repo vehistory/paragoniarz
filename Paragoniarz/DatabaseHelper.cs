@@ -5,10 +5,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 
-
-
-
-
 namespace Paragoniarz
 {
     public class DatabaseHelper
@@ -21,18 +17,19 @@ namespace Paragoniarz
 
 
         // Sprawdzanie, czy użytkownik lub email są już zajęte
-        public bool IsUsernameOrEmailTaken(string username,string email)
+        public bool IsUsernameOrEmailTaken(string username, string email)
         {
             using (var connection = DatabaseConnection.Instance.CreateConnection())
             {
                 try
                 {
                     connection.Open();
-                    string query = "SELECT COUNT(*) FROM dbo.Users WHERE username = @username OR email = @email";
-                    using (var cmd = new SqlCommand(query,connection))
+                    string query =
+                        "SELECT COUNT(*) FROM dbo.Users WHERE username = @username OR email = @email";
+                    using (var cmd = new SqlCommand(query, connection))
                     {
-                        cmd.Parameters.AddWithValue("@username",username);
-                        cmd.Parameters.AddWithValue("@email",email);
+                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@email", email);
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         return count > 0;
@@ -47,21 +44,22 @@ namespace Paragoniarz
         }
 
         // Metoda do dodawania użytkownika z hasłem w formie haszowanej
-        public void InsertUser(string username,string email,string password)
+        public void InsertUser(string username, string email, string password)
         {
             string hashedPassword = HashPassword(password); // Haszowanie hasła
 
-            string query = "INSERT INTO dbo.Users (username, password, email) VALUES (@username, @password, @email)";
+            string query =
+                "INSERT INTO dbo.Users (username, password, email) VALUES (@username, @password, @email)";
 
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(query,conn);
-                    cmd.Parameters.AddWithValue("@username",username);
-                    cmd.Parameters.AddWithValue("@password",hashedPassword);
-                    cmd.Parameters.AddWithValue("@email",email);
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@password", hashedPassword);
+                    cmd.Parameters.AddWithValue("@email", email);
 
                     int result = cmd.ExecuteNonQuery();
                     if (result > 0)
@@ -97,29 +95,58 @@ namespace Paragoniarz
         }
 
         // Walidacja użytkownika
-        public bool ValidateUser(string username,string password)
+        // Walidacja użytkownika i pobieranie idUser
+        // Metoda ValidateUser zwraca teraz krotkę (idUser, username)
+        public int? ValidateUser(string username, string password)
         {
             string hashedPassword = HashPassword(password);
 
-            string query = "SELECT id FROM dbo.Users WHERE username = @username AND password = @password";
+            // Zapytanie SQL teraz zwraca idUser
+            string query =
+                "SELECT id FROM dbo.Users WHERE username = @username AND password = @password";
 
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(query,conn);
-                    cmd.Parameters.AddWithValue("@username",username);
-                    cmd.Parameters.AddWithValue("@password",hashedPassword);
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@password", hashedPassword);
 
-                    int user_id = Convert.ToInt32(cmd.ExecuteScalar());
-                    SessionData.UserId = user_id;
-                    return user_id > 0;
+                    object result = cmd.ExecuteScalar(); // Zwraca pojedynczy wynik, idUser
+
+                    if (result != null)
+                    {
+                        return Convert.ToInt32(result); // Zwraca idUser, jeśli użytkownik istnieje
+                    }
+                    else
+                    {
+                        return null; // Zwraca null, jeśli nie znaleziono użytkownika
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Błąd podczas logowania: {ex.Message}");
-                    return false;
+                    return null;
+                }
+            }
+        }
+
+        // Metoda do pobierania danych z bazy danych
+        public DataTable GetDataFromQuery(string query)
+        {
+            using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand(query, conn))
+                {
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+                        return dataTable; // Zwraca wynik jako DataTable
+                    }
                 }
             }
         }

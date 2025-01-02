@@ -35,9 +35,7 @@ namespace Paragoniarz
             UDlabel.Text = "Data wgrania: ";
             GC.Collect();
             GC.WaitForPendingFinalizers();
-
         }
-
 
         private void pictureBox2_DragDrop(object sender, DragEventArgs e)
         {
