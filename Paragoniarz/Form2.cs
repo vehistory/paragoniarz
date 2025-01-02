@@ -12,19 +12,15 @@ namespace Paragoniarz
         private UploadFileControl uploadFileControl;
         private YourFilesControl yourFilesControl;
         private FindFileControl findFileControl;
-        private int _userId;
-        private string _username;
 
-        public Form2(int userId, string userName)
+        public Form2()
         {
             InitializeComponent();
 
             uploadFileControl = new UploadFileControl();
             yourFilesControl = new YourFilesControl();
-            findFileControl = new FindFileControl(userId);
+            findFileControl = new FindFileControl(UserSession.UserId);
             ShowControl(uploadFileControl);
-            _userId = userId; // Przechowujemy idUser
-            _username = userName; // Przechowujemy username
 
             // Zaokrąglij rogi okna
             WindowHelper.SetWindowRoundCorners(this, 20);
@@ -38,10 +34,8 @@ namespace Paragoniarz
             sendFile.BackColor = Color.FromArgb(46, 51, 73);
 
             // Sprawdź, czy nazwa użytkownika została przekazana i przypisz ją do labela
-            if (!string.IsNullOrEmpty(userName))
             if (!string.IsNullOrEmpty(UserSession.Username))
             {
-                label1.Text = "Witaj " + userName + "!";
                 label1.Text = "Witaj " + UserSession.Username + "!";
             }
             else

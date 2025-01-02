@@ -113,7 +113,7 @@ namespace Paragoniarz
 
         private void button3_Click(object sender, EventArgs e)
         {
-            UserSession.Login(1, "admin", "admin@example.com");
+            UserSession.Login(1, "SebastianSajda ssaddsadasa ssaasddasdads", "admin@example.com");
 
             Form2 form2 = new Form2
             {

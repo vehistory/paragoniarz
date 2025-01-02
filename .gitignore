@@ -1,5 +1,6 @@
 # Ignorowanie folderu .vs
 .vs/
+.idea/
 
 # Ignorowanie folderów kompilacji (bin i obj)
 bin/

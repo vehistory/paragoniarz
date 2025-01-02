@@ -136,6 +136,24 @@ namespace Paragoniarz
             }
         }
 
+        // Metoda do pobierania danych z bazy danych
+        public DataTable GetDataFromQuery(string query)
+        {
+            using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
+            {
+                conn.Open();
+                using (SqlCommand command = new SqlCommand(query, conn))
+                {
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+                        return dataTable; // Zwraca wynik jako DataTable
+                    }
+                }
+            }
+        }
+
         public string GetFileNameFromDatabase(int userId)
         {
             string query = "SELECT fileName FROM dbo.Files WHERE userId = @userId"; // Załóżmy, że masz tabelę 'Files'
