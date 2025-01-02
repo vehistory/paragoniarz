@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Data;
 using System;
-using Azure.Storage.Blobs;  
+using Azure.Storage.Blobs;
 using System.Threading.Tasks;
 
 
@@ -37,6 +37,9 @@ namespace Paragoniarz
                 e.Graphics.FillRectangle(brush,panel.ClientRectangle);
             }
         }
+
+
+
         private void panel6_Paint(object sender,PaintEventArgs e)
         {
             gradientPanel(sender,e,panel6);
@@ -44,7 +47,7 @@ namespace Paragoniarz
 
         private void tablePanel_Scroll(object sender,ScrollEventArgs e)
         {
-            
+
                 tablePanel.AutoScroll = true;
                 tableLayoutPanel1.Dock = DockStyle.Fill;
                 tablePanel.Controls.Add(tableLayoutPanel1);
@@ -88,7 +91,7 @@ namespace Paragoniarz
                 // Iterujemy przez wszystkie wiersze wyników
                 foreach (DataRow row in result.Rows)
                 {
-                    
+
                     // Kolumna 0: Nazwa pliku
                     Label labelNazwa = new Label();
                     labelNazwa.Text = row["original_name"].ToString();
@@ -179,8 +182,8 @@ namespace Paragoniarz
             {
                 // Obsługuje wyjątek w przypadku błędu
                           MessageBox.Show($"Błąd podczas usuwania pliku z Azure: {ex.Message}");
-            }          
-        } 
+            }
+        }
         private async void button2_Click(object sender,EventArgs e)
         {
             // Sprawdzamy, czy sender to przycisk
