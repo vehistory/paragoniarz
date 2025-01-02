@@ -38,7 +38,7 @@ namespace Paragoniarz
             }
         }
 
-       
+
 
         private void panel6_Paint(object sender,PaintEventArgs e)
         {
@@ -47,7 +47,7 @@ namespace Paragoniarz
 
         private void tablePanel_Scroll(object sender,ScrollEventArgs e)
         {
-            
+
                 tablePanel.AutoScroll = true;
                 tableLayoutPanel1.Dock = DockStyle.Fill;
                 tablePanel.Controls.Add(tableLayoutPanel1);

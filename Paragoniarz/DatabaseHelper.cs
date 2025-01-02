@@ -9,6 +9,13 @@ namespace Paragoniarz
 {
     public class DatabaseHelper
     {
+        public static class SessionData
+        {
+            public static int UserId { get; set; }
+            public static string UserName { get; set; }
+        }
+
+
         // Sprawdzanie, czy użytkownik lub email są już zajęte
         public bool IsUsernameOrEmailTaken(string username, string email)
         {
@@ -140,6 +147,26 @@ namespace Paragoniarz
                         adapter.Fill(dataTable);
                         return dataTable; // Zwraca wynik jako DataTable
                     }
+                }
+            }
+        }
+
+        public bool UpdateFileRecord(string fileID, string fileUriBase64)
+        {
+            using (var sqlConnection = DatabaseConnection.Instance.CreateConnection())
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("dbo.UpdateFileUri", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    // Dodanie parametrów
+                    sqlCommand.Parameters.AddWithValue("@FileID", fileID);
+                    sqlCommand.Parameters.AddWithValue("@FileUriBase64", fileUriBase64);
+
+                    int rowsAffected = sqlCommand.ExecuteNonQuery();
+                    return rowsAffected > 0; // Zwraca true, jeśli rekord został zaktualizowany
                 }
             }
         }

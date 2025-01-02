@@ -52,9 +52,9 @@
             this.panel6.SuspendLayout();
             this.tablePanel.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // panel5
-            // 
+            //
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(30)))), ((int)(((byte)(48)))));
             this.panel5.Controls.Add(this.panel6);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
@@ -62,9 +62,9 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(1003, 118);
             this.panel5.TabIndex = 18;
-            // 
+            //
             // label11
-            // 
+            //
             this.label11.AutoSize = true;
             this.label11.BackColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Segoe UI Black", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -74,9 +74,9 @@
             this.label11.Size = new System.Drawing.Size(105, 32);
             this.label11.TabIndex = 6;
             this.label11.Text = "Data do";
-            // 
+            //
             // label12
-            // 
+            //
             this.label12.AutoSize = true;
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Segoe UI Black", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -86,9 +86,9 @@
             this.label12.Size = new System.Drawing.Size(105, 32);
             this.label12.TabIndex = 10;
             this.label12.Text = "Data od";
-            // 
+            //
             // textBox7
-            // 
+            //
             this.textBox7.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.textBox7.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -97,9 +97,9 @@
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(169, 19);
             this.textBox7.TabIndex = 10;
-            // 
+            //
             // label13
-            // 
+            //
             this.label13.AutoSize = true;
             this.label13.BackColor = System.Drawing.Color.Transparent;
             this.label13.Font = new System.Drawing.Font("Segoe UI Black", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -109,9 +109,9 @@
             this.label13.Size = new System.Drawing.Size(66, 32);
             this.label13.TabIndex = 9;
             this.label13.Text = "Opis";
-            // 
+            //
             // textBox8
-            // 
+            //
             this.textBox8.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.textBox8.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -121,9 +121,9 @@
             this.textBox8.Size = new System.Drawing.Size(169, 19);
             this.textBox8.TabIndex = 9;
             this.textBox8.Tag = "";
-            // 
+            //
             // label14
-            // 
+            //
             this.label14.AutoSize = true;
             this.label14.BackColor = System.Drawing.Color.Transparent;
             this.label14.Font = new System.Drawing.Font("Segoe UI Black", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -133,9 +133,9 @@
             this.label14.Size = new System.Drawing.Size(91, 32);
             this.label14.TabIndex = 8;
             this.label14.Text = "Nazwa";
-            // 
+            //
             // panel6
-            // 
+            //
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(94)))));
             this.panel6.Controls.Add(this.dateTimePicker2);
             this.panel6.Controls.Add(this.dateTimePicker1);
@@ -154,9 +154,9 @@
             this.panel6.Size = new System.Drawing.Size(1003, 118);
             this.panel6.TabIndex = 18;
             this.panel6.Paint += new System.Windows.Forms.PaintEventHandler(this.panel6_Paint);
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI Black", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -166,9 +166,9 @@
             this.label1.Size = new System.Drawing.Size(87, 32);
             this.label1.TabIndex = 12;
             this.label1.Text = "Osoba";
-            // 
+            //
             // textBox1
-            // 
+            //
             this.textBox1.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -177,9 +177,9 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(169, 19);
             this.textBox1.TabIndex = 11;
-            // 
+            //
             // button3
-            // 
+            //
             this.button3.BackColor = System.Drawing.Color.Transparent;
             this.button3.FlatAppearance.BorderSize = 3;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -192,9 +192,9 @@
             this.button3.Text = "Wyszukaj";
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
+            //
             // tablePanel
-            // 
+            //
             this.tablePanel.Controls.Add(this.tableLayoutPanel1);
             this.tablePanel.Controls.Add(this.label9);
             this.tablePanel.Controls.Add(this.label10);
@@ -207,9 +207,9 @@
             this.tablePanel.Size = new System.Drawing.Size(1003, 482);
             this.tablePanel.TabIndex = 19;
             this.tablePanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tablePanel_Scroll);
-            // 
+            //
             // tableLayoutPanel1
-            // 
+            //
             this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanel1.ColumnCount = 6;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 257F));
@@ -225,9 +225,9 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(949, 35);
             this.tableLayoutPanel1.TabIndex = 25;
-            // 
+            //
             // label9
-            // 
+            //
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label9.ForeColor = System.Drawing.SystemColors.Highlight;
@@ -236,9 +236,9 @@
             this.label9.Size = new System.Drawing.Size(93, 30);
             this.label9.TabIndex = 24;
             this.label9.Text = "Rozmiar";
-            // 
+            //
             // label10
-            // 
+            //
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label10.ForeColor = System.Drawing.SystemColors.Highlight;
@@ -247,9 +247,9 @@
             this.label10.Size = new System.Drawing.Size(155, 30);
             this.label10.TabIndex = 23;
             this.label10.Text = "Załączony plik";
-            // 
+            //
             // label8
-            // 
+            //
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label8.ForeColor = System.Drawing.SystemColors.Highlight;
@@ -258,9 +258,9 @@
             this.label8.Size = new System.Drawing.Size(57, 30);
             this.label8.TabIndex = 22;
             this.label8.Text = "Opis";
-            // 
+            //
             // label7
-            // 
+            //
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label7.ForeColor = System.Drawing.SystemColors.Highlight;
@@ -269,9 +269,9 @@
             this.label7.Size = new System.Drawing.Size(58, 30);
             this.label7.TabIndex = 21;
             this.label7.Text = "Data";
-            // 
+            //
             // label6
-            // 
+            //
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
@@ -280,27 +280,27 @@
             this.label6.Size = new System.Drawing.Size(79, 30);
             this.label6.TabIndex = 20;
             this.label6.Text = "Nazwa";
-            // 
+            //
             // dateTimePicker1
-            // 
+            //
             this.dateTimePicker1.CalendarMonthBackground = System.Drawing.SystemColors.WindowFrame;
             this.dateTimePicker1.CalendarTrailingForeColor = System.Drawing.SystemColors.Window;
             this.dateTimePicker1.Location = new System.Drawing.Point(611, 45);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(169, 20);
             this.dateTimePicker1.TabIndex = 15;
-            // 
+            //
             // dateTimePicker2
-            // 
+            //
             this.dateTimePicker2.CalendarMonthBackground = System.Drawing.SystemColors.WindowFrame;
             this.dateTimePicker2.CalendarTrailingForeColor = System.Drawing.SystemColors.Window;
             this.dateTimePicker2.Location = new System.Drawing.Point(806, 44);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(169, 20);
             this.dateTimePicker2.TabIndex = 16;
-            // 
+            //
             // FindFileControl
-            // 
+            //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
