@@ -76,7 +76,7 @@
             this.button7.TabIndex = 10;
             this.button7.Text = "Wyslij";
             this.button7.UseVisualStyleBackColor = false;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.button7.Click += new System.EventHandler(this.Button7_Click);
             // 
             // FSlabel
             // 
@@ -136,9 +136,9 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBox2_DragDrop);
-            this.pictureBox2.DragEnter += new System.Windows.Forms.DragEventHandler(this.pictureBox2_DragEnter);
-            this.pictureBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox2_Paint_1);
+            this.pictureBox2.DragDrop += new System.Windows.Forms.DragEventHandler(this.PictureBox2_DragDrop);
+            this.pictureBox2.DragEnter += new System.Windows.Forms.DragEventHandler(this.PictureBox2_DragEnter);
+            this.pictureBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox2_Paint);
             // 
             // label1
             // 

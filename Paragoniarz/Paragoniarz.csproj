@@ -170,6 +170,7 @@
       <DependentUpon>UploadFileControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UserManager.cs" />
+    <Compile Include="UserSession.cs" />
     <Compile Include="WindowHelper.cs" />
     <Compile Include="YourFilesControl.cs">
       <SubType>UserControl</SubType>
@@ -284,6 +285,7 @@
   <ItemGroup>
     <Content Include="ILLink\ILLink.Descriptors.LibraryBuild.xml" />
     <None Include="Resources\Images\icons8-trash-26.png" />
+    <None Include="Resources\pdf_icon.bmp" />
     <None Include="Resources\Upload to Cloud.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

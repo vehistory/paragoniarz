@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static Paragoniarz.DatabaseHelper;
 
 namespace Paragoniarz
 {
@@ -48,14 +49,17 @@ namespace Paragoniarz
             }
 
             DatabaseHelper dbHelper = new DatabaseHelper();
-            int? userId = dbHelper.ValidateUser(enteredUsername, enteredPassword);
 
-            if (userId.HasValue)
+            User user = dbHelper.ValidateUser(enteredUsername, enteredPassword);
+            if (user != null)
             {
-                // Przekazujemy userId do Form2
-                Form2 form2 = new Form2(userId.Value, enteredUsername); // Przekazujemy userId zamiast username
-                form2.StartPosition = FormStartPosition.Manual;
-                form2.Location = this.Location;
+                UserSession.Login(user);
+
+                Form2 form2 = new Form2
+                {
+                    StartPosition = FormStartPosition.Manual,
+                    Location = this.Location,
+                };
                 form2.Show();
                 this.Hide();
             }
@@ -75,8 +79,10 @@ namespace Paragoniarz
 
         private void linkLabel2_MouseClick(object sender, MouseEventArgs e)
         {
-            RegisterForm registerForm = new RegisterForm();
-            registerForm.StartPosition = FormStartPosition.Manual;
+            RegisterForm registerForm = new RegisterForm
+            {
+                StartPosition = FormStartPosition.Manual,
+            };
             int x = this.Location.X + (this.Width - registerForm.Width) / 2;
             int y = this.Location.Y + (this.Height - registerForm.Height) / 2;
             registerForm.Location = new Point(x, y);
@@ -88,8 +94,10 @@ namespace Paragoniarz
 
         private void linkLabel1_MouseClick(object sender, MouseEventArgs e)
         {
-            ForgottenPass forgottenPass = new ForgottenPass();
-            forgottenPass.StartPosition = FormStartPosition.Manual;
+            ForgottenPass forgottenPass = new ForgottenPass
+            {
+                StartPosition = FormStartPosition.Manual,
+            };
             int x = this.Location.X + (this.Width - forgottenPass.Width) / 2;
             int y = this.Location.Y + (this.Height - forgottenPass.Height) / 2;
             forgottenPass.Location = new Point(x, y);
@@ -98,6 +106,22 @@ namespace Paragoniarz
             forgottenPass.Show();
         }
 
-        private void label5_Paint(object sender, PaintEventArgs e) { }
+        private void label5_Paint(object sender, PaintEventArgs e)
+        {
+            // pass
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            UserSession.Login(1, "SebastianSajda ssaddsadasa ssaasddasdads", "admin@example.com");
+
+            Form2 form2 = new Form2
+            {
+                StartPosition = FormStartPosition.Manual,
+                Location = this.Location,
+            };
+            form2.Show();
+            this.Hide();
+        }
     }
 }
