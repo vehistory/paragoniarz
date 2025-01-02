@@ -2,15 +2,22 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Azure.Storage.Blobs;
+using MySqlX.XDevAPI;
 
 namespace Paragoniarz
 {
     public partial class FindFileControl : UserControl
     {
         private int _userId;
+
+        private static readonly HttpClient client = new HttpClient();
 
         public FindFileControl(int userId)
         {
@@ -85,60 +92,82 @@ namespace Paragoniarz
             {
                 // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
                 tableLayoutPanel1.Controls.Clear();
-                tableLayoutPanel1.RowCount = 1; // Resetowanie liczby wierszy do 1
+                tableLayoutPanel1.RowCount = 0; // Resetowanie liczby wierszy do 0
                 tableLayoutPanel1.SuspendLayout();
 
                 // Iterujemy przez wszystkie wiersze wyników
                 foreach (DataRow row in result.Rows)
                 {
+                    tableLayoutPanel1.RowCount++;
+                    tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 42F));
+
+                    string url = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(row["file_url"].ToString()));
+
                     // Kolumna 0: Nazwa pliku
-                    Label labelNazwa = new Label();
+                    LinkLabel labelNazwa = new LinkLabel();
                     labelNazwa.Text = row["original_name"].ToString();
+                    labelNazwa.LinkClicked += new LinkLabelLinkClickedEventHandler(Download_fileAsync);
+                    labelNazwa.AccessibleName = url;
                     labelNazwa.TextAlign = ContentAlignment.MiddleCenter;
+                    labelNazwa.LinkColor = Color.FromArgb(0, 192, 192);
+                    labelNazwa.Dock = DockStyle.Fill;
+                    labelNazwa.AutoSize = false;
+                    labelNazwa.AutoEllipsis = true;
                     tableLayoutPanel1.Controls.Add(labelNazwa, 0, tableLayoutPanel1.RowCount - 1);
-                    labelNazwa.ForeColor = Color.White;
 
                     // Kolumna 1: Data dodania (timestamp)
                     Label labelData = new Label();
-                    labelData.Text = row["timestamp"].ToString(); // Możesz dodać formatowanie daty, jeśli potrzeba
+                    labelData.Text = row["timestamp"].ToString();
                     labelData.TextAlign = ContentAlignment.MiddleCenter;
+                    labelData.ForeColor = Color.FromArgb(0, 192, 192);
+                    labelData.Dock = DockStyle.Fill;
+                    labelData.AutoSize = false;
                     tableLayoutPanel1.Controls.Add(labelData, 1, tableLayoutPanel1.RowCount - 1);
-                    labelData.ForeColor = Color.White;
 
-                    // Kolumna 2: Opis (jeśli nie masz danych, ustaw pustą wartość)
+                    // Kolumna 2: Opis
                     Label labelOpis = new Label();
-                    labelOpis.Text = "3 kolumna"; // Zakładamy, że brak opisu w bazie
+                    labelOpis.Text = "3 kolumna";
                     labelOpis.TextAlign = ContentAlignment.MiddleCenter;
+                    labelOpis.ForeColor = Color.FromArgb(0, 192, 192);
+                    labelOpis.Dock = DockStyle.Fill;
+                    labelOpis.AutoSize = false;
                     tableLayoutPanel1.Controls.Add(labelOpis, 2, tableLayoutPanel1.RowCount - 1);
-                    labelOpis.ForeColor = Color.White;
 
                     // Kolumna 3: Załączony plik (URL)
-                    Label labelUrl = new Label();
-                    labelUrl.Text = row["file_url"].ToString();
+                    LinkLabel labelUrl = new LinkLabel();
+                    labelUrl.AccessibleName = url;
+                    labelUrl.Text = "Wyświetl";
+                    labelUrl.LinkClicked += new LinkLabelLinkClickedEventHandler(linkLabel1_LinkClicked);
                     labelUrl.TextAlign = ContentAlignment.MiddleCenter;
+                    labelUrl.LinkColor = Color.FromArgb(0, 192, 192);
+                    labelUrl.Dock = DockStyle.Fill;
+                    labelUrl.AutoSize = false;
                     tableLayoutPanel1.Controls.Add(labelUrl, 3, tableLayoutPanel1.RowCount - 1);
-                    labelUrl.ForeColor = Color.White;
 
-                    // Kolumna 4: Rozmiar (zakładamy, że nie masz danych o rozmiarze w bazie)
+                    // Kolumna 4: Rozmiar
                     Label labelRozmiar = new Label();
-                    labelRozmiar.Text = "5 kolumna"; // Możesz uzupełnić to danymi o rozmiarze, jeśli masz je w bazie
+                    labelRozmiar.Text = "5 kolumna";
                     labelRozmiar.TextAlign = ContentAlignment.MiddleCenter;
+                    labelRozmiar.ForeColor = Color.FromArgb(0, 192, 192);
+                    labelRozmiar.Dock = DockStyle.Fill;
+                    labelRozmiar.AutoSize = false;
+                    labelRozmiar.AutoEllipsis = true;
                     tableLayoutPanel1.Controls.Add(labelRozmiar, 4, tableLayoutPanel1.RowCount - 1);
-                    labelRozmiar.ForeColor = Color.White;
 
+                    // Przycisk usuwania pozostaje bez zmian
                     Button deleteButton = new Button();
-                    deleteButton.BackgroundImage = Properties.Resources.icons8_trash_26; // Ustawienie obrazka
-                    deleteButton.BackgroundImageLayout = ImageLayout.Center; // Rozciągnięcie obrazka
-                    deleteButton.FlatStyle = FlatStyle.Flat; // Usunięcie ramki
-                    deleteButton.Size = new Size(31, 33); // Dopasuj rozmiar przycisku
-                    deleteButton.Cursor = Cursors.Hand; // Zmieniamy kursor na rękę
-                    deleteButton.Tag = row["original_name"]; // Przypisanie Tag z nazwą pliku (będzie użyteczne przy usuwaniu)
-                    deleteButton.Click += button2_Click; // Podpięcie zdarzenia kliknięcia
+                    deleteButton.BackgroundImage = Properties.Resources.icons8_trash_26;
+                    deleteButton.BackgroundImageLayout = ImageLayout.Center;
+                    deleteButton.FlatStyle = FlatStyle.Flat;
+                    deleteButton.Size = new Size(31, 33);
+                    deleteButton.Cursor = Cursors.Hand;
+                    deleteButton.Tag = row["original_name"];
+                    deleteButton.Click += button2_Click;
+                    labelRozmiar.Dock = DockStyle.Fill;
+                    labelRozmiar.AutoSize = false;
                     tableLayoutPanel1.Controls.Add(deleteButton, 5, tableLayoutPanel1.RowCount - 1);
-
-                    // Dodajemy kolejny wiersz
-                    tableLayoutPanel1.RowCount++;
                 }
+
                 // Po zakończeniu dodawania wszystkich kontrolek wznawiamy układ
                 tableLayoutPanel1.ResumeLayout();
             }
@@ -196,6 +225,58 @@ namespace Paragoniarz
 
                 // Wywołanie funkcji usuwania pliku
                 await DeleteFileFromBlobStorage(fileName);
+            }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            LinkLabel clickedLabel = sender as LinkLabel;
+            if (clickedLabel != null)
+            {
+                string url = clickedLabel.AccessibleName;
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Nie udało się otworzyć linku: {ex.Message}");
+                }
+            }
+        }
+
+        private async void Download_fileAsync(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            LinkLabel clickedLabel = sender as LinkLabel;
+
+            string expandedPath = Environment.ExpandEnvironmentVariables(@"%userprofile%\Downloads");
+            string savePath = Path.Combine(expandedPath, clickedLabel.Text);
+            string fileUrl = clickedLabel.AccessibleName;
+            try
+            {
+                byte[] fileBytes = await client.GetByteArrayAsync(fileUrl);
+
+                Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+
+                File.WriteAllBytes(savePath, fileBytes);
+
+                MessageBox.Show($"Plik został pobrany do: {savePath}");
+
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(savePath)
+                    {
+                        UseShellExecute = true
+                    });
+                }
+                catch (Exception openEx)
+                {
+                    MessageBox.Show($"Plik został pobrany, ale nie udało się go otworzyć: {openEx.Message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
             }
         }
     }
