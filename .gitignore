@@ -11,3 +11,4 @@ obj/
 # Ignorowanie pliku stanu sesji Visual Studio
 VSWorkspaceState.json
 /packages
+App.config
