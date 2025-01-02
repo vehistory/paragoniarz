@@ -5,28 +5,24 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 
-
-
-
-
 namespace Paragoniarz
 {
     public class DatabaseHelper
     {
-
         // Sprawdzanie, czy użytkownik lub email są już zajęte
-        public bool IsUsernameOrEmailTaken(string username,string email)
+        public bool IsUsernameOrEmailTaken(string username, string email)
         {
             using (var connection = DatabaseConnection.Instance.CreateConnection())
             {
                 try
                 {
                     connection.Open();
-                    string query = "SELECT COUNT(*) FROM dbo.Users WHERE username = @username OR email = @email";
-                    using (var cmd = new SqlCommand(query,connection))
+                    string query =
+                        "SELECT COUNT(*) FROM dbo.Users WHERE username = @username OR email = @email";
+                    using (var cmd = new SqlCommand(query, connection))
                     {
-                        cmd.Parameters.AddWithValue("@username",username);
-                        cmd.Parameters.AddWithValue("@email",email);
+                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@email", email);
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         return count > 0;
@@ -41,21 +37,22 @@ namespace Paragoniarz
         }
 
         // Metoda do dodawania użytkownika z hasłem w formie haszowanej
-        public void InsertUser(string username,string email,string password)
+        public void InsertUser(string username, string email, string password)
         {
             string hashedPassword = HashPassword(password); // Haszowanie hasła
 
-            string query = "INSERT INTO dbo.Users (username, password, email) VALUES (@username, @password, @email)";
+            string query =
+                "INSERT INTO dbo.Users (username, password, email) VALUES (@username, @password, @email)";
 
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(query,conn);
-                    cmd.Parameters.AddWithValue("@username",username);
-                    cmd.Parameters.AddWithValue("@password",hashedPassword);
-                    cmd.Parameters.AddWithValue("@email",email);
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@password", hashedPassword);
+                    cmd.Parameters.AddWithValue("@email", email);
 
                     int result = cmd.ExecuteNonQuery();
                     if (result > 0)
@@ -93,23 +90,22 @@ namespace Paragoniarz
         // Walidacja użytkownika
         // Walidacja użytkownika i pobieranie idUser
         // Metoda ValidateUser zwraca teraz krotkę (idUser, username)
-        public int? ValidateUser(string username,string password)
+        public int? ValidateUser(string username, string password)
         {
             string hashedPassword = HashPassword(password);
 
             // Zapytanie SQL teraz zwraca idUser
-            string query = "SELECT id FROM dbo.Users WHERE username = @username AND password = @password";
-            
-
+            string query =
+                "SELECT id FROM dbo.Users WHERE username = @username AND password = @password";
 
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(query,conn);
-                    cmd.Parameters.AddWithValue("@username",username);
-                    cmd.Parameters.AddWithValue("@password",hashedPassword);
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@password", hashedPassword);
 
                     object result = cmd.ExecuteScalar(); // Zwraca pojedynczy wynik, idUser
 
@@ -130,44 +126,19 @@ namespace Paragoniarz
             }
         }
 
-
-
-
-
-
-        //// Metoda do pobierania danych z bazy danych
-        //public DataTable FetchData(string nazwa,string opis,string osoba,DateTime dataOd,DateTime dataDo)
-        //{
-        //    string query = "SELECT * FROM YourTable WHERE nazwa = @nazwa AND opis = @opis AND osoba = @osoba AND data_od >= @data_od AND data_do <= @data_do";
-
-        //    using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
-        //    {
-        //        SqlDataAdapter dataAdapter = new SqlDataAdapter(query,conn);
-        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@nazwa",nazwa);
-        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@opis",opis);
-        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@osoba",osoba);
-        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@data_od",dataOd);
-        //        dataAdapter.SelectCommand.Parameters.AddWithValue("@data_do",dataDo);
-
-        //        DataTable dataTable = new DataTable();
-        //        dataAdapter.Fill(dataTable);
-        //        return dataTable;
-        //    }
-        //}
-
         // Metoda do pobierania danych z bazy danych
         public DataTable GetDataFromQuery(string query)
         {
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
                 conn.Open();
-                using (SqlCommand command = new SqlCommand(query,conn))
+                using (SqlCommand command = new SqlCommand(query, conn))
                 {
                     using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                     {
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
-                        return dataTable;  // Zwraca wynik jako DataTable
+                        return dataTable; // Zwraca wynik jako DataTable
                     }
                 }
             }
