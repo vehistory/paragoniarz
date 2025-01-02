@@ -1,11 +1,11 @@
-﻿using Azure.Storage.Blobs;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Azure.Storage.Blobs;
 
 namespace Paragoniarz
 {
@@ -16,7 +16,6 @@ namespace Paragoniarz
             public static int UserId { get; set; }
             public static string UserName { get; set; }
         }
-
 
         // Sprawdzanie, czy użytkownik lub email są już zajęte
         public bool IsUsernameOrEmailTaken(string username, string email)
@@ -44,6 +43,7 @@ namespace Paragoniarz
                 }
             }
         }
+
         // Metoda do dodawania użytkownika z hasłem w formie haszowanej
         public void InsertUser(string username, string email, string password)
         {
@@ -78,6 +78,7 @@ namespace Paragoniarz
                 }
             }
         }
+
         // Metoda haszująca hasło
         private string HashPassword(string rawData)
         {
@@ -93,13 +94,15 @@ namespace Paragoniarz
                 return builder.ToString();
             }
         }
+
         // Metoda ValidateUser zwraca teraz krotkę (idUser, username)
         public int? ValidateUser(string username, string password)
         {
             string hashedPassword = HashPassword(password);
 
             // Zapytanie SQL teraz zwraca idUser
-            string query = "SELECT id FROM dbo.Users WHERE username = @username AND password = @password";
+            string query =
+                "SELECT id FROM dbo.Users WHERE username = @username AND password = @password";
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
                 try
@@ -140,7 +143,7 @@ namespace Paragoniarz
                     conn.Open();
 
                     // Tworzenie obiektu SqlCommand do wykonania zapytania
-                    SqlCommand cmd = new SqlCommand(query,conn);
+                    SqlCommand cmd = new SqlCommand(query, conn);
 
                     // Wykonanie zapytania i zwrócenie liczby zmodyfikowanych wierszy
                     int result = cmd.ExecuteNonQuery();
@@ -218,8 +221,8 @@ namespace Paragoniarz
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand(query,conn);
-                    cmd.Parameters.AddWithValue("@userId",userId);
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
 
                     object result = cmd.ExecuteScalar(); // Zwraca tylko jedną wartość (nazwa pliku)
 
@@ -249,10 +252,15 @@ namespace Paragoniarz
             }
 
             // Wyszukiwanie i usuwanie pliku z Azure Blob Storage
-            string connectionString = DatabaseConnection.Instance.CreateBlobStorageConnection().ToString();
+            string connectionString = DatabaseConnection
+                .Instance.CreateBlobStorageConnection()
+                .ToString();
             string containerName = "documents";
 
-            BlobContainerClient containerClient = new BlobContainerClient(connectionString,containerName);
+            BlobContainerClient containerClient = new BlobContainerClient(
+                connectionString,
+                containerName
+            );
             BlobClient blobClient = containerClient.GetBlobClient(fileName);
 
             try

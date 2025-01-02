@@ -71,7 +71,9 @@ namespace Paragoniarz
 
             if (!formHelper.ValidatePassword(password, confirmPassword))
             {
-                MessageBox.Show("Hasło musi mieć co najmniej 8 znaków, zawierać jedną cyfrę, jedną wielką literę i jeden znak specjalny.");
+                MessageBox.Show(
+                    "Hasło musi mieć co najmniej 8 znaków, zawierać jedną cyfrę, jedną wielką literę i jeden znak specjalny."
+                );
                 return;
             }
 

@@ -1,7 +1,7 @@
-﻿using Azure.Storage.Blobs; // Dodaj odpowiednią przestrzeń nazw
-using System;
-using System.Data.SqlClient;
+﻿using System;
 using System.Configuration;
+using System.Data.SqlClient;
+using Azure.Storage.Blobs; // Dodaj odpowiednią przestrzeń nazw
 
 public sealed class DatabaseConnection
 {
@@ -11,18 +11,18 @@ public sealed class DatabaseConnection
     // Publiczna statyczna właściwość umożliwiająca dostęp do instancji
     public static DatabaseConnection Instance
     {
-        get
-        {
-            return _instance;
-        }
+        get { return _instance; }
     }
+
     // Metoda do utworzenia połączenia z bazą danych
     public SqlConnection CreateConnection()
     {
         try
         {
             // Pobieramy connection string z pliku konfiguracyjnego (app.config)
-            string connectionString = ConfigurationManager.ConnectionStrings["ParagoniarzConnectionString"]?.ConnectionString;
+            string connectionString = ConfigurationManager
+                .ConnectionStrings["ParagoniarzConnectionString"]
+                ?.ConnectionString;
 
             if (string.IsNullOrEmpty(connectionString))
             {
@@ -34,22 +34,28 @@ public sealed class DatabaseConnection
         catch (Exception ex)
         {
             // Obsługuje wyjątek i może rzucić go dalej lub logować
-            throw new ApplicationException("Failed to create database connection.",ex);
+            throw new ApplicationException("Failed to create database connection.", ex);
         }
     }
+
     public string GetBlobStorageConnectionString()
     {
-        string blobStorageConnectionString = ConfigurationManager.ConnectionStrings["BlobStorageConnectionString"]?.ConnectionString;
+        string blobStorageConnectionString = ConfigurationManager
+            .ConnectionStrings["BlobStorageConnectionString"]
+            ?.ConnectionString;
         if (string.IsNullOrEmpty(blobStorageConnectionString))
         {
             throw new InvalidOperationException("Connection string for Blob Storage is not found.");
         }
         return blobStorageConnectionString;
     }
+
     public BlobContainerClient CreateBlobStorageConnection()
     {
         // Pobieramy connection string z pliku konfiguracyjnego (app.config)
-        string blobStorageConnectionString = ConfigurationManager.ConnectionStrings["BlobStorageConnectionString"].ConnectionString;
+        string blobStorageConnectionString = ConfigurationManager
+            .ConnectionStrings["BlobStorageConnectionString"]
+            .ConnectionString;
 
         // Tworzymy klienta BlobServiceClient z connection stringa
         BlobServiceClient blobServiceClient = new BlobServiceClient(blobStorageConnectionString);
