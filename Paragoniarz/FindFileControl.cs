@@ -3,14 +3,10 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Azure.Storage.Blobs;
-using MySqlX.XDevAPI;
 
 namespace Paragoniarz
 {
@@ -30,6 +26,11 @@ namespace Paragoniarz
             tableLayoutPanel1.AutoSize = true;
             tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutPanel1.Dock = DockStyle.Top;
+            button3.MouseEnter += Button_MouseEnter;
+            button3.MouseLeave += Button_MouseLeave;
+            button1.MouseEnter += Button_MouseEnter;
+            button1.MouseLeave += Button_MouseLeave;
+            dateTimePicker1.Value = DateTime.Now.AddMonths(-1);
         }
 
         // rysowanie gradientu na panelu
@@ -69,8 +70,6 @@ namespace Paragoniarz
         {
             // Pobierz dane z TextBoxów
             string nazwa = textBox8.Text;
-            string opis = textBox7.Text; // Możesz użyć tego później, jeśli chcesz dodać opcję opisu
-            string osoba = textBox1.Text; // Może być przydatne, jeśli chcesz filtrować po osobie
             DateTime? dataOd = null;
             DateTime? dataDo = null;
 
@@ -95,91 +94,117 @@ namespace Paragoniarz
 
             if (result.Rows.Count > 0)
             {
-                // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
                 tableLayoutPanel1.SuspendLayout();
                 tableLayoutPanel1.Controls.Clear();
                 tableLayoutPanel1.RowCount = 0;
 
-                // Iterujemy przez wszystkie wiersze wyników
                 foreach (DataRow row in result.Rows)
                 {
                     tableLayoutPanel1.RowCount++;
                     tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 42F));
-
-                    string url = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(row["file_url"].ToString()));
+                    int currentRow = tableLayoutPanel1.RowCount - 1;
+                    string url = System.Text.Encoding.UTF8.GetString(
+                        Convert.FromBase64String(row["file_url"].ToString())
+                    );
 
                     // Kolumna 0: Nazwa pliku
-                    LinkLabel labelNazwa = new LinkLabel();
-                    labelNazwa.Text = row["original_name"].ToString();
-                    labelNazwa.LinkClicked += new LinkLabelLinkClickedEventHandler(Download_fileAsync);
-                    labelNazwa.AccessibleName = url;
-                    labelNazwa.TextAlign = ContentAlignment.MiddleCenter;
-                    labelNazwa.LinkColor = Color.FromArgb(0, 192, 192);
-                    labelNazwa.Dock = DockStyle.Fill;
-                    labelNazwa.AutoSize = false;
-                    labelNazwa.AutoEllipsis = true;
-                    tableLayoutPanel1.Controls.Add(labelNazwa, 0, tableLayoutPanel1.RowCount - 1);
+                    LinkLabel labelName = CreateLinkLabel(
+                        row["original_name"].ToString(),
+                        url,
+                        Download_fileAsync,
+                        ContentAlignment.MiddleLeft
+                    );
+                    tableLayoutPanel1.Controls.Add(labelName, 0, currentRow);
 
-                    // Kolumna 1: Data dodania (timestamp)
-                    Label labelData = new Label();
-                    labelData.Text = row["timestamp"].ToString();
-                    labelData.TextAlign = ContentAlignment.MiddleCenter;
-                    labelData.ForeColor = Color.FromArgb(0, 192, 192);
-                    labelData.Dock = DockStyle.Fill;
-                    labelData.AutoSize = false;
-                    tableLayoutPanel1.Controls.Add(labelData, 1, tableLayoutPanel1.RowCount - 1);
+                    // Kolumna 1: Data dodania
+                    Label labelDate = CreateLabel(row["timestamp"].ToString());
+                    tableLayoutPanel1.Controls.Add(labelDate, 1, currentRow);
 
-                    // Kolumna 2: Opis
-                    Label labelOpis = new Label();
-                    labelOpis.Text = "3 kolumna";
-                    labelOpis.TextAlign = ContentAlignment.MiddleCenter;
-                    labelOpis.ForeColor = Color.FromArgb(0, 192, 192);
-                    labelOpis.Dock = DockStyle.Fill;
-                    labelOpis.AutoSize = false;
-                    tableLayoutPanel1.Controls.Add(labelOpis, 2, tableLayoutPanel1.RowCount - 1);
+                    // Kolumna 2: Podgląd
+                    Button buttonPreview = CreatePreviewButton(url);
+                    tableLayoutPanel1.Controls.Add(buttonPreview, 2, currentRow);
 
-                    // Kolumna 3: Załączony plik (URL)
-                    LinkLabel labelUrl = new LinkLabel();
-                    labelUrl.AccessibleName = url;
-                    labelUrl.Text = "Podgląd";
-                    labelUrl.LinkClicked += new LinkLabelLinkClickedEventHandler(linkLabel1_LinkClicked);
-                    labelUrl.TextAlign = ContentAlignment.MiddleCenter;
-                    labelUrl.LinkColor = Color.FromArgb(0, 192, 192);
-                    labelUrl.Dock = DockStyle.Fill;
-                    labelUrl.AutoSize = false;
-                    tableLayoutPanel1.Controls.Add(labelUrl, 3, tableLayoutPanel1.RowCount - 1);
-
-                    // Kolumna 4: Rozmiar
-                    Label labelRozmiar = new Label();
-                    labelRozmiar.Text = "5 kolumna";
-                    labelRozmiar.TextAlign = ContentAlignment.MiddleCenter;
-                    labelRozmiar.ForeColor = Color.FromArgb(0, 192, 192);
-                    labelRozmiar.Dock = DockStyle.Fill;
-                    labelRozmiar.AutoSize = false;
-                    labelRozmiar.AutoEllipsis = true;
-                    tableLayoutPanel1.Controls.Add(labelRozmiar, 4, tableLayoutPanel1.RowCount - 1);
-
-                    // Przycisk usuwania pozostaje bez zmian
-                    Button deleteButton = new Button();
-                    deleteButton.BackgroundImage = Properties.Resources.icons8_trash_26;
-                    deleteButton.BackgroundImageLayout = ImageLayout.Center;
-                    deleteButton.FlatStyle = FlatStyle.Flat;
-                    deleteButton.Size = new Size(31, 33);
-                    deleteButton.Cursor = Cursors.Hand;
-                    deleteButton.Tag = row["original_name"];
-                    deleteButton.Click += button2_Click;
-                    labelRozmiar.Dock = DockStyle.Fill;
-                    labelRozmiar.AutoSize = false;
-                    tableLayoutPanel1.Controls.Add(deleteButton, 5, tableLayoutPanel1.RowCount - 1);
+                    // Kolumna 3: Usuń
+                    Button buttonDelete = CreateDeleteButton(row["original_name"].ToString());
+                    tableLayoutPanel1.Controls.Add(buttonDelete, 3, currentRow);
                 }
 
-                // Po zakończeniu dodawania wszystkich kontrolek wznawiamy układ
                 tableLayoutPanel1.ResumeLayout();
             }
             else
             {
                 MessageBox.Show("Brak wyników dla podanych kryteriów.");
             }
+        }
+
+        private LinkLabel CreateLinkLabel(
+            string text,
+            string accessibleName,
+            LinkLabelLinkClickedEventHandler clickHandler,
+            ContentAlignment TextAlign = ContentAlignment.MiddleCenter
+        )
+        {
+            LinkLabel label = new LinkLabel
+            {
+                Text = text,
+                AccessibleName = accessibleName,
+                TextAlign = TextAlign,
+                LinkColor = Color.FromArgb(0, 192, 192),
+                Font = new Font(SystemFonts.DefaultFont.FontFamily, 10f, FontStyle.Regular),
+                Dock = DockStyle.Fill,
+                AutoSize = false,
+                AutoEllipsis = true,
+            };
+            label.LinkClicked += clickHandler;
+            return label;
+        }
+
+        private Label CreateLabel(string text)
+        {
+            return new Label
+            {
+                Text = text,
+                TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = Color.FromArgb(0, 192, 192),
+                Font = new Font(SystemFonts.DefaultFont.FontFamily, 10f, FontStyle.Regular),
+                Dock = DockStyle.Fill,
+                AutoSize = false,
+                AutoEllipsis = true,
+            };
+        }
+
+        private Button CreatePreviewButton(string url)
+        {
+            Button button = new Button
+            {
+                BackgroundImage = Properties.Resources.search_icon,
+                BackgroundImageLayout = ImageLayout.Center,
+                FlatStyle = FlatStyle.Flat,
+                Size = new Size(32, 32),
+                Cursor = Cursors.Hand,
+                Tag = url,
+                FlatAppearance = { BorderSize = 0 },
+            };
+            button.Click += Preview_file;
+
+            return button;
+        }
+
+        private Button CreateDeleteButton(string fileName)
+        {
+            Button button = new Button
+            {
+                BackgroundImage = Properties.Resources.icons8_trash_26,
+                BackgroundImageLayout = ImageLayout.Center,
+                FlatStyle = FlatStyle.Flat,
+                Size = new Size(31, 33),
+                Cursor = Cursors.Hand,
+                Tag = fileName,
+                FlatAppearance = { BorderSize = 0 },
+            };
+            button.Click += button2_Click;
+
+            return button;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -226,22 +251,24 @@ namespace Paragoniarz
 
             if (deleteButton != null)
             {
-                string fileName = deleteButton.Tag.ToString(); // Pobieramy nazwę pliku z Tag
+                string fileName = deleteButton.Tag.ToString();
 
                 // Wywołanie funkcji usuwania pliku
                 await DeleteFileFromBlobStorage(fileName);
             }
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void Preview_file(object sender, EventArgs e)
         {
-            LinkLabel clickedLabel = sender as LinkLabel;
-            if (clickedLabel != null)
+            Button PreviewButton = sender as Button;
+            if (PreviewButton != null)
             {
-                string url = clickedLabel.AccessibleName;
+                string url = PreviewButton.Tag.ToString();
                 try
                 {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true });
+                    System.Diagnostics.Process.Start(
+                        new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true }
+                    );
                 }
                 catch (Exception ex)
                 {
@@ -254,7 +281,9 @@ namespace Paragoniarz
         {
             LinkLabel clickedLabel = sender as LinkLabel;
 
-            string expandedPath = Environment.ExpandEnvironmentVariables(@"%userprofile%\Downloads");
+            string expandedPath = Environment.ExpandEnvironmentVariables(
+                @"%userprofile%\Downloads"
+            );
             string savePath = Path.Combine(expandedPath, clickedLabel.Text);
             string fileUrl = clickedLabel.AccessibleName;
             try
@@ -269,19 +298,36 @@ namespace Paragoniarz
 
                 try
                 {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(savePath)
-                    {
-                        UseShellExecute = true
-                    });
+                    System.Diagnostics.Process.Start(
+                        new System.Diagnostics.ProcessStartInfo(savePath) { UseShellExecute = true }
+                    );
                 }
                 catch (Exception openEx)
                 {
-                    MessageBox.Show($"Plik został pobrany, ale nie udało się go otworzyć: {openEx.Message}");
+                    MessageBox.Show(
+                        $"Plik został pobrany, ale nie udało się go otworzyć: {openEx.Message}"
+                    );
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Wystąpił błąd: {ex.Message}");
+            }
+        }
+
+        private void Button_MouseEnter(object sender, EventArgs e)
+        {
+            if (sender is Button button)
+            {
+                button.BackColor = Color.FromArgb(0, 100, 148); // Kolor przy najechaniu
+            }
+        }
+
+        private void Button_MouseLeave(object sender, EventArgs e)
+        {
+            if (sender is Button button)
+            {
+                button.BackColor = Color.Transparent; // Przywrócenie oryginalnego koloru
             }
         }
     }
