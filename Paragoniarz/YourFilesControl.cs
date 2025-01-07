@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
 
 namespace Paragoniarz
 {
@@ -26,13 +27,28 @@ namespace Paragoniarz
             string phraseSearch = textBoxPhrase.Text;
             string personSearch = textBoxPerson.Text;
 
-            string searchServiceEndpoint = "https://paragoniarz-search.search.windows.net";
-            string apiKey = "KLkPiqmFSYPRhlX8X9HV4kzqT0BzNhY3tgNaj9yNfIAzSeAYrwvs";
-            string indexName = "azureblob-index-ocr2";
+            string searchServiceEndpoint = ConfigurationManager
+                .ConnectionStrings["SearchServiceEndpoint"]
+                ?.ConnectionString;
+            string apiKey = ConfigurationManager
+                .ConnectionStrings["SearchServiceApiKey"]
+                ?.ConnectionString;
+            string indexName = ConfigurationManager
+                .ConnectionStrings["SearchServiceIndexName"]
+                ?.ConnectionString;
 
-            if (string.IsNullOrEmpty(searchServiceEndpoint) || string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(indexName))
+            if (
+                string.IsNullOrEmpty(searchServiceEndpoint)
+                || string.IsNullOrEmpty(apiKey)
+                || string.IsNullOrEmpty(indexName)
+            )
             {
-                MessageBox.Show("Brak wymaganych ustawień konfiguracyjnych. Sprawdź plik konfiguracyjny aplikacji.");
+                Console.WriteLine(searchServiceEndpoint);
+                Console.WriteLine(apiKey);
+                Console.WriteLine(indexName);
+                MessageBox.Show(
+                    "Brak wymaganych ustawień konfiguracyjnych. Sprawdź plik konfiguracyjny aplikacji."
+                );
                 return;
             }
 
@@ -40,14 +56,18 @@ namespace Paragoniarz
             {
                 search = phraseSearch,
                 filter = BuildFilter(UserSession.UserId, personSearch),
-                count = true
+                count = true,
             };
 
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Add("api-key", apiKey);
 
-                StringContent content = new StringContent(JsonConvert.SerializeObject(searchRequest), Encoding.UTF8, "application/json");
+                StringContent content = new StringContent(
+                    JsonConvert.SerializeObject(searchRequest),
+                    Encoding.UTF8,
+                    "application/json"
+                );
 
                 var response = await httpClient.PostAsync(
                     $"{searchServiceEndpoint}/indexes/{indexName}/docs/search?api-version=2024-11-01-preview",
@@ -107,11 +127,11 @@ namespace Paragoniarz
         }
 
         private LinkLabel CreateLinkLabel(
-                    string text,
-                    string url,
-                    LinkLabelLinkClickedEventHandler clickHandler,
-                    ContentAlignment TextAlign = ContentAlignment.MiddleCenter
-                )
+            string text,
+            string url,
+            LinkLabelLinkClickedEventHandler clickHandler,
+            ContentAlignment TextAlign = ContentAlignment.MiddleCenter
+        )
         {
             LinkLabel label = new LinkLabel
             {
@@ -262,16 +282,27 @@ namespace Paragoniarz
             }
         }
 
-        private string BuildFilter(int userId, string personSearch)
+        private static string BuildFilter(int userId, string personSearch)
         {
             var filters = new List<string>();
 
             filters.Add($"user_id eq '{userId}'");
 
-            //if (!string.IsNullOrWhiteSpace(personSearch))
-            //{
-            //    filters.Add($"people/any(p: search.in({personSearch}))");
-            //}
+            if (!string.IsNullOrWhiteSpace(personSearch))
+            {
+                var searchTerms = personSearch
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(term => term.Trim());
+
+                if (searchTerms.Any())
+                {
+                    var peopleSearchFilter = string.Join(
+                        " or ",
+                        searchTerms.Select(term => $"people/any(p: p eq '{term}')")
+                    );
+                    filters.Add($"({peopleSearchFilter})");
+                }
+            }
 
             return string.Join(" and ", filters);
         }
