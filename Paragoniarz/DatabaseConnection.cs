@@ -17,12 +17,12 @@ namespace Paragoniarz
             try
             {
                 _connectionString = ConfigurationManager
-                    .ConnectionStrings["ParagoniarzConnectionString"]
+                    .ConnectionStrings["SqlConnectionString"]
                     .ConnectionString;
                 if (string.IsNullOrEmpty(_connectionString))
                 {
                     throw new ConfigurationErrorsException(
-                        "Connection string 'ParagoniarzConnectionString' is missing or empty in the configuration file."
+                        "Connection string 'SqlConnectionString' is missing or empty in the configuration file."
                     );
                 }
             }
