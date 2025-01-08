@@ -20,6 +20,8 @@ namespace Paragoniarz
         {
             InitializeComponent();
             tableFiles.Visible = false;
+            button3.MouseEnter += Button_MouseEnter;
+            button3.MouseLeave += Button_MouseLeave;
         }
 
         private async void button3_Click(object sender, System.EventArgs e)
@@ -307,19 +309,35 @@ namespace Paragoniarz
             return string.Join(" and ", filters);
         }
 
-        private void textBoxPhrase_KeyDown(object sender,KeyEventArgs e)
+        private void textBoxPhrase_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                button3_Click(sender,e);  // Wywołaj metodę kliknięcia przycisku
+                button3_Click(sender, e);
             }
         }
 
-        private void textBoxPerson_KeyDown(object sender,KeyEventArgs e)
+        private void textBoxPerson_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                button3_Click(sender,e);  // Wywołaj metodę kliknięcia przycisku
+                button3_Click(sender, e);
+            }
+        }
+
+        private void Button_MouseEnter(object sender, EventArgs e)
+        {
+            if (sender is Button button)
+            {
+                button.BackColor = Color.FromArgb(0, 100, 148);
+            }
+        }
+
+        private void Button_MouseLeave(object sender, EventArgs e)
+        {
+            if (sender is Button button)
+            {
+                button.BackColor = Color.Transparent;
             }
         }
     }

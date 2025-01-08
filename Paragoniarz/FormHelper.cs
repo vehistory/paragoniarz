@@ -16,20 +16,19 @@ namespace Paragoniarz
             Dictionary<string, Tuple<string, string>> users
         )
         {
-            // Sprawdzamy, czy nazwa użytkownika już istnieje
             if (users.ContainsKey(username))
             {
-                return true; // Nazwa użytkownika już istnieje
+                return true;
             }
-            // Sprawdzamy, czy email już istnieje
+
             foreach (var user in users.Values)
             {
                 if (user.Item1 == email)
                 {
-                    return true; // E-mail już istnieje
+                    return true;
                 }
             }
-            // Jeśli nazwa użytkownika ani e-mail nie istnieją, zwracamy false
+
             return false;
         }
 
@@ -43,17 +42,16 @@ namespace Paragoniarz
             if (isPasswordVisible)
             {
                 tbPassword.UseSystemPasswordChar = true;
-                pictureBox.Image = hiddenImage; // Ustawienie obrazu dla ukrytego hasła
+                pictureBox.Image = hiddenImage;
             }
             else
             {
                 tbPassword.UseSystemPasswordChar = false;
-                pictureBox.Image = visibleImage; // Ustawienie obrazu dla widocznego hasła
+                pictureBox.Image = visibleImage;
             }
             isPasswordVisible = !isPasswordVisible;
         }
 
-        // funkcja sprawdzajaca poprawnosc hasla
         public bool ValidatePassword(string password, string confirmPassword)
         {
             if (password != confirmPassword)
@@ -89,7 +87,6 @@ namespace Paragoniarz
             return true;
         }
 
-        //funkcja walidacji email
         public bool ValidateEmail(string email)
         {
             if (email.Length == 0)

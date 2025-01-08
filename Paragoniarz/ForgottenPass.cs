@@ -9,10 +9,7 @@ namespace Paragoniarz
         public ForgottenPass()
         {
             InitializeComponent();
-            // Zaokrąglij rogi okna
             WindowHelper.SetWindowRoundCorners(this, 20);
-
-            // Umożliw przesuwanie okna
             WindowHelper.EnableWindowDragging(panel2, this);
             this.StartPosition = FormStartPosition.CenterScreen;
         }

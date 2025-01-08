@@ -18,7 +18,6 @@ namespace Paragoniarz
             public string Email { get; set; }
         }
 
-        // Sprawdzanie, czy użytkownik lub email są już zajęte
         public bool IsUsernameOrEmailTaken(string username, string email)
         {
             try
@@ -43,10 +42,9 @@ namespace Paragoniarz
             }
         }
 
-        // Metoda do dodawania użytkownika z hasłem w formie haszowanej
         public void InsertUser(string username, string email, string password)
         {
-            string hashedPassword = HashPassword(password); // Haszowanie hasła
+            string hashedPassword = HashPassword(password);
 
             string query =
                 "INSERT INTO dbo.Users (username, password, email) VALUES (@username, @password, @email)";
@@ -78,7 +76,6 @@ namespace Paragoniarz
             }
         }
 
-        // Walidacja użytkownika
         public User ValidateUser(string username, string password)
         {
             string hashedPassword = HashPassword(password);
@@ -126,17 +123,15 @@ namespace Paragoniarz
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
 
-                    // Dodanie parametrów
                     sqlCommand.Parameters.AddWithValue("@FileID", fileID);
                     sqlCommand.Parameters.AddWithValue("@FileUriBase64", fileUriBase64);
 
                     int rowsAffected = sqlCommand.ExecuteNonQuery();
-                    return rowsAffected > 0; // Zwraca true, jeśli rekord został zaktualizowany
+                    return rowsAffected > 0;
                 }
             }
         }
 
-        // Metoda do pobierania danych z bazy danych
         public DataTable GetDataFromQuery(string query)
         {
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
@@ -148,7 +143,7 @@ namespace Paragoniarz
                     {
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
-                        return dataTable; // Zwraca wynik jako DataTable
+                        return dataTable;
                     }
                 }
             }
@@ -156,7 +151,7 @@ namespace Paragoniarz
 
         public string GetFileNameFromDatabase(int userId)
         {
-            string query = "SELECT fileName FROM dbo.Files WHERE userId = @userId"; // Załóżmy, że masz tabelę 'Files'
+            string query = "SELECT fileName FROM dbo.Files WHERE userId = @userId";
 
             using (SqlConnection conn = DatabaseConnection.Instance.CreateConnection())
             {
@@ -166,15 +161,15 @@ namespace Paragoniarz
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@userId", userId);
 
-                    object result = cmd.ExecuteScalar(); // Zwraca tylko jedną wartość (nazwa pliku)
+                    object result = cmd.ExecuteScalar();
 
                     if (result != null)
                     {
-                        return result.ToString(); // Zwraca nazwę pliku
+                        return result.ToString();
                     }
                     else
                     {
-                        return null; // Zwraca null, jeśli nie znaleziono pliku
+                        return null;
                     }
                 }
                 catch (Exception ex)
@@ -193,7 +188,6 @@ namespace Paragoniarz
                 return;
             }
 
-            // Wyszukiwanie i usuwanie pliku z Azure Blob Storage
             string connectionString = DatabaseConnection
                 .Instance.CreateBlobStorageConnection()
                 .ToString();
@@ -207,7 +201,6 @@ namespace Paragoniarz
 
             try
             {
-                // Usuwanie pliku z Blob Storage
                 await blobClient.DeleteIfExistsAsync();
                 MessageBox.Show($"Plik {fileName} został pomyślnie usunięty.");
             }
@@ -217,8 +210,32 @@ namespace Paragoniarz
             }
         }
 
-        // Metoda haszująca hasło
-        private string HashPassword(string rawData)
+        public bool DeleteFileRecord(string fileId, int userId)
+        {
+            try
+            {
+                return DatabaseConnection.Instance.ExecuteQuery(connection =>
+                {
+                    string query =
+                        "DELETE FROM [dbo].[files] WHERE id = @FileID AND user_id = @UserID";
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@FileID", fileId);
+                        cmd.Parameters.AddWithValue("@UserID", userId);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Błąd podczas usuwania pliku: {ex.Message}");
+                return false;
+            }
+        }
+
+        private static string HashPassword(string rawData)
         {
             using (SHA256 sha256Hash = SHA256.Create())
             {

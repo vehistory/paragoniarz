@@ -14,11 +14,7 @@ namespace Paragoniarz
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             tbPassword.UseSystemPasswordChar = true;
-
-            // Zaokrąglij rogi okna
             WindowHelper.SetWindowRoundCorners(this, 20);
-
-            // Umożliw przesuwanie okna
             WindowHelper.EnableWindowDragging(panel1, this);
         }
 

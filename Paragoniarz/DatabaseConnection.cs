@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
-using Azure.Storage.Blobs; // Dodaj odpowiednią przestrzeń nazw
+using Azure.Storage.Blobs;
 
 namespace Paragoniarz
 {
@@ -19,6 +19,7 @@ namespace Paragoniarz
                 _connectionString = ConfigurationManager
                     .ConnectionStrings["SqlConnectionString"]
                     .ConnectionString;
+
                 if (string.IsNullOrEmpty(_connectionString))
                 {
                     throw new ConfigurationErrorsException(
@@ -84,32 +85,34 @@ namespace Paragoniarz
             }
         }
 
+        public BlobContainerClient CreateBlobStorageConnection()
+        {
+            string blobStorageConnectionString = GetBlobStorageConnectionString();
+
+            BlobServiceClient blobServiceClient = new BlobServiceClient(
+                blobStorageConnectionString
+            );
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(
+                "documents"
+            );
+
+            return containerClient;
+        }
+
         public string GetBlobStorageConnectionString()
+        {
+            string blobStorageConnectionString = ConfigurationManager
+                .ConnectionStrings["BlobConnectionString"]
+                ?.ConnectionString;
+
+            if (string.IsNullOrEmpty(blobStorageConnectionString))
             {
-                string blobStorageConnectionString = ConfigurationManager
-                    .ConnectionStrings["BlobStorageConnectionString"]
-                    ?.ConnectionString;
-                if (string.IsNullOrEmpty(blobStorageConnectionString))
-                {
-                    throw new InvalidOperationException("Connection string for Blob Storage is not found.");
-                }
-                return blobStorageConnectionString;
+                throw new InvalidOperationException(
+                    "Connection string for Blob Storage is not found."
+                );
             }
 
-            public BlobContainerClient CreateBlobStorageConnection()
-            {
-                // Pobieramy connection string z pliku konfiguracyjnego (app.config)
-                string blobStorageConnectionString = ConfigurationManager
-                    .ConnectionStrings["BlobStorageConnectionString"]
-                    .ConnectionString;
-
-                // Tworzymy klienta BlobServiceClient z connection stringa
-                BlobServiceClient blobServiceClient = new BlobServiceClient(blobStorageConnectionString);
-
-                // Uzyskujemy dostęp do kontenera (zmień nazwę kontenera na swoją)
-                BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient("documents");
-
-                return containerClient;
-            }
+            return blobStorageConnectionString;
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace Paragoniarz
         public ImageMetadata(string filePath)
         {
             LoadMetadata(filePath);
-            UploadDate = DateTime.Now; // Data wgrania na serwer ustawiona na bieżącą datę
+            UploadDate = DateTime.Now;
         }
 
         private void LoadMetadata(string filePath)
@@ -22,9 +22,9 @@ namespace Paragoniarz
             {
                 FileInfo fileInfo = new FileInfo(filePath);
 
-                FileName = fileInfo.Name; // Nazwa pliku
-                FileSize = fileInfo.Length; // Rozmiar pliku w bajtach
-                CreationDate = fileInfo.CreationTime; // Data utworzenia pliku
+                FileName = fileInfo.Name;
+                FileSize = fileInfo.Length;
+                CreationDate = fileInfo.CreationTime;
             }
             else
             {
