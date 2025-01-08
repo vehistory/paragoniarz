@@ -9,9 +9,7 @@ namespace Paragoniarz
         public RegisterForm()
         {
             InitializeComponent();
-            // Zaokrąglij rogi okna
             WindowHelper.SetWindowRoundCorners(this, 20);
-            // Umożliw przesuwanie okna
             WindowHelper.EnableWindowDragging(panel1, this);
             passBox.UseSystemPasswordChar = true;
             rePassBox.UseSystemPasswordChar = true;
@@ -19,7 +17,6 @@ namespace Paragoniarz
 
         private FormHelper formHelper = new FormHelper();
 
-        //obsluga widocznosci hasla dla pola haslo
         private void pictureBox5_Click(object sender, EventArgs e)
         {
             formHelper.TogglePasswordVisibility(
@@ -30,7 +27,6 @@ namespace Paragoniarz
             );
         }
 
-        //obsluga widocznosci hasla dla pola powtorz haslo
         private void pictureBox6_Click(object sender, EventArgs e)
         {
             formHelper.TogglePasswordVisibility(
@@ -41,13 +37,11 @@ namespace Paragoniarz
             );
         }
 
-        //obsluga butonna "x" do zamkniecia okna
         private void exitButton_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
         }
 
-        //oblsuga przycisku zarejestruj
         private void button3_Click(object sender, EventArgs e)
         {
             string password = passBox.Text;
@@ -93,7 +87,7 @@ namespace Paragoniarz
         {
             if (e.KeyCode == Keys.Enter)
             {
-                button3.PerformClick(); // Kliknięcie przycisku "Zarejestruj"
+                button3.PerformClick();
             }
         }
 

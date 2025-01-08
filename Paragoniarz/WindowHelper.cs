@@ -7,7 +7,7 @@ namespace Paragoniarz
 {
     public static class WindowHelper //NIEDZIALA
     {
-        // Import funkcji do zaokrąglania rogów okna
+        // Import biblioteki do zaokrąglania rogów okna
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(
             int nLeftRect,
@@ -35,7 +35,6 @@ namespace Paragoniarz
         [DllImport("user32.dll")]
         private static extern bool ReleaseCapture();
 
-        // Metoda do zaokrąglania rogów
         public static void SetWindowRoundCorners(Form form, int radius)
         {
             form.Region = Region.FromHrgn(
@@ -43,7 +42,6 @@ namespace Paragoniarz
             );
         }
 
-        // Metoda do obsługi przesuwania okna
         public static void EnableWindowDragging(Control control, Form form)
         {
             control.MouseDown += (sender, e) =>

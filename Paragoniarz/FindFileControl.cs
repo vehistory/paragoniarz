@@ -33,23 +33,20 @@ namespace Paragoniarz
             dateTimePicker1.Value = DateTime.Now.AddMonths(-1);
         }
 
-        // rysowanie gradientu na panelu
         private void gradientPanel(object sender, PaintEventArgs e, Panel panel)
         {
-            // Definicja kolorów dla gradientu
-            Color startColor = Color.FromArgb(0, 64, 95); // Kolor początkowy (np. czerwony)
-            Color endColor = Color.FromArgb(64, 64, 64); // Kolor końcowy (np. niebieski)
-            // Tworzymy pędzel z gradientem
+            Color startColor = Color.FromArgb(0, 64, 95);
+            Color endColor = Color.FromArgb(64, 64, 64);
+
             using (
                 LinearGradientBrush brush = new LinearGradientBrush(
-                    panel.ClientRectangle, // Określamy obszar panelu
-                    startColor, // Kolor początkowy
-                    endColor, // Kolor końcowy
+                    panel.ClientRectangle,
+                    startColor,
+                    endColor,
                     45F
                 )
-            ) // Kąt gradientu (w tym przypadku 45 stopni)
+            )
             {
-                // Rysujemy tło panelu z użyciem gradientu
                 e.Graphics.FillRectangle(brush, panel.ClientRectangle);
             }
         }
@@ -68,12 +65,10 @@ namespace Paragoniarz
 
         private void button3_Click(object sender, EventArgs e)
         {
-            // Pobierz dane z TextBoxów
             string nazwa = textBox8.Text;
             DateTime? dataOd = null;
             DateTime? dataDo = null;
 
-            // Sprawdzamy, czy daty są wpisane (można użyć DateTimePickerów zamiast TextBoxów)
             if (DateTime.TryParse(dateTimePicker1.Text, out DateTime parsedDataOd))
             {
                 dataOd = parsedDataOd;
@@ -84,11 +79,9 @@ namespace Paragoniarz
                 dataDo = parsedDataDo;
             }
 
-            // Tworzymy instancję klasy odpowiedzialnej za zapytanie
             FinderManager finderManager = new FinderManager();
             string query = finderManager.CreateSearchQuery(_userId, nazwa, dataOd, dataDo);
 
-            // Wysyłamy zapytanie do bazy danych
             DatabaseHelper dbConnection = new DatabaseHelper();
             DataTable result = dbConnection.GetDataFromQuery(query);
 
@@ -125,7 +118,10 @@ namespace Paragoniarz
                     tableLayoutPanel1.Controls.Add(buttonPreview, 2, currentRow);
 
                     // Kolumna 3: Usuń
-                    Button buttonDelete = CreateDeleteButton(row["original_name"].ToString());
+                    Button buttonDelete = CreateDeleteButton(
+                        row["id"].ToString(),
+                        row["original_name"].ToString()
+                    );
                     tableLayoutPanel1.Controls.Add(buttonDelete, 3, currentRow);
                 }
 
@@ -190,7 +186,7 @@ namespace Paragoniarz
             return button;
         }
 
-        private Button CreateDeleteButton(string fileName)
+        private Button CreateDeleteButton(string id, string fileName)
         {
             Button button = new Button
             {
@@ -200,6 +196,7 @@ namespace Paragoniarz
                 Size = new Size(31, 33),
                 Cursor = Cursors.Hand,
                 Tag = fileName,
+                AccessibleDescription = id,
                 FlatAppearance = { BorderSize = 0 },
             };
             button.Click += button2_Click;
@@ -209,9 +206,8 @@ namespace Paragoniarz
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Wyczyść istniejące dane w TableLayoutPanel przed dodaniem nowych
             tableLayoutPanel1.Controls.Clear();
-            tableLayoutPanel1.RowCount = 0; // Resetowanie liczby wierszy do 0
+            tableLayoutPanel1.RowCount = 0;
         }
 
         public async Task DeleteFileFromBlobStorage(string fileName)
@@ -222,39 +218,68 @@ namespace Paragoniarz
                 return;
             }
 
-            // Tworzymy obiekt BlobContainerClient
             BlobContainerClient containerClient =
                 DatabaseConnection.Instance.CreateBlobStorageConnection();
 
             try
             {
-                // Uzyskujemy obiekt BlobClient dla pliku, który chcemy usunąć
                 BlobClient blobClient = containerClient.GetBlobClient(fileName);
-
-                // Usuwamy plik
                 await blobClient.DeleteIfExistsAsync();
 
-                // Powiadamiamy użytkownika o sukcesie
                 MessageBox.Show($"Plik {fileName} został pomyślnie usunięty.");
             }
             catch (Exception ex)
             {
-                // Obsługuje wyjątek w przypadku błędu
                 MessageBox.Show($"Błąd podczas usuwania pliku z Azure: {ex.Message}");
             }
         }
 
         private async void button2_Click(object sender, EventArgs e)
         {
-            // Sprawdzamy, czy sender to przycisk
             Button deleteButton = sender as Button;
 
             if (deleteButton != null)
             {
+                string fileId = deleteButton.AccessibleDescription.ToString();
                 string fileName = deleteButton.Tag.ToString();
 
-                // Wywołanie funkcji usuwania pliku
-                await DeleteFileFromBlobStorage(fileName);
+                // Confirm deletion with the user
+                DialogResult result = MessageBox.Show(
+                    $"Czy na pewno chcesz usunąć plik '{fileName}'?",
+                    "Potwierdzenie usunięcia",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        await DeleteFileFromBlobStorage(fileName);
+
+                        DatabaseHelper dbHelper = new DatabaseHelper();
+                        bool deletedFromDb = dbHelper.DeleteFileRecord(fileId, UserSession.UserId);
+
+                        if (deletedFromDb)
+                        {
+                            MessageBox.Show(
+                                "Plik został pomyślnie usunięty z Blob storage i bazy danych."
+                            );
+
+                            button3_Click(sender, e);
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                "Plik został usunięty z Blob storage, ale wystąpił problem z usunięciem rekordu z bazy danych."
+                            );
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Wystąpił błąd podczas usuwania pliku: {ex.Message}");
+                    }
+                }
             }
         }
 
@@ -319,7 +344,7 @@ namespace Paragoniarz
         {
             if (sender is Button button)
             {
-                button.BackColor = Color.FromArgb(0, 100, 148); // Kolor przy najechaniu
+                button.BackColor = Color.FromArgb(0, 100, 148);
             }
         }
 
@@ -327,7 +352,7 @@ namespace Paragoniarz
         {
             if (sender is Button button)
             {
-                button.BackColor = Color.Transparent; // Przywrócenie oryginalnego koloru
+                button.BackColor = Color.Transparent;
             }
         }
     }

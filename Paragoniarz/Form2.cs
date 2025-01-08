@@ -7,7 +7,6 @@ namespace Paragoniarz
 {
     public partial class Form2 : Form
     {
-        // Deklaracja kontrolek
         private UserControl currentControl = null;
         private UploadFileControl uploadFileControl;
         private YourFilesControl yourFilesControl;
@@ -22,10 +21,7 @@ namespace Paragoniarz
             findFileControl = new FindFileControl(UserSession.UserId);
             ShowControl(uploadFileControl);
 
-            // Zaokrąglij rogi okna
             WindowHelper.SetWindowRoundCorners(this, 20);
-
-            // Umożliw przesuwanie okna
             WindowHelper.EnableWindowDragging(panel1, this);
 
             pnlNav.Height = sendFile.Height;
@@ -33,7 +29,6 @@ namespace Paragoniarz
             pnlNav.Left = sendFile.Left;
             sendFile.BackColor = Color.FromArgb(46, 51, 73);
 
-            // Sprawdź, czy nazwa użytkownika została przekazana i przypisz ją do labela
             if (!string.IsNullOrEmpty(UserSession.Username))
             {
                 label1.Text = "Witaj " + UserSession.Username + "!";
@@ -46,13 +41,11 @@ namespace Paragoniarz
 
         private void ShowControl(UserControl control)
         {
-            // Usuń aktualną kontrolkę, jeśli jakaś jest
             if (currentControl != null)
             {
                 panel4.Controls.Remove(currentControl);
             }
 
-            // Dodaj nową kontrolkę
             panel4.Controls.Add(control);
             control.Dock = DockStyle.Fill;
             currentControl = control;
