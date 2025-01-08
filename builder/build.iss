@@ -19,7 +19,7 @@ DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 ; Remove the following line to run in administrative install mode (install for all users.)
 PrivilegesRequired=lowest
-OutputBaseFilename=mysetup
+OutputBaseFilename=Paragoniarz
 SetupIconFile={#SourcePath}..\Paragoniarz\paragoniarz_icon.ico
 Compression=lzma
 SolidCompression=yes
