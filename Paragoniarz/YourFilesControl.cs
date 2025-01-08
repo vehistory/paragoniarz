@@ -314,5 +314,13 @@ namespace Paragoniarz
                 button3_Click(sender,e);  // Wywołaj metodę kliknięcia przycisku
             }
         }
+
+        private void textBoxPerson_KeyDown(object sender,KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button3_Click(sender,e);  // Wywołaj metodę kliknięcia przycisku
+            }
+        }
     }
 }

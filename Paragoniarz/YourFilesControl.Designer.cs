@@ -96,6 +96,7 @@
             this.textBoxPerson.Size = new System.Drawing.Size(278, 22);
             this.textBoxPerson.TabIndex = 24;
             this.textBoxPerson.Tag = "";
+            this.textBoxPerson.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPerson_KeyDown);
             // 
             // button3
             // 
