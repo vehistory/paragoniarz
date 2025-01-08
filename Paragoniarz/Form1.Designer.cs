@@ -54,9 +54,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // panel1
-            //
+            // 
             this.panel1.BackColor = System.Drawing.Color.RoyalBlue;
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.button1);
@@ -65,21 +65,20 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1280, 31);
             this.panel1.TabIndex = 0;
-
-            //
+            // 
             // label2
-            //
+            // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.label2.Location = new System.Drawing.Point(3, 8);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(118, 20);
+            this.label2.Size = new System.Drawing.Size(91, 15);
             this.label2.TabIndex = 4;
             this.label2.Text = "PARAGONIARZ";
-            //
+            // 
             // button1
-            //
+            // 
             this.button1.BackgroundImage = global::Paragoniarz.Properties.Resources.Close;
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button1.Dock = System.Windows.Forms.DockStyle.Right;
@@ -92,9 +91,9 @@
             this.button1.TabIndex = 0;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            //
+            // 
             // panel2
-            //
+            // 
             this.panel2.BackgroundImage = global::Paragoniarz.Properties.Resources.paragoniarzfresh1panel;
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.pictureBox4);
@@ -112,21 +111,21 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(390, 390);
             this.panel2.TabIndex = 4;
-            //
+            // 
             // label5
-            //
+            // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label5.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label5.Location = new System.Drawing.Point(235, 128);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(114, 28);
+            this.label5.Size = new System.Drawing.Size(94, 21);
             this.label5.TabIndex = 12;
             this.label5.Text = "Logowanie";
-            //
+            // 
             // pictureBox4
-            //
+            // 
             this.pictureBox4.BackColor = System.Drawing.Color.White;
             this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox4.Image = global::Paragoniarz.Properties.Resources.Closed_Eye;
@@ -137,9 +136,9 @@
             this.pictureBox4.TabIndex = 11;
             this.pictureBox4.TabStop = false;
             this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
-            //
+            // 
             // pictureBox2
-            //
+            // 
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox2.BackgroundImage = global::Paragoniarz.Properties.Resources.Password;
             this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -148,9 +147,9 @@
             this.pictureBox2.Size = new System.Drawing.Size(25, 22);
             this.pictureBox2.TabIndex = 10;
             this.pictureBox2.TabStop = false;
-            //
+            // 
             // pictureBox1
-            //
+            // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImage = global::Paragoniarz.Properties.Resources.User2;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -159,45 +158,45 @@
             this.pictureBox1.Size = new System.Drawing.Size(25, 22);
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
-            //
+            // 
             // linkLabel2
-            //
+            // 
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.BackColor = System.Drawing.Color.Transparent;
             this.linkLabel2.LinkColor = System.Drawing.Color.Black;
             this.linkLabel2.Location = new System.Drawing.Point(216, 370);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(136, 20);
-            this.linkLabel2.TabIndex = 8;
+            this.linkLabel2.Size = new System.Drawing.Size(108, 15);
+            this.linkLabel2.TabIndex = 6;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "Stworz nowe konto";
             this.linkLabel2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.linkLabel2_MouseClick);
-            //
+            // 
             // linkLabel1
-            //
+            // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
             this.linkLabel1.LinkColor = System.Drawing.Color.Black;
             this.linkLabel1.Location = new System.Drawing.Point(216, 290);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(143, 20);
-            this.linkLabel1.TabIndex = 7;
+            this.linkLabel1.Size = new System.Drawing.Size(113, 15);
+            this.linkLabel1.TabIndex = 5;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Zapomnialem Hasla";
             this.linkLabel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.linkLabel1_MouseClick);
-            //
+            // 
             // label4
-            //
+            // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Location = new System.Drawing.Point(166, 229);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 20);
+            this.label4.Size = new System.Drawing.Size(37, 15);
             this.label4.TabIndex = 6;
             this.label4.Text = "Haslo";
-            //
+            // 
             // button2
-            //
+            // 
             this.button2.BackColor = System.Drawing.Color.Transparent;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Location = new System.Drawing.Point(210, 321);
@@ -207,47 +206,47 @@
             this.button2.Text = "Zaloguj";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            //
+            // 
             // tbPassword
-            //
+            // 
             this.tbPassword.Location = new System.Drawing.Point(169, 253);
             this.tbPassword.Name = "tbPassword";
-            this.tbPassword.Size = new System.Drawing.Size(212, 27);
-            this.tbPassword.TabIndex = 5;
+            this.tbPassword.Size = new System.Drawing.Size(212, 23);
+            this.tbPassword.TabIndex = 3;
             this.tbPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress);
-            //
+            // 
             // label3
-            //
+            // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label3.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.label3.Location = new System.Drawing.Point(235, 128);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(114, 28);
+            this.label3.Size = new System.Drawing.Size(94, 21);
             this.label3.TabIndex = 4;
             this.label3.Text = "Logowanie";
-            //
+            // 
             // label1
-            //
+            // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Location = new System.Drawing.Point(166, 174);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(141, 20);
+            this.label1.Size = new System.Drawing.Size(112, 15);
             this.label1.TabIndex = 3;
             this.label1.Text = "Nazwa Uzytkownika";
-            //
+            // 
             // tbUserName
-            //
+            // 
             this.tbUserName.Location = new System.Drawing.Point(169, 192);
             this.tbUserName.Name = "tbUserName";
-            this.tbUserName.Size = new System.Drawing.Size(212, 27);
+            this.tbUserName.Size = new System.Drawing.Size(212, 23);
             this.tbUserName.TabIndex = 2;
             this.tbUserName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress);
-            //
+            // 
             // pictureBox3
-            //
+            // 
             this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox3.Image = global::Paragoniarz.Properties.Resources.paragoniarzfresh1;
             this.pictureBox3.Location = new System.Drawing.Point(0, 0);
@@ -256,10 +255,9 @@
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 6;
             this.pictureBox3.TabStop = false;
-            //
-            //
+            // 
             // button3
-            //
+            // 
             this.button3.BackColor = System.Drawing.Color.Transparent;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Location = new System.Drawing.Point(1010, 669);
@@ -269,10 +267,10 @@
             this.button3.Text = "Fake login (admin ID: 1)";
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
-            //
+            // 
             // Form1
-            //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 720);
             this.Controls.Add(this.button3);
