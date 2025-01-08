@@ -306,5 +306,13 @@ namespace Paragoniarz
 
             return string.Join(" and ", filters);
         }
+
+        private void textBoxPhrase_KeyDown(object sender,KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button3_Click(sender,e);  // Wywołaj metodę kliknięcia przycisku
+            }
+        }
     }
 }
