@@ -115,11 +115,11 @@
             // 
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label5.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label5.Location = new System.Drawing.Point(235, 128);
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label5.Location = new System.Drawing.Point(214, 128);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(94, 21);
+            this.label5.Size = new System.Drawing.Size(110, 25);
             this.label5.TabIndex = 12;
             this.label5.Text = "Logowanie";
             this.label5.Click += new System.EventHandler(this.label5_Click);
@@ -199,6 +199,7 @@
             // 
             this.button2.BackColor = System.Drawing.Color.Transparent;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button2.Location = new System.Drawing.Point(210, 321);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(119, 35);
