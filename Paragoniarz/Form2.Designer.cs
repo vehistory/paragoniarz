@@ -167,7 +167,7 @@
             this.findFile.Name = "findFile";
             this.findFile.Size = new System.Drawing.Size(200, 50);
             this.findFile.TabIndex = 3;
-            this.findFile.Text = "Znajdz plik";
+            this.findFile.Text = "Znajdź plik";
             this.findFile.UseVisualStyleBackColor = true;
             this.findFile.Click += new System.EventHandler(this.button5_Click);
             this.findFile.Leave += new System.EventHandler(this.button5_Leave);
@@ -214,7 +214,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(115, 30);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Wyslij plik";
+            this.label3.Text = "Wyślij plik";
             // 
             // panel4
             // 

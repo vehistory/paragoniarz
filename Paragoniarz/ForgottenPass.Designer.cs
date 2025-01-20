@@ -46,6 +46,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
             this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.linkLabel2);
             this.panel1.Controls.Add(this.button3);
@@ -77,13 +78,14 @@
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.BackColor = System.Drawing.Color.Transparent;
             this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.linkLabel2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.linkLabel2.LinkColor = System.Drawing.SystemColors.Highlight;
             this.linkLabel2.Location = new System.Drawing.Point(188, 195);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(134, 16);
             this.linkLabel2.TabIndex = 28;
             this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Stworz nowe konto";
+            this.linkLabel2.Text = "Stwórz nowe konto";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // button3
@@ -119,10 +121,10 @@
             // 
             // textBox2
             // 
-            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.textBox2.BackColor = System.Drawing.SystemColors.Menu;
             this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox2.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.textBox2.ForeColor = System.Drawing.SystemColors.MenuText;
             this.textBox2.Location = new System.Drawing.Point(136, 56);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(218, 19);
@@ -137,7 +139,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 17);
             this.label3.TabIndex = 24;
-            this.label3.Text = "e-mail";
+            this.label3.Text = "E-mail";
             // 
             // panel2
             // 
@@ -149,7 +151,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(742, 31);
             this.panel2.TabIndex = 1;
-            
             // 
             // label2
             // 

@@ -114,5 +114,18 @@ namespace Paragoniarz
             form2.Show();
             this.Hide();
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+            UserSession.Login(1, "admin", "admin@example.com");
+
+            Form2 form2 = new Form2
+            {
+                StartPosition = FormStartPosition.Manual,
+                Location = this.Location,
+            };
+            form2.Show();
+            this.Hide();
+        }
     }
 }

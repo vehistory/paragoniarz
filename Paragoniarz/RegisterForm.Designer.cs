@@ -76,7 +76,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(742, 31);
             this.panel1.TabIndex = 2;
-            
             // 
             // button2
             // 
@@ -136,7 +135,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(129, 17);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Nazwa uzytkownika";
+            this.label1.Text = "Nazwa użytkownika";
             // 
             // label3
             // 
@@ -147,7 +146,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 17);
             this.label3.TabIndex = 6;
-            this.label3.Text = "e-mail";
+            this.label3.Text = "E-mail";
             // 
             // textBox2
             // 
@@ -170,7 +169,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(43, 17);
             this.label4.TabIndex = 8;
-            this.label4.Text = "Haslo";
+            this.label4.Text = "Hasło";
             // 
             // passBox
             // 
@@ -193,7 +192,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(95, 17);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Powtorz haslo";
+            this.label5.Text = "Powtórz hasło";
             // 
             // rePassBox
             // 
@@ -214,9 +213,9 @@
             this.label6.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label6.Location = new System.Drawing.Point(179, 27);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(84, 25);
+            this.label6.Size = new System.Drawing.Size(106, 25);
             this.label6.TabIndex = 12;
-            this.label6.Text = "Register";
+            this.label6.Text = "Rejestracja";
             // 
             // button3
             // 
@@ -398,7 +397,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RegisterForm";
             this.Text = "RegisterForm";
-           
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.pnlLogin.ResumeLayout(false);
